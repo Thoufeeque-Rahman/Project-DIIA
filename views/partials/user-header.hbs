@@ -1,71 +1,113 @@
 <style>
-    .navbar-nav .nav-link.active{
-        color: #FFA07A;
-    }
-
-    .navbar-nav .nav-link{
+    .navbar-nav .nav-link {
         color: #6495ED;
         font-size: 17px;
         margin-left: 20px;
-    
+
     }
 
-    .navbar-nav .nav-link:hover{
+    .navbar-nav .nav-link:hover {
         color: #FFA07A;
-    
+
     }
-    
-    .navbar{
+
+
+
+    .dropdown-menu {
+        border: none;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.397);
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-left: 25px;
+    }
+
+    .dropdown-item:hover {
+        border-radius: 10px;
+        margin-top: 5px;
+        color: #FFA07A;
+    }
+
+    .dropdown-item {
+        border-radius: 10px;
+        margin-top: 5px;
+        color: #6495ED;
+    }
+
+    .nav-link .dropdown-toggle::after {
+        color: #6495ED;
+    }
+
+    .navbar-nav .nav-link.active,
+    .navbar-nav .nav-link.show {
+        color: #FFA07A;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+        opacity: 1;
+    }
+
+    .dropdown-menu {
+        display: block;
+        opacity: 0;
+        transition: all 0.2s;
+    }
+
+    .fixed-top.scrolled {
+        background-color: #fff !important;
+        transition: background-color 200ms linear;
+    }
+
+    .navbar {
         background-color: #ffffff;
     }
+
 </style>
 <header>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg fixed-top" id="mynav">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="https://i.ibb.co/sg75ShG/DIIA-Logo-Round.png" alt="Bootstrap" width="60" height="60">
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Status</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Gallery</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Donation</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact Us</a>
-                        </li>
-                        
-                    </ul>
-                
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#about" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false" data-bs-auto-close="outside">
+                            About
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Founders</a></li>
+                            <li><a class="dropdown-item" href="#">Committee</a></li>
+                            <li><a class="dropdown-item" href="#">Our Mission & Vision</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Status</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Donation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+
+                </ul>
+
 
 
                 {{!-- <form class="d-flex" role="search">
@@ -76,3 +118,11 @@
         </div>
     </nav>
 </header>
+<script>
+    // Add slideUp animation to Bootstrap dropdown when collapsing.
+    $('.dropdown').on('hide.bs.dropdown', function () {
+        $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+    });
+
+    
+</script>
