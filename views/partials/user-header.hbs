@@ -1,18 +1,19 @@
 <style>
+    {{!-- 
+            #495e5f
+            #919e95
+     --}}
     .navbar-nav .nav-link {
-        color: #6495ED;
+        color: #495e5f;
         font-size: 17px;
         margin-left: 20px;
 
     }
 
     .navbar-nav .nav-link:hover {
-        color: #FFA07A;
+        color: #919e95;
 
     }
-
-
-
     .dropdown-menu {
         border: none;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.397);
@@ -24,22 +25,22 @@
     .dropdown-item:hover {
         border-radius: 10px;
         margin-top: 5px;
-        color: #FFA07A;
+        color: #919e95;
     }
 
     .dropdown-item {
         border-radius: 10px;
         margin-top: 5px;
-        color: #6495ED;
+        color: #495e5f;
     }
 
     .nav-link .dropdown-toggle::after {
-        color: #6495ED;
+        color: #495e5f;
     }
 
     .navbar-nav .nav-link.active,
     .navbar-nav .nav-link.show {
-        color: #FFA07A;
+        color: #919e95;
     }
 
     .dropdown:hover .dropdown-menu {
@@ -61,6 +62,7 @@
 
     .navbar {
         background-color: #ffffff;
+        
     }
 
 </style>
@@ -70,14 +72,12 @@
             <a class="navbar-brand" href="#">
                 <img src="https://i.ibb.co/sg75ShG/DIIA-Logo-Round.png" alt="Bootstrap" width="60" height="60">
             </a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
@@ -107,13 +107,6 @@
                     </li>
 
                 </ul>
-
-
-
-                {{!-- <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form> --}}
             </div>
         </div>
     </nav>
