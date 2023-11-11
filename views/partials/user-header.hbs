@@ -1,121 +1,77 @@
 <style>
-    {{!-- 
-            #495e5f
-            #919e95
-     --}}
-    .navbar-nav .nav-link {
-        color: #495e5f;
-        font-size: 17px;
-        margin-left: 20px;
+  
+  .navbar {
+    background-color: rgba(255, 255, 255, 0.322);
+    transition: 0.4s; /* Adds a transition effect when the padding is decreased */
+    width: 100%;
+    top: 0; /* At the top */
+    z-index: 99;
+  }
 
-    }
+  .navbar .nav-link{
+    font-weight: 600;
+    color: #495e5f;
+    transition: .3s;
+  }
 
-    .navbar-nav .nav-link:hover {
-        color: #919e95;
+  .navbar .nav-link.active{
+    color: #42929d;
+  }
 
-    }
-    .dropdown-menu {
-        border: none;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.397);
-        padding-left: 5px;
-        padding-right: 5px;
-        margin-left: 25px;
-    }
-
-    .dropdown-item:hover {
-        border-radius: 10px;
-        margin-top: 5px;
-        color: #919e95;
-    }
-
-    .dropdown-item {
-        border-radius: 10px;
-        margin-top: 5px;
-        color: #495e5f;
-    }
-
-    .nav-link .dropdown-toggle::after {
-        color: #495e5f;
-    }
-
-    .navbar-nav .nav-link.active,
-    .navbar-nav .nav-link.show {
-        color: #919e95;
-    }
-
-    .dropdown:hover .dropdown-menu {
-        display: block;
-        margin-top: 0;
-        opacity: 1;
-    }
-
-    .dropdown-menu {
-        display: block;
-        opacity: 0;
-        transition: all 0.2s;
-    }
-
-    .fixed-top.scrolled {
-        background-color: #fff !important;
-        transition: background-color 200ms linear;
-    }
-
-    .navbar {
-        background-color: #ffffff;
-        
-    }
-
+  .navbar .nav-link:hover{
+    color: #42929d;
+  }
 </style>
-<header>
-    <nav class="navbar navbar-expand-lg fixed-top" id="mynav">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="https://i.ibb.co/sg75ShG/DIIA-Logo-Round.png" alt="Bootstrap" width="60" height="60">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#about" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false" data-bs-auto-close="outside">
-                            About
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Founders</a></li>
-                            <li><a class="dropdown-item" href="#">Committee</a></li>
-                            <li><a class="dropdown-item" href="#">Our Mission & Vision</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Status</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Gallery</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Donation</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact Us</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-<script>
-    // Add slideUp animation to Bootstrap dropdown when collapsing.
-    $('.dropdown').on('hide.bs.dropdown', function () {
-        $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
-    });
-
-    
-</script>
+<nav class="navbar sticky-top navbar-expand-lg ps-5 pe-5" style="background-color: rgba(255, 255, 255, 0.938);"> 
+  <div class="container-fluid container ms-5 me-5">
+    <a class="navbar-brand" href="/"><img src="/images/DIIA Logo Round.png" alt="" width="70"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav gap-4 ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            About
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">About Us</a></li>
+            <li><a class="dropdown-item" href="#">Mission and Vision</a></li>
+            <li><a class="dropdown-item" href="#">Founders</a></li>
+            <li><a class="dropdown-item" href="#">Committe</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Offices
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Office of Administation</a></li>
+            <li><a class="dropdown-item" href="#">Office of Welfare</a></li>
+            <li><a class="dropdown-item" href="#">OGEA</a></li>
+            <li><a class="dropdown-item" href="#">Staff Council</a></li>
+            <li><a class="dropdown-item" href="#">LISAN</a></li>
+            <li><a class="dropdown-item" href="#">DSC</a></li>
+            <li><a class="dropdown-item" href="#">Himayathussuniya</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Facilities</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Donate</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Gallery</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
