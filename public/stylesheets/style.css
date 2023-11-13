@@ -56,8 +56,14 @@
 }
 
 /* carousel */
-.carousel-item {
+.carousel-item,
+.carousel {
     height: 650px;
+}
+
+.carousel-item img {
+    height: 650px;
+    object-fit: cover;
 }
 
 .carousel-caption .btn {
@@ -306,8 +312,8 @@
 /* donation */
 
 #donation {
-    background-color: #42929d;
-    color: white;
+    background-color: whitesmoke;
+    color: #42929d;
 }
 
 #donation h2 {
@@ -503,6 +509,27 @@
     object-fit: cover;
 }
 
+#gallery .modal-content {
+    background-color: #42929d00;
+    border: none;
+    border-radius: 0px;
+}
+
+#gallery .modal-header {
+    padding: 0px;
+}
+
+#gallery .modal-header button,
+#gallery .modal-header button:focus,
+#gallery .modal-header button:hover {
+    background-color: #42929d00;
+    border: none;
+    border-radius: 0px;
+    color: white;
+    font-size: 25px;
+    transition: 0.5s ease;
+}
+
 /* gallery end */
 
 /* footer */
@@ -515,11 +542,10 @@
 #footer .footer-footer {
     background-color: whitesmoke;
     color: #42929d;
-    text-align: center;
 }
 
 #footer .footer-title h3 {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 600;
 }
 
@@ -533,60 +559,8 @@
     margin-bottom: 10px;
 }
 
-#footer .footer-links ul li a {
-    font-size: 15px;
-    font-weight: 400;
-    color: #42929d;
-    text-decoration: none;
-}
-
-#footer .footer-links ul li a:hover {
-    color: #42929d;
-    text-decoration: none;
-}
-
-#footer .footer-links ul li a:focus {
-    color: #42929d;
-    text-decoration: none;
-}
-
-#footer .footer-links ul li a:active {
-    color: #42929d;
-    text-decoration: none;
-}
-
-#footer .footer-links ul li a i {
-    font-size: 15px;    
-    font-weight: 400;
-    color: #42929d;
-    text-decoration: none;
-}
-
-#footer .footer-links ul li a:hover i {
-    color: #42929d;
-    text-decoration: none;
-}
-
-#footer .footer-links ul li a:focus i {
-    color: #42929d;
-    text-decoration: none;
-}
-
-#footer .footer-links ul li a:active i {
-    color: #42929d;
-    text-decoration: none;
-}
-
-#footer .footer-links ul li a:hover,
-#footer .footer-links ul li a:focus,
-#footer .footer-links ul li a:active {
-    text-decoration: none;
-}
-
-#footer .footer-links ul li a:hover i,
-#footer .footer-links ul li a:focus i,
-#footer .footer-links ul li a:active i {
-    text-decoration: none;
+#footer .footer-social h3 {
+    font-size: 20px;
 }
 
 #footer .footer-social ul li a {
@@ -639,4 +613,5 @@
     font-size: 12px;
     text-decoration: none;
     color: #42929d;
+    text-align: end;
 }

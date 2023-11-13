@@ -87,7 +87,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-md-3 ms-auto d-sm-none d-md-block">
+                <div class="col-md-3 ms-auto d-none d-md-block">
 
                     <div class="about-vid">
 
@@ -331,7 +331,8 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn ms-auto" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-close"></i></button>
                     </div>
                     <div class="modal-body p-0">
                         <img id="modal-image">
@@ -411,72 +412,36 @@
                         <p><i class="fa-solid fa-envelope"></i> diiapandikkad@gmail.com</p>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="footer-title">
-                        <h3>Quick Links</h3>
-                    </div>
-                    <div class="footer-links">
-                        <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About Us</a></li>
-
-                            <li><a href="#">Gallery</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Sponser a Student</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="footer-title">
+                <div class="col-md-4 ms-auto">
+                    <div class="footer-title footer-social">
                         <h3>Follow Us</h3>
                     </div>
                     <div class="footer-social">
                         <ul>
-                            <li><a href="https://www.facebook.com/profile.php?id=61552263635010"><i class="fa-brands fa-facebook"></i> Darul Irfan Islamic Academy</a></li>
-                            <li><a href="https://www.youtube.com/@darulirfan8161"><i class="fa-brands fa-youtube"></i> DARUL IRFAN</a></li>
-                            <li><a href="https://www.instagram.com/lisanmedia_/"><i class="fa-brands fa-instagram"></i> LISAN MEDIA</a></li>
-                            <li><a href="https://www.facebook.com/lisan.pandikkad"><i class="fa-brands fa-facebook"></i> Lisan Darul Irfan Pandikkad</a></li>
-                            <li><a href="https://www.youtube.com/@lisanmedia_"><i class="fa-brands fa-youtube"></i> LISAN MEDIA</a></li>
-                        </ul>
+                            <li><a href="https://www.facebook.com/profile.php?id=61552263635010"><i
+                                        class="fa-brands fa-facebook"></i> Darul Irfan Islamic Academy</a></li>
+                            <li><a href="https://www.youtube.com/@darulirfan8161"><i class="fa-brands fa-youtube"></i>
+                                    DARUL IRFAN</a></li>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="footer-footer pt-3 pb-1">
-        <p>© 2023 DIIA Pandikkad. All Rights Reserved.</p>
-        <p class="design">Designed by <a href="https://www.instagram.com/tropu.thoufeeq/">TROPICKS</a></p>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>© 2023 DIIA Pandikkad. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6">
+                    <p class="design ">Designed by <a
+                            href="https://www.instagram.com/tropu.thoufeeq/">TROPICKS</a></p>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 
 </footer>
-<script>
-    // Remove the transition class
-    const square = document.querySelector('.about-div');
-    square.classList.remove('about-div-transition');
-
-    // Create the observer, same as before:
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                square.classList.add('about-div-transition');
-                return;
-            }
-
-            square.classList.remove('about-div-transition');
-        });
-    });
-
-    observer.observe(document.querySelector('.ad-ad'));
-
-    document.querySelectorAll('.grid-image').forEach(item => {
-        item.addEventListener('click', event => {
-            let imgSrc = event.target.getAttribute('src');
-            console.log('imgSrc:', imgSrc); // Debugging line
-            let modalImg = document.querySelector('#exampleModal img');
-            console.log('modalImg:', modalImg); // Debugging line
-            modalImg.setAttribute('src', imgSrc);
-            imgSrc.toggleclass('grid-image-hover');
-
-        });
-    });
-</script>
