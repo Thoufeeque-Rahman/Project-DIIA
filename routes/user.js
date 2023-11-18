@@ -26,4 +26,8 @@ router.get('/unions/dsc', function(req, res, next) {
   res.render('pages/user/unions', { admin:false, lisan:false, dsc:true });
 });
 
+router.get('/academics/programs', function(req, res, next) {
+  res.render('pages/user/academics', { admin:false, programs:true, co:false, extra:false });
+});
+
 module.exports = router;
