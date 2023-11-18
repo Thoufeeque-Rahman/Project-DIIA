@@ -1,28 +1,7 @@
 <style>
   
-  .navbar {
-    background-color: rgba(255, 255, 255, 0.322);
-    transition: 0.4s; /* Adds a transition effect when the padding is decreased */
-    width: 100%;
-    top: 0; /* At the top */
-    z-index: 99;
-  }
-
-  .navbar .nav-link{
-    font-weight: 600;
-    color: #495e5f;
-    transition: .3s;
-  }
-
-  .navbar .nav-link.active{
-    color: #42929d;
-  }
-
-  .navbar .nav-link:hover{
-    color: #42929d;
-  }
 </style>
-<nav class="navbar sticky-top navbar-expand-lg ps-5 pe-5" style="background-color: rgba(255, 255, 255, 0.938);"> 
+<nav class="navbar sticky-top navbar-expand-lg ps-5 pe-5 shadow-sm" style="background-color: rgba(255, 255, 255, 0.938);">
   <div class="container-fluid container ms-5 me-5">
     <a class="navbar-brand" href="/"><img src="/images/DIIA Logo Round.png" alt="" width="70"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -30,47 +9,75 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav gap-4 ms-auto">
+      <ul class="navbar-nav gap-2 ms-auto">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             About
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">About Us</a></li>
-            <li><a class="dropdown-item" href="#">Mission and Vision</a></li>
-            <li><a class="dropdown-item" href="#">Founders</a></li>
-            <li><a class="dropdown-item" href="#">Committe</a></li>
+            <li><a class="dropdown-item" href="/#about">About Us</a></li>
+            <li><a class="dropdown-item" href="/#mvv">Mission and Vision</a></li>
+            <li><a class="dropdown-item" href="/about/visionaries">Visionaries</a></li>
+            <li><a class="dropdown-item" href="/about/committee">Committee</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Offices
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Office of Administation</a></li>
-            <li><a class="dropdown-item" href="#">Office of Welfare</a></li>
-            <li><a class="dropdown-item" href="#">OGEA</a></li>
-            <li><a class="dropdown-item" href="#">Staff Council</a></li>
-            <li><a class="dropdown-item" href="#">LISAN</a></li>
-            <li><a class="dropdown-item" href="#">DSC</a></li>
-            <li><a class="dropdown-item" href="#">Himayathussuniya</a></li>
+            <li><a class="dropdown-item" href="/offices/#academic-admin">Office of Academics</a></li>
+            <li><a class="dropdown-item" href="/offices/#academic-admin">Office of Administration</a></li>
+            <li><a class="dropdown-item" href="/offices/#out-reach">Office of Out Reach</a></li>
+            <li><a class="dropdown-item" href="/offices/#welfare">Office of Welfare</a></li>
+            <li><a class="dropdown-item" href="/offices/#himayathussuniya">Himayathussuniya</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Students Unions
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/unions/lisan">LISAN</a></li>
+            <li><a class="dropdown-item" href="/unions/dsc">DSC</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Academics
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/academics/programs">Programs</a></li>
+            <li><a class="dropdown-item" href="/academics/co-curricular">Co-curricular</a></li>
+            <li><a class="dropdown-item" href="/academics/extra-curricular">Extra-curricular</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Admissions
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/admission/secondary">Secondary</a></li>
+            <li><a class="dropdown-item" href="/admission/sen-secondary">Co-curricular</a></li>
+            <li><a class="dropdown-item" href="/admission/degree">Extra-curricular</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Facilities</a>
+          <a class="nav-link" href="/#facilities">Facilities</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Donate</a>
+          <a class="nav-link" href="/#donation">Donate</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Gallery</a>
+          <a class="nav-link" href="/#gallery">Gallery</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
+          <a class="nav-link" href="/contact">Contact</a>
         </li>
+        
       </ul>
     </div>
   </div>
