@@ -30,4 +30,11 @@ router.get('/academics/programs', function(req, res, next) {
   res.render('pages/user/academics', { admin:false, programs:true, co:false, extra:false });
 });
 
+router.get('/academics/co-curricular', function(req, res, next) {
+  res.render('pages/user/academics', { admin:false, programs:false, co:true, extra:false });
+});
+
+router.get('/academics/extra-curricular', function(req, res, next) {
+  res.render('pages/user/academics', { admin:false, programs:false, co:false, extra:true });
+});
 module.exports = router;
