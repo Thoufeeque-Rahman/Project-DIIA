@@ -37,4 +37,6 @@ router.get('/academics/co-curricular', function(req, res, next) {
 router.get('/academics/extra-curricular', function(req, res, next) {
   res.render('pages/user/academics', { admin:false, programs:false, co:false, extra:true });
 });
+
+
 module.exports = router;
