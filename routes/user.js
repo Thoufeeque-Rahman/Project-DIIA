@@ -38,5 +38,9 @@ router.get('/academics/extra-curricular', function(req, res, next) {
   res.render('pages/user/academics', { admin:false, programs:false, co:false, extra:true });
 });
 
+router.get('/admission', function(req, res, next) {
+  res.render('pages/user/admission', { admin:false, secondary:true, senior:false, degree:false });
+});
+
 
 module.exports = router;
