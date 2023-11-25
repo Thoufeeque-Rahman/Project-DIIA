@@ -1,1 +1,69 @@
-<h1>You are admin now!</h1>
+<style>
+    #admin-dash .admin-dash {
+        height: 100%;
+        background-color: #42929d;
+    }
+
+    #admin-dash span {
+        display: block;
+        width: 300px;
+        height: 2px;
+        background-color: #ffffff;
+        margin: 5px auto;
+
+    }
+
+    #admin-dash .tool-box {
+        background-color: white;
+        color: #42929d;
+        font-size: x-large;
+        transition: 0.5s ease;
+    }
+
+
+    #admin-dash a {
+        text-decoration: none;
+
+    }
+</style>
+
+<section id="admin-dash">
+    <div class="container m-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="admin-dash p-5">
+                    <h1 class="text-center text-white">Welcome to Admin Panel</h1>
+                    <span></span>
+
+                    <h3 class="text-start text-white mt-5">Tools</h3>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="/admin/add-photo">
+                                <div
+                                    class="tool-box p-3 shadow-sm d-flex justify-content-around align-items-center rounded">
+                                    <div>
+                                        <h2 class="fs-5">Add Photo Gallery
+                                        </h2>
+                                    </div>
+                                    <i class="fa-solid fa-image fs-1 primary-text rounded-full secondary-bg p-3"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/admin/add-feed">
+                                <div
+                                    class="tool-box p-3 shadow-sm d-flex justify-content-around align-items-center rounded">
+                                    <div>
+                                        <h2 class="fs-5">Add Feed
+                                        </h2>
+                                    </div>
+                                    <i class="fa-solid fa-newspaper fs-1 primary-text rounded-full secondary-bg p-3"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
