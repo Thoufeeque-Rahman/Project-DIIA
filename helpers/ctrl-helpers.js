@@ -76,6 +76,7 @@ module.exports = {
     getFeed: (feedId) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.FEED_COLLECTION).findOne({ _id: feedId }).then((feed) => {
+                console.log(feed);
                 resolve(feed)
             })
         })

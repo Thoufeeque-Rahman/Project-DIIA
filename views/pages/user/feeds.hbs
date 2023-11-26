@@ -54,21 +54,27 @@
     }
 
     .blog-related .blog-box .blog-img img {
-        height: 300px;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
     }
 
     .blog-related .blog-box .blog-txt h2 {
         font-size: 25px;
         margin-bottom: 10px;
+        color: white;
+
     }
 
     .blog-related .blog-box .blog-txt p {
         font-size: 15px;
         line-height: 25px;
+        color: white;
     }
 
     .blog-related .blog-box .blog-txt .date {
         font-size: 12px;
+        color: white;
     }
 
     .blog-related .blog-box .blog-txt .date hr {
@@ -77,134 +83,122 @@
 
     .blog-related .blog-box .blog-txt .social a {
         font-size: 15px;
+        color: white;
+        margin-right: 10px;
+
     }
 
-    @media (max-width: 991px) {
-        .blog-page {
-            width: 90%;
-        }
+    .blog-related .blog-box {
+        border: 1px solid #42929d;
+        background-color: #42929d;
+        transition: all 0.3s ease-in-out;
 
-        .blog-page .blog-box .blog-img img {
-            height: 300px;
-        }
-
-        .blog-page .blog-box .blog-txt h2 {
-            font-size: 25px;
-        }
-
-        .blog-page .blog-box .blog-txt p {
-            font-size: 15px;
-        }
-
-        .blog-page .blog-box .blog-txt .date {
-            font-size: 12px;
-        }
-
-        .blog-page .blog-box .blog-txt .social a {
-            font-size: 15px;
-        }
-
-        .blog-related .blog-box .blog-img img {
-            height: 300px;
-        }
-
-        .blog-related .blog-box .blog-txt h2 {
-            font-size: 25px;
-        }
-
-        .blog-related .blog-box .blog-txt p {
-            font-size: 15px;
-        }
-
-        .blog-related .blog-box .blog-txt .date {
-            font-size: 12px;
-        }
-
-        .blog-related .blog-box .blog-txt .social a {
-            font-size: 15px;
-        }
     }
 
-    
+    .blog-related .blog-box:hover {
+        border: 1px solid white;
+    }
+
+    .blog-related a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .feed-container {
+        border: 1px solid #42929d;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .feed-container:hover {
+        border: 1px solid white;
+    }
 </style>
 <section>
     <div class="container">
-        <div class="blog-page pt-5 pb-5">
-            
+        <div class="blog-page pt-4 pb-5">
+
             <div class="row">
                 <div class="">
                     <div class="blog-box">
                         {{#each feeds}}
-                        <div class="blog-img">
-                            <img src="/images/uploads/{{this.photo}}" alt="#" />
-                        </div>
-                        <div class="blog-txt">
-                            <h2>{{this.title}}</h2>
-                            <p>{{this.content}}</p>
-                            <div class="date">
-                                <hr>
-                                <div class="d-flex">
-                                    <div class="flex-grow-1">
-                                        <span>{{this.date}}</span>
-                                    </div>
-                                    <div class="social">
-                                        <a href="https://www.facebook.com/profile.php?id=61552263635010"><i
-                                                class="fa fa-facebook" aria-hidden="true"></i></a>
-                                        <a href="https://www.youtube.com/@darulirfan8161"><i class="fa fa-youtube"
-                                                aria-hidden="true"></i></a>
-                                        <a href="https://whatsapp.com/channel/0029Va8uXSD9RZAXMrkoD43l"><i
-                                                class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-
-                                <hr>
+                        <a href="/feeds/{{this._id}}"></a>
+                        <div class="shadow-sm p-2 feed-container">
+                            <div class="blog-img">
+                                <img src="/images/uploads/{{this.photo}}" alt="#" />
                             </div>
-
+                            <div class="blog-txt p-3">
+                                <h2>{{this.title}}</h2>
+                                <p>{{this.content}}</p>
+                                <div class="date">
+                                    <hr>
+                                    <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                            <span>{{this.date}}</span>
+                                        </div>
+                                        <div class="social">
+                                            <a href="https://www.facebook.com/profile.php?id=61552263635010"><i
+                                                    class="fa fa-facebook" aria-hidden="true"></i></a>
+                                            <a href="https://www.youtube.com/@darulirfan8161"><i class="fa fa-youtube"
+                                                    aria-hidden="true"></i></a>
+                                            <a href="https://whatsapp.com/channel/0029Va8uXSD9RZAXMrkoD43l"><i
+                                                    class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
                         </div>
                         {{/each}}
-                        <div class="blog-related">
-                            <h2>Related Post</h2>
+                        <div class="blog-related pb-5">
+                            <h2>Related Posts</h2>
                             <div class="row">
                                 {{#each relatedFeeds}}
                                 <div class="col-md-4">
-                                    <div class="blog-box">
-                                        <div class="blog-img">
-                                            <img src="/images/uploads/{{this.photo}}" alt="#" />
-                                        </div>
-                                        <div class="blog-txt">
-                                            <h2>{{this.title}}</h2>
-                                            <p>{{this.content}}</p>
-                                            <div class="date">
-                                                <hr>
-                                                <div class="d-flex">
-                                                    <div class="flex-grow-1">
-                                                        <span>{{this.date}}</span>
-                                                    </div>
-                                                    <div class="social">
-                                                        <a
-                                                            href="https://www.facebook.com/profile.php?id=61552263635010"><i
-                                                                class="fa fa-facebook" aria-hidden="true"></i></a>
-                                                        <a href="https://www.youtube.com/@darulirfan8161"><i
-                                                                class="fa fa-youtube" aria-hidden="true"></i></a>
-                                                        <a href="https://whatsapp.com/channel/0029Va8uXSD9RZAXMrkoD43l"><i
-                                                                class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </div>
-
-                                                <hr>
+                                    <a href="/feeds/{{this._id}}">
+                                        <div class="blog-box">
+                                            <div class="blog-img">
+                                                <img src="/images/uploads/{{this.photo}}" alt="#" />
                                             </div>
-
+                                            <div class="blog-txt p-3">
+                                                <h2>{{this.title}}</h2>
+                                                <p>{{this.description}}</p>
+                                    </a>
+                                    <div class="date">
+                                        <hr>
+                                        <div class="d-flex">
+                                            <div class="flex-grow-1">
+                                                <span>{{this.date}}</span>
+                                            </div>
+                                            <div class="social">
+                                                <a href="https://www.facebook.com/profile.php?id=61552263635010"><i
+                                                        class="fa fa-facebook" aria-hidden="true"></i></a>
+                                                <a href="https://www.youtube.com/@darulirfan8161"><i
+                                                        class="fa fa-youtube" aria-hidden="true"></i></a>
+                                                <a href="https://whatsapp.com/channel/0029Va8uXSD9RZAXMrkoD43l"><i
+                                                        class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                            </div>
                                         </div>
+                                        <hr>
                                     </div>
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
+                        {{/each}}
                     </div>
                 </div>
-            </div>
 
-            
+
+            </div>
         </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+    </div>
     </div>
 </section>

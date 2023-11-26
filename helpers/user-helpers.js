@@ -12,5 +12,11 @@ module.exports = {
             console.log(relatedFeeds);
             resolve({ feed, relatedFeeds })
         })
-    }
+    },
+    getFeed: () => {
+        return new Promise(async (resolve, reject) => {
+            let feed = await db.get().collection(collection.FEED_COLLECTION).find().sort({ _id: -1 }).limit(15).toArray()
+            resolve(feed)
+        })
+    },
 }

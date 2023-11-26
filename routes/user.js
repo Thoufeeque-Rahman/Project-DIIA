@@ -5,7 +5,10 @@ const { ObjectId } = require('mongodb');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('pages/user/user-homePage', { admin: false, title: 'Darul Irfan Pandikkad - DIIA' });
+  userHelpers.getFeed().then((feeds) => {
+    res.render('pages/user/user-homePage', { admin: false, title: 'Darul Irfan Pandikkad - DIIA', feeds });
+  })
+  
 });
 
 router.get('/about/visionaries', function (req, res, next) {
@@ -51,6 +54,12 @@ router.get('/feeds/:id', function (req, res, next) {
     console.log(feeds);
     console.log(relatedFeeds);
     res.render('pages/user/feeds', { admin: false, title: 'Feeds - DIIA', feeds, relatedFeeds });
+  })
+});
+
+router.get('/feeds-page', function (req, res, next) {
+  userHelpers.getFeed().then((feeds) => {
+    res.render('pages/user/feeds-page', { admin: false, title: 'Feeds - DIIA', feeds });
   })
 });
 

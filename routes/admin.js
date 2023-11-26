@@ -186,10 +186,12 @@ router.get('/edit-feeds/:id', function (req, res, next) {
 
 router.get('/delete-feed/:id', function (req, res, next) {
   if (req.session.loggedIn) {
-    ctrlHelpers.getFeed(req.body.id).then((existingFeed) => {
+    ctrlHelpers.getFeed(new ObjectId(req.params.id)).then((existingFeed) => {
+      console.log(existingFeed);
       if (existingFeed && existingFeed.photo) {
         // Delete the existing image file
-        fs.unlinkSync(path.join(__dirname, '../uploads/', existingFeed.photo));
+        console.log(existingFeed.photo);
+        fs.unlinkSync(path.join(__dirname, '../public/images/uploads/', existingFeed.photo));
       }
     });
     db.get().collection(collection.FEED_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
