@@ -46,4 +46,54 @@ module.exports = {
             }
         })
     },
+    editFeedgetFeed: (feedId) => {
+        return new Promise(async (resolve, reject) => {
+            let feed = await db.get().collection(collection.FEED_COLLECTION).findOne({ _id: feedId })
+            resolve(feed)
+        })
+    },
+    editFeed: (feed, callback) => {
+        console.log(feed);
+        db.get().collection(collection.FEED_COLLECTION).updateOne({ _id: feed.feedId },
+            {
+                $set: {
+                    title: feed.title,
+                    description: feed.description,
+                    date: feed.date,
+                    image: feed.image
+                }
+            }).then((response) => {
+                callback(response)
+            })
+    },
+    addFeed: (feed) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.FEED_COLLECTION).insertOne(feed).then((data) => {
+                resolve(data)
+            })
+        })
+    },
+    getFeed: (feedId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.FEED_COLLECTION).findOne({ _id: feedId }).then((feed) => {
+                resolve(feed)
+            })
+        })
+    },
+    updateFeed: (feed) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.FEED_COLLECTION).updateOne({ _id: feed._id },
+                {
+                    $set: {
+                        title: feed.title,
+                        description: feed.description,
+                        content: feed.content,
+                        date: feed.date,
+                        photo: feed.photo
+                    }
+                }).then((response) => {
+                    resolve(response)
+                })
+        })
+    },
 }
