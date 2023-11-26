@@ -1,8 +1,4 @@
 <style>
-    .blog-related {
-        margin-top: 50px;
-    }
-
     .blog-related h2 {
         font-size: 30px;
         font-weight: 600;
@@ -59,12 +55,19 @@
         text-decoration: none;
         color: white;
     }
+
+    .blog-related h2 {
+        font-size: 50px;
+        font-weight: 600;
+        color: #42929d;
+    }
 </style>
 <section id="feed-page">
     <div class="container">
-        <div class="blog-related pb-5">
-            <h2>Related Posts</h2>
-            <div class="row">
+        <div class="blog-related pt-3 pb-5 text-center">
+            <h2>Latest updates</h2>
+            <span class="title-span"></span>
+            <div class="row pt-5">
                 {{#each feeds}}
                 <div class="col-md-3">
                     <a href="/feeds/{{this._id}}">
@@ -75,30 +78,30 @@
                             <div class="blog-txt p-3">
                                 <h2>{{this.title}}</h2>
                                 <p>{{this.description}}</p>
-                                </a>
-                                <div class="date">
-                                    <hr>
-                                    <div class="d-flex">
-                                        <div class="flex-grow-1">
-                                            <span>{{this.date}}</span>
-                                        </div>
-                                        <div class="social">
-                                            <a href="https://www.facebook.com/profile.php?id=61552263635010"><i
-                                                    class="fa fa-facebook" aria-hidden="true"></i></a>
-                                            <a href="https://www.youtube.com/@darulirfan8161"><i class="fa fa-youtube"
-                                                    aria-hidden="true"></i></a>
-                                            <a href="https://whatsapp.com/channel/0029Va8uXSD9RZAXMrkoD43l"><i
-                                                    class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                </div>
+                    </a>
+                    <div class="date">
+                        <hr>
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <span>{{this.date}}</span>
+                            </div>
+                            <div class="social">
+                                <a href="https://www.facebook.com/profile.php?id=61552263635010"><i
+                                        class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="https://www.youtube.com/@darulirfan8161"><i class="fa fa-youtube"
+                                        aria-hidden="true"></i></a>
+                                <a href="https://whatsapp.com/channel/0029Va8uXSD9RZAXMrkoD43l"><i
+                                        class="fa fa-whatsapp" aria-hidden="true"></i></a>
                             </div>
                         </div>
+                        <hr>
+                    </div>
                 </div>
-                {{/each}}
             </div>
         </div>
+        {{/each}}
+    </div>
+    </div>
     </div>
 
 </section>

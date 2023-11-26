@@ -109,7 +109,7 @@ router.post('/add-feed', upload.single('photo'), (req, res) => {
       if (response.status) {
         res.redirect('/admin')
       } else {
-        res.redirect('/admin/add-feed')
+        res.redirect('/admin/view-feeds')
       }
     })
   } else {
@@ -140,7 +140,7 @@ router.post('/edit-feed', upload.single('photo'), (req, res) => {
         if (response.status) {
           res.redirect('/admin')
         } else {
-          res.redirect('/admin/add-feed')
+          res.redirect('/admin/view-feeds')
         }
       });
     });
