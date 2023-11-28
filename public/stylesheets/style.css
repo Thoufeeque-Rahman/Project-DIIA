@@ -2,7 +2,8 @@
     font-family: 'Poppins', sans-serif;
 }
 
-#495e5f #42929d .h111 {
+#495e5f #42929d 
+.h111 {
     font-size: 50px;
     font-weight: bold;
     color: #000;
@@ -364,14 +365,14 @@
 #donation .price-card h3 {
     font-size: 30px;
     font-weight: 800;
-    background: -webkit-linear-gradient(95deg, #456990 0.84%, #EF767A 96.72%);
+    background: -webkit-linear-gradient(95deg, #495e5f 0.84%, #42929d 96.72%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 #donation .price-card .price-round {
-    background: linear-gradient(95deg, #456990 0.84%, #EF767A 96.72%);
+    background: linear-gradient(95deg, #495e5f 0.84%, #42929d 96.72%);
     border-radius: 50%;
     width: 200px;
     height: 200px;
@@ -401,7 +402,7 @@
     border-radius: 10px;
     font-size: 20px;
     font-weight: 700;
-    background: -webkit-linear-gradient(95deg, #456990 0.84%, #EF767A 96.72%);
+    background: -webkit-linear-gradient(95deg, #495e5f 0.84%, #42929d 96.72%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -416,7 +417,7 @@
 }
 
 #donation .s-price {
-    background: linear-gradient(95deg, #EF767A 0.84%, #456990 96.72%);
+    background: linear-gradient(95deg, #495e5f 0.84%, #42929d 96.72%);
 }
 
 #donation .s-price h3 {
@@ -432,7 +433,7 @@
 
 #donation .s-price .price-round h4,
 #donation .s-price .price-round h4 sup {
-    background: -webkit-linear-gradient(95deg, #456990 0.84%, #EF767A 96.72%);
+    background: -webkit-linear-gradient(95deg, #42929d 0.84%, #495e5f 96.72%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
