@@ -21,5 +21,17 @@
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1"
-  }
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DIIA-Pandikkad/Project-DIIA.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DIIA-Pandikkad/Project-DIIA/issues"
+  },
+  "homepage": "https://github.com/DIIA-Pandikkad/Project-DIIA#readme",
+  "description": ""
 }
