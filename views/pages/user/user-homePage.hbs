@@ -1,5 +1,5 @@
 <style>
-    
+
 </style>
 <section class="" id="home">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -337,7 +337,7 @@
         </div>
     </div>
 </section>
-<section id="feeds" class="pt-5 pb-5">
+{{!-- <section id="feeds" class="pt-5 pb-5">
     <div class="container ">
         <div class="row">
             <div class="col-md-6">
@@ -357,59 +357,84 @@
                 <div class="col-md-3">
                     <div class="blog-box">
                         <a href="/feeds/{{this._id}}">
-                        <div class="blog-img">
-                            <img src="/images/uploads/{{this.photo}}" class="mb-2" alt="#" />
-                        </div>
-                        <div class="blog-txt p-3">
-                            <h2>{{this.title}}</h2>
-                            <p>{{this.description}}</p>
-                            </a>
-                            <div class="date">
-                                <hr>
-                                <div class="d-flex">
-                                    <div class="flex-grow-1">
-                                        <span>{{this.date}}</span>
-                                    </div>
-                                    <div class="social">
-                                        <a href="https://www.facebook.com/profile.php?id=61552263635010"><i
-                                                class="fa fa-facebook" aria-hidden="true"></i></a>
-                                        <a href="https://www.youtube.com/@darulirfan8161"><i class="fa fa-youtube"
-                                                aria-hidden="true"></i></a>
-                                        <a href="https://whatsapp.com/channel/0029Va8uXSD9RZAXMrkoD43l"><i
-                                                class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                                    </div>
-                                </div>
-                                <hr>
+                            <div class="blog-img">
+                                <img src="/images/uploads/{{this.photo}}" class="mb-2" alt="#" />
                             </div>
-
+                            <div class="blog-txt p-3">
+                                <h2>{{this.title}}</h2>
+                                <p>{{this.description}}</p>
+                        </a>
+                        <div class="date">
+                            <hr>
+                            <div class="d-flex">
+                                <div class="flex-grow-1">
+                                    <span>{{this.date}}</span>
+                                </div>
+                                <div class="social">
+                                    <a href="https://www.facebook.com/profile.php?id=61552263635010"><i
+                                            class="fa fa-facebook" aria-hidden="true"></i></a>
+                                    <a href="https://www.youtube.com/@darulirfan8161"><i class="fa fa-youtube"
+                                            aria-hidden="true"></i></a>
+                                    <a href="https://whatsapp.com/channel/0029Va8uXSD9RZAXMrkoD43l"><i
+                                            class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+                            <hr>
                         </div>
+
                     </div>
                 </div>
-                {{/each}}
             </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn ms-auto" data-bs-dismiss="modal" aria-label="Close"><i
-                                class="fa-solid fa-close"></i></button>
-                    </div>
-                    <div class="modal-body p-0">
-                        <img id="modal-image">
-                    </div>
-
-                </div>
-            </div>
+            {{/each}}
         </div>
     </div>
-</section>
+</section> --}}
 <section id="gallery" class="pt-5 pb-5">
     <div class="container text-center">
         <h2>Gallery</h2>
         <div class="row mt-5 g-3">
+            {{#each photo}}
+            <div class="col-md-3 position-relative">
+                <div>
+                    <img class="grid-image grid-image-hover" src="/images/uploads/gallery/{{this.photo}}" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" alt="">
+                    <div class="image-description pt-3 position-absolute bottom-0 start-50 translate-middle-x">
+                        <h5>{{this.title}}</h5>
+                        <p>{{this.description}}</p>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{!-- <div class="col-md-3 position-relative">
+                <div>
+                    <img class="grid-image grid-image-hover" src="/images/M.jpg" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" alt="">
+                    <div class="image-description pt-3 position-absolute bottom-0 start-50 translate-middle-x">
+                        <h5>Image Title</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 position-relative">
+                <div>
+                    <img class="grid-image grid-image-hover" src="/images/VI.jpg" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" alt="">
+                    <div class="image-description pt-3 position-absolute bottom-0 start-50 translate-middle-x">
+                        <h5>Image Title</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 position-relative">
+                <div>
+                    <img class="grid-image grid-image-hover" src="/images/M.jpg" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" alt="">
+                    <div class="image-description pt-3 position-absolute bottom-0 start-50 translate-middle-x">
+                        <h5>Image Title</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-3 position-relative">
                 <div>
                     <img class="grid-image grid-image-hover" src="/images/M.jpg" data-bs-toggle="modal"
@@ -449,47 +474,7 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 position-relative">
-                <div>
-                    <img class="grid-image grid-image-hover" src="/images/M.jpg" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" alt="">
-                    <div class="image-description pt-3 position-absolute bottom-0 start-50 translate-middle-x">
-                        <h5>Image Title</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 position-relative">
-                <div>
-                    <img class="grid-image grid-image-hover" src="/images/M.jpg" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" alt="">
-                    <div class="image-description pt-3 position-absolute bottom-0 start-50 translate-middle-x">
-                        <h5>Image Title</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 position-relative">
-                <div>
-                    <img class="grid-image grid-image-hover" src="/images/VI.jpg" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" alt="">
-                    <div class="image-description pt-3 position-absolute bottom-0 start-50 translate-middle-x">
-                        <h5>Image Title</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 position-relative">
-                <div>
-                    <img class="grid-image grid-image-hover" src="/images/M.jpg" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal" alt="">
-                    <div class="image-description pt-3 position-absolute bottom-0 start-50 translate-middle-x">
-                        <h5>Image Title</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing.</p>
-                    </div>
-                </div>
-            </div>
+            </div> --}}
             <div>
                 <a href="">
                     <button class="btn">View More</button>

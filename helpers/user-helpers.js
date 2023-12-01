@@ -15,8 +15,14 @@ module.exports = {
     },
     getFeed: () => {
         return new Promise(async (resolve, reject) => {
-            let feed = await db.get().collection(collection.FEED_COLLECTION).find().sort({ _id: -1 }).limit(15).toArray()
+            let feed = await db.get().collection(collection.FEED_COLLECTION).find().sort({ _id: -1 }).limit(4).toArray()
             resolve(feed)
+        })
+    },
+    getPhoto: () => {
+        return new Promise(async (resolve, reject) => {
+            let photo = await db.get().collection(collection.PHOTO_COLLECTION).find().sort({ _id: -1 }).limit(8).toArray()
+            resolve(photo)
         })
     },
 }

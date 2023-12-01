@@ -509,7 +509,8 @@
     transition: 0.5s ease;
 }
 
-#gallery img:hover~.image-description {
+#gallery img:hover~.image-description,
+#gallery .image-description:hover {
     opacity: 1;
 }
 

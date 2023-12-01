@@ -6,7 +6,9 @@ const { ObjectId } = require('mongodb');
 /* GET home page. */
 router.get('/', function (req, res, next) {
   userHelpers.getFeed().then((feeds) => {
-    res.render('pages/user/user-homePage', { admin: false, title: 'Darul Irfan Pandikkad - DIIA', feeds });
+    userHelpers.getPhoto().then((photo) => {
+    res.render('pages/user/user-homePage', { admin: false, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo });
+    })
   })
   
 });

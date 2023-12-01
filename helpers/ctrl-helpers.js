@@ -97,4 +97,19 @@ module.exports = {
                 })
         })
     },
+    addPhoto: (photo) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.PHOTO_COLLECTION).insertOne(photo).then((data) => {
+                resolve(data)
+            })
+        })
+    },
+    getPhoto: () => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.PHOTO_COLLECTION).find().sort({ _id: -1 }).toArray().then((photos) => {
+                console.log(photos);
+                resolve(photos)
+            })
+        })
+    },
 }

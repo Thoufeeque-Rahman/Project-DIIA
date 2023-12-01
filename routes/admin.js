@@ -73,7 +73,7 @@ router.get('/add-feed', function (req, res, next) {
     const pattern = date.compile('ddd, MMM DD YYYY');
     const dateNow = date.format(now, pattern);
 
-    res.render('pages/admin/add-feed', { admin: true, user: req.session.user, dateNow, title: 'Admin Add Feeds - DIIA' });
+    res.render('pages/admin/add-feed', { admin: true, addFeed: true, user: req.session.user, dateNow, title: 'Admin Add Feeds - DIIA' });
   } else {
     res.redirect('/admin/auth/login')
   }
@@ -152,23 +152,24 @@ router.post('/edit-feed', upload.single('photo'), (req, res) => {
 router.get('/view-feeds', function (req, res, next) {
   if (req.session.loggedIn) {
     db.get().collection(collection.FEED_COLLECTION).find().toArray().then((feeds) => {
-      res.render('pages/admin/view-feeds', { admin: true, user: req.session.user, feeds, title: 'Admin View Feeds - DIIA' });
+
+      res.render('pages/admin/view-feeds', { admin: true, user: req.session.user, feedPage: true, feeds, title: 'Admin View Feeds - DIIA' });
     })
   } else {
     res.redirect('/admin/auth/login')
   }
 });
 
-router.get('/feeds/:id', function(req, res, next) {
-  if(req.session.user){
-    userHelpers.readFeed(new ObjectId(req.params.id)).then((feed)=>{
+router.get('/feeds/:id', function (req, res, next) {
+  if (req.session.user) {
+    userHelpers.readFeed(new ObjectId(req.params.id)).then((feed) => {
       let feeds = feed.feed;
       let relatedFeeds = feed.relatedFeeds;
-      console.log(feeds); 
+      console.log(feeds);
       console.log(relatedFeeds);
-      res.render('pages/user/feeds', { admin:true, title: 'Feeds - DIIA', feeds, relatedFeeds });
+      res.render('pages/user/feeds', { admin: true, title: 'Feeds - DIIA', feeds, relatedFeeds });
     })
-  }else{
+  } else {
     res.redirect('/admin/auth/login')
   }
 });
@@ -196,6 +197,90 @@ router.get('/delete-feed/:id', function (req, res, next) {
     });
     db.get().collection(collection.FEED_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
       res.redirect('/admin/view-feeds')
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+router.get('/add-photo', function (req, res, next) {
+  if (req.session.loggedIn) {
+    const now = new Date();
+    const pattern = date.compile('ddd, MMM DD YYYY , HH:mm:ss');
+    const dateNow = date.format(now, pattern);
+
+
+    res.render('pages/admin/add-feed', { admin: true, photoGallery: true, dateNow, user: req.session.user, title: 'Admin Add Photo - DIIA' });
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+function dateCreate() {
+  const now = new Date();
+  const pattern = date.compile('ddd, MMM DD YYYY , HH;mm;ss');
+  const dateNow = date.format(now, pattern);
+
+  return dateNow;
+}
+
+const imageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../public/images/uploads/gallery'))
+  },
+  filename: function (req, file, cb) {
+    cb(null, dateCreate() + path.extname(file.originalname))
+  }
+})
+
+const imageUpload = multer({ storage: imageStorage });
+
+router.post('/add-photo', imageUpload.single('photo'), (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+  if (req.file) {
+    console.log(req.file);
+    console.log(req.body);
+
+    const newPhoto = {
+      ...req.body,
+      photo: req.file.filename // or another property from req.file
+    };
+
+    ctrlHelpers.addPhoto(newPhoto).then((response) => {
+      if (response.status) {
+        res.redirect('/admin')
+      } else {
+        res.redirect('/admin/view-photo-gallery')
+      }
+    })
+  } else {
+    res.status(400).send({ error: 'No file uploaded' });
+  }
+});
+
+router.get('/view-photo-gallery', function (req, res, next) {
+  if (req.session.loggedIn) {
+    db.get().collection(collection.PHOTO_COLLECTION).find().sort({ _id: -1 }).toArray().then((photos) => {
+      res.render('pages/admin/view-feeds', { admin: true, photoPage: true, user: req.session.user, photos, title: 'Admin View Photo Gallery - DIIA' });
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+router.get('/delete-photo/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    ctrlHelpers.getPhoto(new ObjectId(req.params.id)).then((existingFeed) => {
+      console.log(existingFeed);
+      if (existingFeed && existingFeed.photo) {
+        // Delete the existing image file
+        console.log(existingFeed.photo);
+        fs.unlinkSync(path.join(__dirname, '../public/images/uploads/gallery/', existingFeed.photo));
+      }
+    });
+    db.get().collection(collection.PHOTO_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+      res.redirect('/admin/view-photo-gallery')
     })
   } else {
     res.redirect('/admin/auth/login')

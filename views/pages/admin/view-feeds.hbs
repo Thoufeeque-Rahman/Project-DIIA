@@ -80,6 +80,8 @@
 
 <section class="pt-5 pb-5">
   <div class="content">
+    <a href="/admin"><button><i class="fa-solid fa-arrow-left"></i> Back</button></a>
+    {{#if feedPage}}
     <h1>View Feeds</h1>
     <table>
       <thead>
@@ -109,6 +111,33 @@
 
     <a href="/admin/add-feed"><button>Add New Feed</button></a>
 
+    {{else if photoPage}}
+    <h1>View Photos</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Title</th>
+          <th>Delete Photo</th>
+          <th>Last Update Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each photos}}
+        <tr>
+          <td><img src="/images/uploads/gallery/{{this.photo}}" alt="Feed Image"></td>
+          <td>{{this.title}}</td>
+          <td><a href="/admin/delete-photo/{{this._id}}"><i class="fa-solid fa-trash"></i></a></td>
+          {{!-- <td><a href="/admin/edit-feeds/{{this._id}}"><i class="fa-solid fa-edit"></i></a></td> --}}
+          <td>{{this.date}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <a href="/admin/add-photo"><button>Add New Photo</button></a>
+
+    {{/if}}
   </div>
 
 </section>
