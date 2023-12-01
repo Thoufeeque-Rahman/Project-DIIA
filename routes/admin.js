@@ -287,4 +287,14 @@ router.get('/delete-photo/:id', function (req, res, next) {
   }
 });
 
+router.get('/view-forms', function (req, res, next) {
+  if (req.session.loggedIn) {
+    db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: -1 }).toArray().then((forms) => {
+      res.render('pages/admin/view-feeds', { admin: true, user: req.session.user, forms, title: 'Admin View Forms - DIIA' });
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
 module.exports = router;
