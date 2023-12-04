@@ -60,6 +60,21 @@
     color: #42929d;
 }
 
+.navbar .sp-btn{
+    background-color: #42929d;
+    color: white;
+    border-radius: 50px;
+    border: 2px solid #42929d;
+    transition: 0.5s ease;
+
+}
+
+.navbar .sp-btn:hover,
+.navbar .sp-btn:focus {
+    background-color: white;
+    color: #42929d;
+}
+
 
 /* Scroll Bar */
 

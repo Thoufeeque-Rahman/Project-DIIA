@@ -79,15 +79,20 @@ router.get('/add-feed', function (req, res, next) {
   }
 });
 
-const now = new Date();
-const pattern = date.compile('YYYY-MM-DD HH-mm-ss');
-const dateNow = date.format(now, pattern);
+function dateCreate() {
+  const now = new Date();
+  const pattern = date.compile('ddd, MMM DD YYYY , HH;mm;ss');
+  const dateNow = date.format(now, pattern);
+
+  return dateNow;
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(__dirname, '../public/images/uploads'))
   },
   filename: function (req, file, cb) {
-    cb(null, dateNow + path.extname(file.originalname))
+    cb(null, dateCreate() + path.extname(file.originalname))
   }
 })
 
@@ -215,14 +220,6 @@ router.get('/add-photo', function (req, res, next) {
     res.redirect('/admin/auth/login')
   }
 });
-
-function dateCreate() {
-  const now = new Date();
-  const pattern = date.compile('ddd, MMM DD YYYY , HH;mm;ss');
-  const dateNow = date.format(now, pattern);
-
-  return dateNow;
-}
 
 const imageStorage = multer.diskStorage({
   destination: function (req, file, cb) {

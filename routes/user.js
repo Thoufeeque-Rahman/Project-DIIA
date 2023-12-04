@@ -65,4 +65,8 @@ router.get('/feeds-page', function (req, res, next) {
   })
 });
 
+router.get('/forms', function (req, res, next) {
+  res.render('pages/user/forms', { admin: false, title: 'Forms - DIIA' });
+});
+
 module.exports = router;
