@@ -5,13 +5,17 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var hbs = require('express-handlebars');
 const multer = require('multer');
-
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 
 var app = express();
 var db = require('./config/connection')
 var session = require('express-session')
+var Handlebars = require('handlebars');
+
+Handlebars.registerHelper("inc", function (value, options) {
+  return parseInt(value) + 1;
+});
 
 // view engine setup
 app.use(express.static(__dirname + '/public'));
@@ -53,6 +57,8 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + '-' + Date.now())
   }
 })
+
+
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

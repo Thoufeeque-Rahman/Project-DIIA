@@ -286,8 +286,29 @@ router.get('/delete-photo/:id', function (req, res, next) {
 
 router.get('/view-forms', function (req, res, next) {
   if (req.session.loggedIn) {
-    db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: -1 }).toArray().then((forms) => {
-      res.render('pages/admin/view-feeds', { admin: true, user: req.session.user, forms, title: 'Admin View Forms - DIIA' });
+    db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: 1 }).toArray().then((forms) => {
+      res.render('pages/user/forms', { admin: true, user: req.session.user, forms, title: 'Admin View Forms - DIIA' });
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+router.post('/add-form', (req, res) => {
+  console.log(req.body);
+  ctrlHelpers.addForm(req.body).then((response) => {
+    if (response.status) {
+      res.redirect('/admin')
+    } else {
+      res.redirect('/admin/view-forms')
+    }
+  })
+});
+
+router.get('/delete-form/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    db.get().collection(collection.FORM_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+      res.redirect('/admin/view-forms')
     })
   } else {
     res.redirect('/admin/auth/login')

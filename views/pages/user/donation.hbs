@@ -1,0 +1,167 @@
+<style>
+    #donation-first {
+        color: white;
+    }
+
+    #donation-first .fa-brands {
+        font-size: 50px;
+        color: #42929d;
+    }
+
+    #donation-first p {
+        font-size: 25px;
+        text-align: center;
+        margin: 0px;
+    }
+
+    #donation-first img {
+        height: 400px;
+        object-fit: fill;
+        margin: 0 auto;
+        border-radius: 5px;
+        box-shadow: 0px 0px 3px 0px #42929d;
+        transition: all 0.3s ease-in-out;
+    }
+
+    #donation-first img:hover {
+        box-shadow: 0px 0px 1px 0px #42929d;
+        transition: all 0.3s ease-in-out;
+    }
+
+    #donation-first .phoneNumber {
+        border: 1px solid #42929d;
+        padding: 5px;
+        border-radius: 5px;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    #donation-first .phoneNumber img {
+        height: 18px;
+        border-radius: 0px;
+        box-shadow: 0px 0px 0px 0px #42929d;
+    }
+
+    #donation-first .phoneNumber p {
+        font-size: 20px;
+        margin: 0px;
+        color: #42929d;
+    }
+
+    .form-control {
+        border-radius: 0px;
+        border: 1px solid #42929d;
+    }
+
+    #second-content h2{
+        color: #42929d;
+    
+    }
+
+    #second-content form button{
+        background-color: #42929d;
+        border: 1px solid #42929d;
+        color: white;
+        border-radius: 0px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    #second-content form button:hover{
+        background-color: white;
+        border: 1px solid #42929d;
+        color: #42929d;
+        border-radius: 0px;
+        transition: all 0.3s ease-in-out;
+    }
+</style>
+<section id="donation-first" class="content">
+    <div class="container text-center pt-5 pb-5">
+        <h2>Donate Now</h2>
+        <span class="title-span"></span>
+
+        <div class="row text-center mt-5">
+            <div class="col-12 ">
+                <p>Scan <i class="fa-solid fa-qrcode"></i></p>
+                <img src="/images/gpay.jpg" alt="">
+                <p class="mt-3">or</p>
+                <p class="mt-3">Pay phone number <i class="fa-solid fa-mobile-screen"></i></p>
+                <div class="phoneNumber mt-2">
+                    <div class="row">
+                        <div class="col">
+                            <p class="ms-2 me-3"><img
+                                    src="https://uxwing.com/wp-content/themes/uxwing/download/flags-landmarks/india-flag-icon.png"
+                                    alt=""> +91 98473 71253</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="second-content">
+    <div class="container p-5">
+        <h2 class="text-center">Submit this after Payment</h2>
+        <div class="row pt-3">
+            <div class="col">
+                <div class="payForm">
+                    <form id="submit-form" action="">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row g-3">
+                                    <div class="col-md-6 col-12">
+                                        <input type="text" name="name" class="form-control" id="name"
+                                            placeholder="Enter your name" required>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <input type="email" name="email" class="form-control" id="email"
+                                            placeholder="Enter your email" required>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <input type="tel" name="phone" class="form-control" id="phone"
+                                            placeholder="Enter your phone number" required>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <input type="number" name="amount" class="form-control" id="amount"
+                                            placeholder="Enter amount in ₹" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="text" name="transactionID" class="form-control" id="transactionID"
+                                            placeholder="Enter your transaction ID" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="message" class="form-control" id="message"
+                                            placeholder="Enter your message" required></textarea>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <button type="submit" class="btn ps-5 pe-5">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<script>
+    $("#submit-form").submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: "https://script.google.com/macros/s/AKfycbzPVw9IWJVPZ0j_uSGxEzR4UNSZzXR9Yq2VTxZd6YRURbyPdGvdr8lGiFfFUs8IScp6Tw/exec",
+            data: $("#submit-form").serialize(),
+            method: "post",
+            success: function (response) {
+                alert("Payment submitted successfully")
+                window.location.reload()
+                //window.location.href="https://google.com"
+            },
+            error: function (err) {
+                console.log(err)
+                alert("Something Error"+err)
+
+            }
+        })
+    })
+</script>

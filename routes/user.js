@@ -2,15 +2,17 @@ var express = require('express');
 var router = express.Router();
 var userHelpers = require('../helpers/user-helpers');
 const { ObjectId } = require('mongodb');
+var Handlebars = require('handlebars');
+var db = require('../config/connection')
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   userHelpers.getFeed().then((feeds) => {
     userHelpers.getPhoto().then((photo) => {
-    res.render('pages/user/user-homePage', { admin: false, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo });
+      res.render('pages/user/user-homePage', { admin: false, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo });
     })
   })
-  
+
 });
 
 router.get('/about/visionaries', function (req, res, next) {
@@ -62,11 +64,18 @@ router.get('/feeds/:id', function (req, res, next) {
 router.get('/feeds-page', function (req, res, next) {
   userHelpers.getFeed().then((feeds) => {
     res.render('pages/user/feeds-page', { admin: false, title: 'Feeds - DIIA', feeds });
-  })
+  });
 });
 
 router.get('/forms', function (req, res, next) {
-  res.render('pages/user/forms', { admin: false, title: 'Forms - DIIA' });
+  userHelpers.getForm().then((forms) => {
+    console.log(forms);
+    res.render('pages/user/forms', { admin: false, forms, title: 'Forms - DIIA' });
+  });
+});
+
+router.get('/donate', function (req, res, next) {
+  res.render('pages/user/donation', { admin: false, title: 'Donate - DIIA' });
 });
 
 module.exports = router;

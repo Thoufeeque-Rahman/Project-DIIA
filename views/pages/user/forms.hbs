@@ -6,32 +6,177 @@
         color: #fff;
 
     }
+
+    .form-control {
+        border-radius: 0px;
+        border: 1px solid #42929d;
+        margin-bottom: 20px;
+    }
+
+    .form-control:focus {
+        border-color: #42929d;
+        box-shadow: 2px #42929d;
+    }
+
+    .form-tables tbody tr td {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+
+    .form-tables tbody tr td a {
+        color: #000000;
+        text-decoration: none;
+    }
+
+    .form-tables tbody tr td a:hover,
+    .form-tables tbody tr td a:focus {
+        color: #42929d;
+        text-decoration: none;
+    }
+
+    .form-tables .add-btn {
+        background-color: #42929d;
+        color: #fff;
+        padding: 10px 20px;
+        border: 1px solid #42929d;
+        border-radius: 0px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-tables .add-btn:hover {
+        background-color: #fff;
+        color: #42929d;
+    }
+
+    .modal-content {
+        border-radius: 0px;
+    }
 </style>
 <section id="second-content" class="content pt-5 pb-5">
     <div class="container">
-        <div class="form-tables table-bordered border-primary">
-            <input id="searchbar " class="form-control" onkeyup="search_animal()" type="text" name="search"
-                placeholder="Search Forms..">
+        <h2 class="text-center">Official Forms</h2>
+        <span class="title-span"></span>
+        <div class="form-tables table-bordered border-primary mt-5">
+            <input id="searchbar" onkeyup="myFunction()" class="form-control searchbar" onkeyup="search_animal()"
+                type="text" name="search" placeholder="Search Forms...">
+            <div class="table-responsive">
+                <table class="table mt-5 table-bordered table-hover" id="myTable">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="col">SI.No</th>
+                            <th scope="col">Form Name</th>
+                            <th scope="col">Form Type</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Download</th>
+                            {{#if admin}}
+                            <th scope="col">Delete</th>
+                            {{/if}}
+                        </tr>
 
-            <table class="table mt-5">
-                <thead>
-                    <tr class="text-center">
-                        <th scope="col">SI.No</th>
-                        <th scope="col">Form Name</th>
-                        <th scope="col">Form Type</th>
-                        <th scope="col">Category</th>
-                    </tr>
+                    </thead>
+                    <tbody id="tableRows">
+                        {{#if admin}}
+                        {{#each forms}}
+                        <tr class="text-center">
+                            <td scope="row" class="create_index">{{inc @index}}</td>
+                            <td class="text-start">{{this.formName}}</td>
+                            <td>{{this.formType}}</td>
+                            <td>{{this.formCategory}}</td>
+                            <td><a href="{{this.fileURL}}">Download
+                                    <i class="fa-solid fa-download"></i></a></td>
+                            <td><a href="/admin/delete-form/{{this._id}}"><i class="fa-solid fa-trash"></i> </a></td>
+                        </tr>
+                        {{/each}}
+                        {{else}}
+                        {{#each forms}}
+                        <tr class="text-center">
+                            <td scope="row" class="create_index">{{inc @index}}</td>
+                            <td class="text-start">{{this.formName}}</td>
+                            <td>{{this.formType}}</td>
+                            <td>{{this.formCategory}}</td>
+                            <td><a href="{{this.fileURL}}">Download
+                                    <i class="fa-solid fa-download"></i></a></td>
+                        </tr>
+                        {{/each}}
 
-                </thead>
-                <tbody>
-                    <tr>
-                        <td scope="row">1</td>
-                        <td>Form 1</td>
-                        <td>Admission</td>
-                        <td>Secondary</td>
-                    </tr>
-                </tbody>
-            </table>
+                        {{/if}}
+
+                    </tbody>
+                </table>
+            </div>
+            {{#if admin}}
+
+            <!-- Button trigger modal -->
+            <button class="add-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Feed</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new Form</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <form action="/admin/add-form" method="POST">
+                                <div class="mb-3">
+                                    <label for="formName" class="form-label">Form Name</label>
+                                    <input type="text" class="form-control" id="formName" name="formName"
+                                        placeholder="Enter Form Name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formType" class="form-label">Form Type</label>
+                                    <input type="text" class="form-control" id="formType" name="formType"
+                                        placeholder="Enter Form Type" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formCategory" class="form-label">Form Category</label>
+                                    <input type="text" class="form-control" id="formCategory" name="formCategory"
+                                        placeholder="Enter Form Category" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fileURL" class="form-label">File URL</label>
+                                    <input type="text" class="form-control" id="fileURL" name="fileURL"
+                                        placeholder="Enter Form File URL" required>
+                                    <a href="https://sites.google.com/site/gdocs2direct/" style="text-decoration: none;"
+                                        target="_blank">
+                                        <p class="ms-3">Get download Link</p>
+                                    </a>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Form</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
         </div>
     </div>
 </section>
+<script>
+
+    function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchbar");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

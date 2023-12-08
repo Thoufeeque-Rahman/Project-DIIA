@@ -25,4 +25,10 @@ module.exports = {
             resolve(photo)
         })
     },
+    getForm: () => {
+        return new Promise(async (resolve, reject) => {
+            let form = await db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: 1 }).limit(4).toArray()
+            resolve(form)
+        })
+    },
 }

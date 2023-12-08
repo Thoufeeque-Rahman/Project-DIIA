@@ -112,4 +112,11 @@ module.exports = {
             })
         })
     },
+    addForm: (form) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.FORM_COLLECTION).insertOne(form).then((data) => {
+                resolve(data)
+            })
+        })
+    },
 }
