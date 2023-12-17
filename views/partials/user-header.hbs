@@ -1,13 +1,28 @@
 <style>
-  
+  .navbar .notiButton {
+    background-color: #42929d;
+    font-size: 20px;
+    border-radius: 50%;
+    border: 2px solid #42929d;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .navbar .notiButton:hover {
+    background-color: #fff;
+    color: #42929d;
+  }
+  .navbar .navbar-toggler,
+  .navbar .navbar-toggler:focus,
+  .navbar .navbar-toggler:active, {
+    border: 0px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+  }
 </style>
-<nav class="navbar sticky-top navbar-expand-lg ps-5 pe-5 shadow-sm" style="background-color: rgba(255, 255, 255, 0.938);">
+<nav class="navbar sticky-top navbar-expand-lg ps-md-5 pe-md-5 ps-2 pe-2 shadow-sm"
+  style="background-color: rgba(255, 255, 255, 0.938);">
   <div class="container-fluid container ms-md-5 me-md-5">
     <a class="navbar-brand" href="/"><img src="/images/DIIA Logo Round.png" alt="" width="70"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav gap-1 ms-auto">
         <li class="nav-item">
@@ -74,14 +89,29 @@
         <li class="nav-item">
           <a class="nav-link" href="/#gallery">Gallery</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link sp-btn ps-4 pe-4" href="/#donation">Donate</a>
-        </li>
         {{!-- <li class="nav-item">
-          <a class="nav-link" href="/contact">Contact</a>
+          <a class="nav-link sp-btn ps-4 pe-4" href="/#donation">Donate</a>
         </li> --}}
-        
+        <li class="nav-item">
+
+        </li>
+
       </ul>
     </div>
+    <a class="nav-link sp-btn pt-2 pb-2 ps-4 pe-4 ms-auto" href="/#donation">Donate</a>
+    <button type="button" class="notiButton btn btn-primary position-relative ms-md-2 ms-2" id="toastBtn" data-bs-dismiss="toast"
+      data-bs-target=".toast">
+      <i class="fa-regular fa-bell"></i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        4
+        <span class="visually-hidden">unread messages</span>
+      </span>
+    </button>
+    <button class="navbar-toggler ms-4 p-0 border border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    
   </div>
 </nav>

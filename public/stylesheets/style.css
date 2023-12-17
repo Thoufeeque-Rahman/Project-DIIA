@@ -2,8 +2,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-#495e5f #42929d 
-.h111 {
+#495e5f #42929d .h111 {
     font-size: 50px;
     font-weight: bold;
     color: #000;
@@ -42,7 +41,7 @@
     width: 100%;
     top: 0;
     /* At the top */
-    z-index: 99;
+    z-index: 5;
 }
 
 .navbar .nav-link {
@@ -60,7 +59,7 @@
     color: #42929d;
 }
 
-.navbar .sp-btn{
+.navbar .sp-btn {
     background-color: #42929d;
     color: white;
     border-radius: 50px;
@@ -99,6 +98,33 @@
 }
 
 /* carousel */
+@media screen and (max-width: 768px) {
+
+    .carousel-item,
+    .carousel {
+        height: 250px;
+    }
+
+    .carousel-item img {
+        height: 250px;
+        object-fit: cover;
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+    .carousel-item,
+    .carousel {
+        height: 650px;
+    }
+
+    .carousel-item img {
+        height: 650px;
+        object-fit: cover;
+    }
+    
+}
+/* 
 .carousel-item,
 .carousel {
     height: 650px;
@@ -107,7 +133,7 @@
 .carousel-item img {
     height: 650px;
     object-fit: cover;
-}
+} */
 
 .carousel-caption .btn {
     fill-opacity: 0;
@@ -652,6 +678,7 @@
     text-decoration: none;
     color: #42929d;
 }
+
 /* feeds end */
 
 /* footer */
@@ -864,3 +891,35 @@
 }
 
 /* common end */
+
+#btn-back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    background-color: white;
+    color: #42929d;
+    border-radius: 50%;
+    border: 2px solid #42929d;
+    transition: 0.5s ease;
+
+}
+
+#btn-back-to-top:hover,
+#btn-back-to-top:focus {
+    background-color: #42929d;
+    color: white;
+}
+
+#toast .toast-header {
+    font-size: 14px;
+    color: #42929d;
+}
+
+#toast .toast-category {
+    background-color: #42929d;
+    color: #fff;
+    padding: 2px 5px;
+    width: fit-content;
+
+}

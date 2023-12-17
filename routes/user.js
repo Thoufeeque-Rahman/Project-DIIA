@@ -4,12 +4,20 @@ var userHelpers = require('../helpers/user-helpers');
 const { ObjectId } = require('mongodb');
 var Handlebars = require('handlebars');
 var db = require('../config/connection')
+var collection = require('../config/collection')
+const date = require('date-and-time');
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   userHelpers.getFeed().then((feeds) => {
     userHelpers.getPhoto().then((photo) => {
-      res.render('pages/user/user-homePage', { admin: false, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo });
+      userHelpers.getAnnouncement().then((announcement) => {
+        userHelpers.getCarousel().then((carousel) => {
+          console.log(announcement);
+          res.render('pages/user/user-homePage', { admin: false, carousel, announcement, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo });
+        })
+      })
     })
   })
 

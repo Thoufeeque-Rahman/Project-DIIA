@@ -14,7 +14,8 @@ const fs = require('fs');
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   if (req.session.loggedIn) {
-    res.render('pages/admin/admin-homePage', { admin: true, user: req.session.user, title: 'Admin Home - DIIA' });
+    var date = dateCreate();
+    res.render('pages/admin/admin-homePage', { admin: true, date, user: req.session.user, title: 'Admin Home - DIIA' });
   } else {
     res.redirect('/admin/auth/login')
   }
@@ -312,6 +313,62 @@ router.get('/delete-form/:id', function (req, res, next) {
     })
   } else {
     res.redirect('/admin/auth/login')
+  }
+});
+
+router.post('/add-announcement', function (req, res, next) {
+  console.log(req.body);
+  const now = new Date();
+  const pattern = date.compile('YYYY, MM, DD');
+  const dateNow = date.format(now, pattern);
+  req.body.date = dateNow;
+  ctrlHelpers.addAnnouncement(req.body).then((response) => {
+    res.redirect('/admin')
+  })
+});
+
+router.get('/view-notifications', function (req, res, next) {
+  if (req.session.loggedIn) {
+    var date = dateCreate();
+    db.get().collection(collection.NOTIFICATION_COLLECTION).find().sort({ _id: -1 }).toArray().then((notifications) => {
+      res.render('pages/admin/view-feeds', { admin: true, date, notificationPage: true, user: req.session.user, notifications, title: 'Admin View Notifications - DIIA' });
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+const notiImageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../public/images/uploads/notifications'))
+  },
+  filename: function (req, file, cb) {
+    cb(null, dateCreate() + path.extname(file.originalname))
+  }
+})
+
+const notiImageUpload = multer({ storage: notiImageStorage });
+
+router.post('/add-notification', notiImageUpload.single('notiImage'), function (req, res, next) {
+  console.log(req.body);
+  if (req.file) {
+    console.log(req.file);
+    console.log(req.body);
+
+    const newNotification = {
+      ...req.body,
+      notiImage: req.file.filename // or another property from req.file
+    };
+
+    ctrlHelpers.addNotification(newNotification).then((response) => {
+      if (response.status) {
+        res.redirect('/admin')
+      } else {
+        res.redirect('/admin/view-notifications')
+      }
+    })
+  } else {
+    res.status(400).send({ error: 'No file uploaded' });
   }
 });
 

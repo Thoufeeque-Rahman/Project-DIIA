@@ -119,4 +119,18 @@ module.exports = {
             })
         })
     },
+    addAnnouncement : (announcement) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ANNOUNCEMENT_COLLECTION).insertOne(announcement).then((data) => {
+                resolve(data)
+            })
+        })
+    },
+    addNotification : (notification) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.NOTIFICATION_COLLECTION).insertOne(notification).then((data) => {
+                resolve(data)
+            })
+        })
+    },
 }

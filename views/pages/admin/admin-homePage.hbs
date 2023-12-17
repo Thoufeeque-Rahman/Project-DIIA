@@ -25,10 +25,25 @@
         text-decoration: none;
 
     }
+
+    .form-control {
+        border-radius: 0px;
+        border: 1px solid #42929d;
+        margin-bottom: 20px;
+    }
+
+    .form-control:focus {
+        border-color: #42929d;
+        box-shadow: 2px #42929d;
+    }
+
+    .modal-content {
+        border-radius: 0px;
+    }
 </style>
 
 <section id="admin-dash">
-    <div class="container m-5">
+    <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-12">
                 <div class="admin-dash p-5">
@@ -36,7 +51,7 @@
                     <span></span>
 
                     <h3 class="text-start text-white mt-5">Tools</h3>
-                    <div class="row">
+                    <div class="row  g-4">
                         <div class="col-md-3">
                             <a href="/admin/view-photo-gallery">
                                 <div
@@ -57,7 +72,8 @@
                                         <h2 class="fs-5">Add Feed
                                         </h2>
                                     </div>
-                                    <i class="fa-solid fa-newspaper fs-1 primary-text rounded-full secondary-bg p-3"></i>
+                                    <i
+                                        class="fa-solid fa-newspaper fs-1 primary-text rounded-full secondary-bg p-3"></i>
                                 </div>
                             </a>
                         </div>
@@ -71,7 +87,31 @@
                                     </div>
                                     <i class="fa-brands fa-wpforms fs-1 primary-text rounded-full secondary-bg p-3"></i>
                                 </div>
-                            </a>   
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <div
+                                    class="tool-box p-3 shadow-sm d-flex justify-content-around align-items-center rounded">
+                                    <div>
+                                        <h2 class="fs-5">Add Announcement
+                                        </h2>
+                                    </div>
+                                    <i class="fa-solid fa-bullhorn fs-1 primary-text rounded-full secondary-bg p-3"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="/admin/view-notifications">
+                                <div
+                                    class="tool-box p-3 shadow-sm d-flex justify-content-around align-items-center rounded">
+                                    <div>
+                                        <h2 class="fs-5">Add Notification
+                                        </h2>
+                                    </div>
+                                    <i class="fa-solid fa-bell fs-1 primary-text rounded-full secondary-bg p-3"></i>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -79,3 +119,56 @@
         </div>
     </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new Announcement</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/admin/add-announcement" method="POST">
+                    <div class="mb-3">
+                        <label for="annTitle" class="form-label">Announcement Title</label>
+                        <input type="text" class="form-control" id="annTitle" name="annTitle"
+                            placeholder="Give an Announcement Title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annDescrip" class="form-label">Announcement Description</label>
+                        <input type="text" class="form-control" id="annDescrip" name="annDescrip"
+                            placeholder="Give an Announcement Description" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annDate" class="form-label">Date</label>
+                        <input type="text" class="form-control" id="annDate" name="annDate"
+                            value="{{date}}" required read-only>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+
+                        <select class="form-control" name="category" id="category" required>
+                            <option value="">Select a Category</option>
+                            <option value="General">General</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Admission">Admission</option>
+                            <option value="Examination">Examination</option>
+                            <option value="Scholarship">Scholarship</option>
+                            <option value="Co-Curricular">Co-Curricular</option>
+                            <option value="Extra-Curricular">Extra-Curricular</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annLinks" class="form-label">Additional Links (if any)</label>
+                        <input type="text" class="form-control" id="annLinks" name="annLinks"
+                            placeholder="Give Additional Links">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Announcement</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

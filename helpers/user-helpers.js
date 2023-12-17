@@ -1,6 +1,7 @@
 const collection = require('../config/collection')
 const bcrypt = require('bcryptjs')
 const db = require('../config/connection')
+const date = require('date-and-time');
 
 module.exports = {
     readFeed: (id) => {
@@ -29,6 +30,32 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let form = await db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: 1 }).limit(4).toArray()
             resolve(form)
+        })
+    },
+    getAnnouncement: () => {
+        return new Promise(async (resolve, reject) => {
+            
+            let announcement = await db.get().collection(collection.ANNOUNCEMENT_COLLECTION).find().sort({ _id: -1 }).limit(3).toArray()
+            for (let i = 0; i < announcement.length; i++) {
+                console.log(announcement[i].date);
+                const annDate = new Date(announcement[i].date);
+                const todayDate = new Date();
+                console.log(annDate);
+                console.log(todayDate);
+            
+                const diffTime = Math.abs(todayDate - annDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+                console.log(diffDays);
+                announcement[i].date = diffDays;
+            }
+            resolve(announcement)
+        })
+    },
+    getCarousel: () => {
+        return new Promise(async (resolve, reject) => {
+            let carousel = await db.get().collection(collection.FEED_COLLECTION).find().sort({ _id: -1 }).limit(3).toArray()
+            resolve(carousel)
         })
     },
 }

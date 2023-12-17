@@ -76,6 +76,26 @@
     color: #42929d;
     border-radius: 0px;
   }
+
+  .form-control {
+    border-radius: 0px;
+    border: 1px solid #42929d;
+    margin-bottom: 20px;
+  }
+
+  .form-control:focus {
+    border-color: #42929d;
+    box-shadow: 2px #42929d;
+  }
+
+  .modal-content {
+    border-radius: 0px;
+  }
+
+  #img_preview {
+    width: 100%;
+    object-fit: cover;
+  }
 </style>
 
 <section class="pt-5 pb-5">
@@ -136,36 +156,138 @@
     </table>
 
     <a href="/admin/add-photo"><button>Add New Photo</button></a>
-      
-      {{else if formPage}}
-      <h1>View Forms</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>File</th>
-            <th>Show Form</th>
-            <th>Delete Form</th>
-            <th>Last Update Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each forms}}
-          <tr>
-            <td>{{this.title}}</td>
-            <td><a href="/images/uploads/forms/{{this.file}}" target="_blank">View File</a></td>
-            <td><a href="/admin/forms/{{this._id}}"><i class="fa-solid fa-eye"></i></a></td>
-            <td><a href="/admin/delete-form/{{this._id}}"><i class="fa-solid fa-trash"></i></a></td>
-            {{!-- <td><a href="/admin/edit-feeds/{{this._id}}"><i class="fa-solid fa-edit"></i></a></td> --}}
-            <td>{{this.date}}</td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
 
-      <a href="/admin/add-form"><button>Add New Form</button></a>
-      
+    {{else if formPage}}
+    <h1>View Forms</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>File</th>
+          <th>Show Form</th>
+          <th>Delete Form</th>
+          <th>Last Update Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each forms}}
+        <tr>
+          <td>{{this.title}}</td>
+          <td><a href="/images/uploads/forms/{{this.file}}" target="_blank">View File</a></td>
+          <td><a href="/admin/forms/{{this._id}}"><i class="fa-solid fa-eye"></i></a></td>
+          <td><a href="/admin/delete-form/{{this._id}}"><i class="fa-solid fa-trash"></i></a></td>
+          {{!-- <td><a href="/admin/edit-feeds/{{this._id}}"><i class="fa-solid fa-edit"></i></a></td> --}}
+          <td>{{this.date}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <a href="/admin/add-form"><button>Add New Form</button></a>
+
+    {{else if notificationPage}}
+    <h1>View Notifications</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Status</th>
+          <th>Delete</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each notifications}}
+        <tr>
+          <td>
+            <img src="/images/uploads/{{this.photo}}" alt="Notification Image">
+          </td>
+          <td>
+            {{#if this.status}}
+            <a href="/admin/change-notification-status/{{this._id}}"><i class="fa-solid fa-check"></i></a>
+            {{else}}
+            <a href="/admin/change-notification-status/{{this._id}}"><i class="fa-solid fa-times"></i></a>
+            {{/if}}
+          </td>
+          <td>
+            <a href="/admin/delete-notification/{{this._id}}"><i class="fa-solid fa-trash"></i></a>
+          </td>
+          <td>
+            {{this.date}}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><button>Add New
+        Notification</button></a>
     {{/if}}
   </div>
 
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new Notification</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="/admin/add-notification" method="POST">
+          <div class="mb-3">
+            <label for="notiImage" class="form-label">Notification Image</label>
+            <input type="file" name="notiImage" id="notiImage" onchange="fileChange()" class="form-control">
+            <img id="img_preview" src="#" alt="your image" style="display:none;" class="pt-3 pb-3" />
+          </div>
+          <div class="mb-3">
+            <label for="notiStatus" class="form-label">Notification Status</label>
+            <select name="notiStatus" id="notiStatus" class="form-control">
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="notiDate" class="form-label">Date</label>
+            <input type="text" class="form-control" id="notiDate" name="notiDate" value="{{date}}" required
+              readonly>
+          </div>
+          <div class="mb-3">
+            <label for="notiCategory" class="form-label">Category</label>
+            <select class="form-control" name="notiCategory" id="notiCategory" required>
+              <option value="general">General</option>
+              <option value="admission">Admission</option>
+              <option value="exam">Exam</option>
+              <option value="result">Result</option>
+              <option value="notice">Notice</option>
+              <option value="event">Event</option>
+              <option value="job">Job</option>
+              <option value="tender">Tender</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="notiLinks" class="form-label">Additional Links (if any)</label>
+            <input type="text" class="form-control" id="notiLinks" name="notiLinks"
+              placeholder="Give Additional Links">
+          </div>
+          <button type="submit" class="btn btn-primary">Add Notification</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    function fileChange() {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+
+            document.getElementById("img_preview").src = e.target.result;
+        };
+        reader.readAsDataURL(document.getElementById("notiImage").files[0]);
+        document.getElementById("img_preview").style.display = "block";
+    }
+</script>
