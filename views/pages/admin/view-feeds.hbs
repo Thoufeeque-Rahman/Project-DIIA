@@ -110,7 +110,7 @@
           <th>Image</th>
           <th>Show Feed</th>
           <th>Delete Feed</th>
-          <th>Add to Carousel</th>
+          <th>Copy Link</th>
           <th>Last Update Date</th>
         </tr>
       </thead>
@@ -122,7 +122,20 @@
           <td><a href="/admin/feeds/{{this._id}}"><i class="fa-solid fa-eye"></i></a></td>
           <td><a href="/admin/delete-feed/{{this._id}}"><i class="fa-solid fa-trash"></i></a></td>
           {{!-- <td><a href="/admin/edit-feeds/{{this._id}}"><i class="fa-solid fa-edit"></i></a></td> --}}
-          <td><input type="checkbox"></td>
+          <td>
+            <input type="text" value="/feeds/{{this._id}}" id="myInput{{this._id}}" class="visually-hidden">
+            <button onclick="myFunction{{this._id}}()">Copy text</button>
+            <script>
+              function myFunction{{this._id}}() {
+                var copyText = document.getElementById("myInput{{this._id}}");
+                copyText.select();
+                copyText.setSelectionRange(0, 99999)
+                document.execCommand("copy");
+                alert("Copied the text: " + copyText.value);
+                
+              }
+            </script>
+          </td>
           <td>{{this.date}}</td>
         </tr>
         {{/each}}
@@ -191,7 +204,9 @@
       <thead>
         <tr>
           <th>Image</th>
+          <th>Category</th>
           <th>Status</th>
+          <th>Edit</th>
           <th>Delete</th>
           <th>Date</th>
         </tr>
@@ -200,20 +215,26 @@
         {{#each notifications}}
         <tr>
           <td>
-            <img src="/images/uploads/{{this.photo}}" alt="Notification Image">
+            <img src="/images/uploads/notifications/{{this.notiImage}}" alt="Notification Image">
           </td>
           <td>
-            {{#if this.status}}
+            {{this.notiCategory}}
+          </td>
+          <td>
+            {{#ifEquals this.notiStatus "true"}}
             <a href="/admin/change-notification-status/{{this._id}}"><i class="fa-solid fa-check"></i></a>
             {{else}}
             <a href="/admin/change-notification-status/{{this._id}}"><i class="fa-solid fa-times"></i></a>
-            {{/if}}
+            {{/ifEquals}}
           </td>
+          <td>
+            <a href="/admin/edit-notification/{{this._id}}" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                class="fa-solid fa-edit"></i></a>
           <td>
             <a href="/admin/delete-notification/{{this._id}}"><i class="fa-solid fa-trash"></i></a>
           </td>
           <td>
-            {{this.date}}
+            {{this.notiDate}}
           </td>
         </tr>
         {{/each}}
@@ -222,6 +243,40 @@
 
     <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><button>Add New
         Notification</button></a>
+
+    {{else if announcementPage}}
+    <h1>View Announcements</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each announcements}}
+        <tr>
+          <td>{{this.annTitle}}</td>
+          <td>{{this.annDescrip}}</td>
+          <td>{{this.annDate}}</td>
+          <td>
+            {{#ifEquals this.annStatus "true"}}
+            <a href="/admin/change-announcement-status/{{this._id}}"><i class="fa-solid fa-check"></i></a>
+            {{else}}
+            <a href="/admin/change-announcement-status/{{this._id}}"><i class="fa-solid fa-times"></i></a>
+            {{/ifEquals}}
+          <td><a href="/admin/delete-announcement/{{this._id}}"><i class="fa-solid fa-trash"></i></a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+
+    </table>
+
+    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#annModal"><button>Add New
+        Announcement</button></a>
     {{/if}}
   </div>
 
@@ -237,10 +292,10 @@
       </div>
       <div class="modal-body">
 
-        <form action="/admin/add-notification" method="POST">
+        <form action="/admin/add-notification" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="notiImage" class="form-label">Notification Image</label>
-            <input type="file" name="notiImage" id="notiImage" onchange="fileChange()" class="form-control">
+            <input type="file" name="notiImage" id="notifImage" onchange="fileChange()" class="form-control">
             <img id="img_preview" src="#" alt="your image" style="display:none;" class="pt-3 pb-3" />
           </div>
           <div class="mb-3">
@@ -252,27 +307,18 @@
           </div>
           <div class="mb-3">
             <label for="notiDate" class="form-label">Date</label>
-            <input type="text" class="form-control" id="notiDate" name="notiDate" value="{{date}}" required
-              readonly>
+            <input type="text" class="form-control" id="notiDate" name="notiDate" value="{{date}}" required readonly>
           </div>
           <div class="mb-3">
             <label for="notiCategory" class="form-label">Category</label>
             <select class="form-control" name="notiCategory" id="notiCategory" required>
-              <option value="general">General</option>
-              <option value="admission">Admission</option>
-              <option value="exam">Exam</option>
-              <option value="result">Result</option>
-              <option value="notice">Notice</option>
-              <option value="event">Event</option>
-              <option value="job">Job</option>
-              <option value="tender">Tender</option>
-              <option value="other">Other</option>
+              <option value="blog">Blog</option>
+              <option value="poster">Poster</option>
             </select>
           </div>
           <div class="mb-3">
-            <label for="notiLinks" class="form-label">Additional Links (if any)</label>
-            <input type="text" class="form-control" id="notiLinks" name="notiLinks"
-              placeholder="Give Additional Links">
+            <label for="notiLinks" class="form-label">Additional Links (if Blog or other links there)</label>
+            <input type="text" class="form-control" id="notiLinks" name="notiLinks" placeholder="Give Additional Links">
           </div>
           <button type="submit" class="btn btn-primary">Add Notification</button>
         </form>
@@ -280,14 +326,74 @@
     </div>
   </div>
 </div>
-<script>
-    function fileChange() {
-        var reader = new FileReader();
-        reader.onload = function (e) {
 
-            document.getElementById("img_preview").src = e.target.result;
-        };
-        reader.readAsDataURL(document.getElementById("notiImage").files[0]);
-        document.getElementById("img_preview").style.display = "block";
-    }
+<!-- Modal -->
+<div class="modal fade" id="annModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new Announcement</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/admin/add-announcement" method="POST">
+                    <div class="mb-3">
+                        <label for="annTitle" class="form-label">Announcement Title</label>
+                        <input type="text" class="form-control" id="annTitle" name="annTitle"
+                            placeholder="Give an Announcement Title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annDescrip" class="form-label">Announcement Description</label>
+                        <input type="text" class="form-control" id="annDescrip" name="annDescrip"
+                            placeholder="Give an Announcement Description" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annDate" class="form-label">Date</label>
+                        <input type="text" class="form-control" id="annDate" name="annDate"
+                            value="{{date}}" required read-only>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annStatus" class="form-label">Announcement Status</label>
+                        <select name="annStatus" id="annStatus" class="form-control">
+                            <option value="true">Active</option>
+                            <option value="false">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+
+                        <select class="form-control" name="category" id="category" required>
+                            <option value="">Select a Category</option>
+                            <option value="General">General</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Admission">Admission</option>
+                            <option value="Examination">Examination</option>
+                            <option value="Scholarship">Scholarship</option>
+                            <option value="Co-Curricular">Co-Curricular</option>
+                            <option value="Extra-Curricular">Extra-Curricular</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annLinks" class="form-label">Additional Links (if any)</label>
+                        <input type="text" class="form-control" id="annLinks" name="annLinks"
+                            placeholder="Give Additional Links">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Announcement</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  function fileChange() {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+
+      document.getElementById("img_preview").src = e.target.result;
+    };
+    reader.readAsDataURL(document.getElementById("notifImage").files[0]);
+    document.getElementById("img_preview").style.display = "block";
+  }
 </script>

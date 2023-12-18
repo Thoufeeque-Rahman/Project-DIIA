@@ -26,16 +26,22 @@ module.exports = {
             resolve(photo)
         })
     },
+    getPhotopage: () => {
+        return new Promise(async (resolve, reject) => {
+            let photo = await db.get().collection(collection.PHOTO_COLLECTION).find().sort({ _id: -1 }).toArray()
+            resolve(photo)
+        })
+    },
     getForm: () => {
         return new Promise(async (resolve, reject) => {
-            let form = await db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: 1 }).limit(4).toArray()
+            let form = await db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: 1 }).toArray()
             resolve(form)
         })
     },
     getAnnouncement: () => {
         return new Promise(async (resolve, reject) => {
             
-            let announcement = await db.get().collection(collection.ANNOUNCEMENT_COLLECTION).find().sort({ _id: -1 }).limit(3).toArray()
+            let announcement = await db.get().collection(collection.ANNOUNCEMENT_COLLECTION).find({annStatus: "true"}).sort({ _id: -1 }).limit(3).toArray()
             for (let i = 0; i < announcement.length; i++) {
                 console.log(announcement[i].date);
                 const annDate = new Date(announcement[i].date);
@@ -54,7 +60,7 @@ module.exports = {
     },
     getCarousel: () => {
         return new Promise(async (resolve, reject) => {
-            let carousel = await db.get().collection(collection.FEED_COLLECTION).find().sort({ _id: -1 }).limit(3).toArray()
+            let carousel = await db.get().collection(collection.NOTIFICATION_COLLECTION).find({notiStatus: "true"}).sort({ _id: -1 }).limit(5).toArray()
             resolve(carousel)
         })
     },

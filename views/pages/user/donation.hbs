@@ -53,12 +53,12 @@
         border: 1px solid #42929d;
     }
 
-    #second-content h2{
+    #second-content h2 {
         color: #42929d;
-    
+
     }
 
-    #second-content form button{
+    #second-content form button {
         background-color: #42929d;
         border: 1px solid #42929d;
         color: white;
@@ -66,12 +66,30 @@
         transition: all 0.3s ease-in-out;
     }
 
-    #second-content form button:hover{
+    #second-content form button:hover {
         background-color: white;
         border: 1px solid #42929d;
         color: #42929d;
         border-radius: 0px;
         transition: all 0.3s ease-in-out;
+    }
+
+    .phonepe .btn {
+        fill-opacity: 0;
+        color: #42929d;
+        border-radius: 0px;
+        border: 2px solid #42929d;
+        transition: 0.5s ease;
+    }
+
+    .phonepe .btn:hover,
+    .phonepe .btn:focus {
+        background-color: #42929d;
+        color: white;
+    }
+
+    .phonepe .btn {
+        margin-top: 20px;
     }
 </style>
 <section id="donation-first" class="content">
@@ -80,20 +98,42 @@
         <span class="title-span"></span>
 
         <div class="row text-center mt-5">
-            <div class="col-12 ">
+            <div class="col-12 col-md-6 border-end">
                 <p>Scan <i class="fa-solid fa-qrcode"></i></p>
                 <img src="/images/gpay.jpg" alt="">
-                <p class="mt-3">or</p>
-                <p class="mt-3">Pay phone number <i class="fa-solid fa-mobile-screen"></i></p>
-                <div class="phoneNumber mt-2">
-                    <div class="row">
-                        <div class="col">
-                            <p class="ms-2 me-3"><img
-                                    src="https://uxwing.com/wp-content/themes/uxwing/download/flags-landmarks/india-flag-icon.png"
-                                    alt=""> +91 98473 71253</p>
+                <p class="mt-3 d-sm-block d-md-none">or</p>
+            </div>
+
+            <div class="col-12 col-md-6 border-start ">
+                <div class="d-sm-block d-md-none mb-4 phonepe">
+                    <p class="mt-3">Pay phone number <i class="fa-solid fa-mobile-screen"></i></p>
+                    <div class="phoneNumber mt-2">
+                        <div class="row">
+                            <div class="col">
+                                <p class="ms-2 me-3"><img
+                                        src="https://uxwing.com/wp-content/themes/uxwing/download/flags-landmarks/india-flag-icon.png"
+                                        alt=""> +91 98473 71253</p>
+                            </div>
                         </div>
                     </div>
+                    <a href="upi://pay?pa=rahman.am90@okicici&pn=Thoufeeq&aid=uGICAgMDui9LLLg" target="_blank">
+                        <button class="btn pe-5 ps-5">Pay Now</button>
+                    </a>
+                    <p class="mt-3">or</p>
                 </div>
+                <div class="">
+                    <p class="mt-3 mb-3">Bank Account Details <i class="fa-solid fa-building-columns"></i></p>
+                    <p class="fs-6">
+                        <strong>Bank Name: </strong> State Bank of India <br>
+                        <strong>Holder Name: </strong> Darul Irfan Islamic Academy <br>
+                        <strong>Account No: </strong>30323788252 <br>
+                        <strong>IFSC: </strong>SBIN0001153 <br>
+                        <strong>MICR: </strong>676002007 <br>
+                        <strong>Branch: </strong>PARAPPANANGADI BRANCH <br>
+                        0494-2463155, 0494-2460575, 0494-2464502
+                    </p>
+                </div>
+
             </div>
         </div>
     </div>
@@ -105,7 +145,8 @@
             <div class="col">
                 <div class="payForm">
                     <form id="submit-form" action="">
-                        <div class="row">
+                        <div class="row ms-md-5 me-md-5">
+                            
                             <div class="col">
                                 <div class="row g-3">
                                     <div class="col-md-6 col-12">
@@ -159,7 +200,7 @@
             },
             error: function (err) {
                 console.log(err)
-                alert("Something Error"+err)
+                alert("Something Error" + err)
 
             }
         })

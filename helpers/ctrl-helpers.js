@@ -133,4 +133,20 @@ module.exports = {
             })
         })
     },
+    getNotification : (notiId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.NOTIFICATION_COLLECTION).find({_id: notiId}).sort({ _id: -1 }).toArray().then((notification) => {
+                
+                resolve(notification)
+            })
+        })
+    },
+    getAnnouncement : (annId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.ANNOUNCEMENT_COLLECTION).find({_id: annId}).sort({ _id: -1 }).toArray().then((announcement) => {
+                
+                resolve(announcement)
+            })
+        })
+    },
 }

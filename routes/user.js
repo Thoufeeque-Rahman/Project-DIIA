@@ -15,6 +15,7 @@ router.get('/', function (req, res, next) {
       userHelpers.getAnnouncement().then((announcement) => {
         userHelpers.getCarousel().then((carousel) => {
           console.log(announcement);
+          console.log(carousel);
           res.render('pages/user/user-homePage', { admin: false, carousel, announcement, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo });
         })
       })
@@ -84,6 +85,12 @@ router.get('/forms', function (req, res, next) {
 
 router.get('/donate', function (req, res, next) {
   res.render('pages/user/donation', { admin: false, title: 'Donate - DIIA' });
+});
+
+router.get('/gallery', function (req, res, next) {
+  userHelpers.getPhotopage().then((photo) => {
+    res.render('pages/user/gallery', { admin: false, photo, title: 'Gallery - DIIA' });
+  });
 });
 
 module.exports = router;

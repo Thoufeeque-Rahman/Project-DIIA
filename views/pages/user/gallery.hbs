@@ -1,0 +1,51 @@
+<section id="gallery" class="pt-5 pb-5">
+    <div class="container text-center">
+        <h2>Gallery</h2>
+        <span class="title-span"></span>
+        <div class="row mt-5 g-3">
+            {{#each photo}}
+            <div class="col-md-3 position-relative">
+                <div>
+                    <img class="grid-image grid-image-hover" src="/images/uploads/gallery/{{this.photo}}"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal" alt="">
+                    <div class="image-description pt-3 position-absolute bottom-0 start-50 translate-middle-x">
+                        <h5>{{this.title}}</h5>
+                        <p>{{this.description}}</p>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn ms-auto" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-close"></i></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <img id="modal-image">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    document.querySelectorAll('.grid-image').forEach(item => {
+        item.addEventListener('click', event => {
+            let imgSrc = event.target.getAttribute('src');
+            console.log('imgSrc:', imgSrc); // Debugging line
+            let modalImg = document.querySelector('#exampleModal img');
+            console.log('modalImg:', modalImg); // Debugging line
+            modalImg.setAttribute('src', imgSrc);
+            imgSrc.toggleclass('grid-image-hover');
+
+        });
+    });
+</script>

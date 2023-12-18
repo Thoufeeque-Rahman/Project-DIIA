@@ -323,7 +323,7 @@ router.post('/add-announcement', function (req, res, next) {
   const dateNow = date.format(now, pattern);
   req.body.date = dateNow;
   ctrlHelpers.addAnnouncement(req.body).then((response) => {
-    res.redirect('/admin')
+    res.redirect('/admin/view-announcements')
   })
 });
 
@@ -349,8 +349,9 @@ const notiImageStorage = multer.diskStorage({
 
 const notiImageUpload = multer({ storage: notiImageStorage });
 
-router.post('/add-notification', notiImageUpload.single('notiImage'), function (req, res, next) {
+router.post('/add-notification', notiImageUpload.single('notiImage'), (req, res, next) => {
   console.log(req.body);
+  console.log(req.file);
   if (req.file) {
     console.log(req.file);
     console.log(req.body);
@@ -369,6 +370,122 @@ router.post('/add-notification', notiImageUpload.single('notiImage'), function (
     })
   } else {
     res.status(400).send({ error: 'No file uploaded' });
+  }
+});
+
+
+router.get('/delete-notification/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    ctrlHelpers.getNotification(new ObjectId(req.params.id)).then((existingNotification) => {
+      console.log(existingNotification);
+      if (existingNotification && existingNotification.notiImage) {
+        // Delete the existing image file
+        console.log(existingNotification.notiImage);
+        fs.unlinkSync(path.join(__dirname, '../public/images/uploads/notifications/', existingNotification.notiImage));
+      }
+    });
+    db.get().collection(collection.NOTIFICATION_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+      res.redirect('/admin/view-notifications')
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+router.get('/change-notification-status/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    ctrlHelpers.getNotification(new ObjectId(req.params.id)).then((existingNotification) => {
+      console.log(existingNotification);
+      console.log('notiStatus:', existingNotification[0].notiStatus); // log the notiStatus
+      if (existingNotification[0].notiStatus == "true") {
+        db.get().collection(collection.NOTIFICATION_COLLECTION).updateOne({ _id: new ObjectId(req.params.id) },
+          {
+            $set: {
+              notiStatus: "false"
+            }
+          }).then((response) => {
+            console.log(response);
+            res.redirect('/admin/view-notifications')
+          })
+      } else if (existingNotification[0].notiStatus == "false") {
+        db.get().collection(collection.NOTIFICATION_COLLECTION).updateOne({ _id: new ObjectId(req.params.id) },
+          {
+            $set: {
+              notiStatus: "true"
+            }
+          }).then((response) => {
+            console.log(response);
+            res.redirect('/admin/view-notifications')
+          })
+      } else {
+        console.log('Unexpected notiStatus:', existingNotification.notiStatus); // log unexpected notiStatus
+        res.redirect('/admin/view-notifications')
+      }
+    }).catch((error) => {
+      console.log('Error getting notification:', error); // log any errors
+      res.redirect('/admin/view-notifications')
+    });
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+router.get('/view-announcements', function (req, res, next) {
+  if (req.session.loggedIn) {
+    var date = dateCreate();
+    db.get().collection(collection.ANNOUNCEMENT_COLLECTION).find().sort({ _id: -1 }).toArray().then((announcements) => {
+      res.render('pages/admin/view-feeds', { admin: true, date, announcementPage: true, user: req.session.user, announcements, title: 'Admin View Announcements - DIIA' });
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+router.get('/delete-announcement/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    db.get().collection(collection.ANNOUNCEMENT_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+      res.redirect('/admin/view-announcements')
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+router.get('/change-announcement-status/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    ctrlHelpers.getAnnouncement(new ObjectId(req.params.id)).then((existingAnnouncement) => {
+      console.log(existingAnnouncement);
+      console.log('annStatus:', existingAnnouncement[0].annStatus); // log the annStatus
+      if (existingAnnouncement[0].annStatus == "true") {
+        db.get().collection(collection.ANNOUNCEMENT_COLLECTION).updateOne({ _id: new ObjectId(req.params.id) },
+          {
+            $set: {
+              annStatus: "false"
+            }
+          }).then((response) => {
+            console.log(response);
+            res.redirect('/admin/view-announcements')
+          })
+      } else if (existingAnnouncement[0].annStatus == "false") {
+        db.get().collection(collection.ANNOUNCEMENT_COLLECTION).updateOne({ _id: new ObjectId(req.params.id) },
+          {
+            $set: {
+              annStatus: "true"
+            }
+          }).then((response) => {
+            console.log(response);
+            res.redirect('/admin/view-announcements')
+          })
+      } else {
+        console.log('Unexpected annStatus:', existingAnnouncement.annStatus); // log unexpected annStatus
+        res.redirect('/admin/view-announcements')
+      }
+    }).catch((error) => {
+      console.log('Error getting announcement:', error); // log any errors
+      res.redirect('/admin/view-announcements')
+    });
+  } else {
+    res.redirect('/admin/auth/login')
   }
 });
 

@@ -1,75 +1,93 @@
 <style>
-    
-</style>
-<div class="container" id="toast">
-  <div aria-live="polite" aria-atomic="true" class="position-relative">
-    <!-- Position it: -->
-    <!-- - `.toast-container` for spacing between toasts -->
-    <!-- - `top-0` & `end-0` to position the toasts in the upper right corner -->
-    <!-- - `.p-3` to prevent the toasts from sticking to the edge of the container  -->
-    <div class="toast-container top-0 end-0 p-3">
+    .toast {
+        width: 240px;
+    }
 
-      <!-- Then put toasts within -->
-      {{#each announcement}}
-      <div class="toast liveToast" data-bs-delay="5000" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <i class="fa-solid fa-bullhorn pe-1"> </i>
-          <strong class="me-auto">{{this.annTitle}}</strong>
-          <small class="text-body-secondary">{{this.date}} days ago</small>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-          <p class="toast-category">{{this.category}}</p>
-          {{this.annDescrip}}
-        </div>
-      </div>
-      {{/each}}
-    </div>
-  </div>
-</div>
+    .toast .toast-header img {
+        height: 20px;
+        object-fit: cover;
+    }
+
+    .toast .toast-body .btn {
+        background-color: #42929d;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        border-radius: 0px;
+    }
+
+    .toast .toast-body .btn:hover {
+        background-color: #42929d;
+        color: white;
+    }
+</style>
+
 <section class="" id="home">
 
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
                 aria-current="true" aria-label="Slide 1"></button>
+            {{#if carousel.[1]}}
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
                 aria-label="Slide 2"></button>
+            {{/if}}
+            {{#if carousel.[2]}}
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
                 aria-label="Slide 3"></button>
+            {{/if}}
+            {{#if carousel.[3]}}
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                aria-label="Slide 4"></button>
+            {{/if}}
+            {{#if carousel.[4]}}
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"
+                aria-label="Slide 5"></button>
+            {{/if}}
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active" data-bs-interval="5000">
-                <img src="/images/uploads/{{carousel.[0].photo}}" class="d-block w-100" alt="...">
+                <img src="/images/uploads/notifications/{{carousel.[0].notiImage}}" class="d-block w-100" alt="...">
                 <div class="overlay" style="
         background-image: linear-gradient(0.35turn, #ff0000, #ffffff);">
 
                 </div>
-                <div class="carousel-caption mb-5 d-none d-md-block text-start">
+                <div class="carousel-caption mb-0 mb-md-5 text-start">
                     <h2>{{carousel.[0].title}}</h2>
                     <p>{{carousel.[0].description}}</p>
-                    <a href="/feeds/{{carousel.[0]._id}}">
-                        <button class="btn">Read More</button>
+                    {{#if carousel.[0].notiLinks}}
+                    <a href="{{carousel.[0].notiLinks}}">
+                        <button class="btn">Know More</button>
                     </a>
+                    {{/if}}
                 </div>
 
             </div>
+            {{#if carousel.[1]}}
             <div class="carousel-item" data-bs-interval="5000">
-                <img src="/images/uploads/{{carousel.[1].photo}}" class="d-block w-100" alt="...">
+                <img src="/images/uploads/notifications/{{carousel.[1].notiImage}}" class="d-block w-100" alt="...">
                 <div class="overlay" style="
         background-image: linear-gradient(0.35turn, #ff7b00, #ffffff);">
 
                 </div>
-                <div class="carousel-caption mb-5 d-none d-md-block text-start">
+                <div class="carousel-caption mb-0 mb-md-5 text-center text-md-start">
                     <h2>{{carousel.[1].title}}</h2>
                     <p>{{carousel.[1].description}}</p>
-                    <a href="/feeds/{{carousel.[1]._id}}">
-                        <button class="btn">Read More</button>
+                    {{#if carousel.[1].notiLinks}}
+                    <a href="{{carousel.[1].notiLinks}}">
+                        <button class="btn">Know More</button>
                     </a>
+                    {{/if}}
                 </div>
             </div>
+            {{/if}}
+            {{#if carousel.[2]}}
             <div class="carousel-item" data-bs-interval="5000">
-                <img src="/images/uploads/{{carousel.[2].photo}}" class="d-block w-100" alt="...">
+                <img src="/images/uploads/notifications/{{carousel.[2].notiImage}}" class="d-block w-100" alt="...">
                 <div class="overlay" style="
         background-image: linear-gradient(0.35turn, #00a2ff, #ffffff);">
 
@@ -77,11 +95,50 @@
                 <div class="carousel-caption mb-5 d-none d-md-block text-start">
                     <h2>{{carousel.[2].title}}</h2>
                     <p>{{carousel.[2].description}}</p>
-                    <a href="/feeds/{{carousel.[2]._id}}">
-                        <button class="btn">Read More</button>
+                    {{#if carousel.[2].notiLinks}}
+                    <a href="{{carousel.[2].notiLinks}}">
+                        <button class="btn">Know More</button>
                     </a>
+                    {{/if}}
                 </div>
             </div>
+            {{/if}}
+            {{#if carousel.[3]}}
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="/images/uploads/notifications/{{carousel.[3].notiImage}}" class="d-block w-100" alt="...">
+                <div class="overlay" style="
+        background-image: linear-gradient(0.35turn, #ffee00, #ffffff);">
+
+                </div>
+                <div class="carousel-caption mb-5 d-none d-md-block text-start">
+                    <h2>{{carousel.[3].title}}</h2>
+                    <p>{{carousel.[3].description}}</p>
+                    {{#if carousel.[3].notiLinks}}
+                    <a href="{{carousel.[3].notiLinks}}">
+                        <button class="btn">Know More</button>
+                    </a>
+                    {{/if}}
+                </div>
+            </div>
+            {{/if}}
+            {{#if carousel.[4]}}
+            <div class="carousel-item" data-bs-interval="5000">
+                <img src="/images/uploads/notifications/{{carousel.[4].notiImage}}" class="d-block w-100" alt="...">
+                <div class="overlay" style="
+        background-image: linear-gradient(0.35turn, #d400ff, #ffffff);">
+
+                </div>
+                <div class="carousel-caption mb-5 d-none d-md-block text-start">
+                    <h2>{{carousel.[4].title}}</h2>
+                    <p>{{carousel.[4].description}}</p>
+                    {{#if carousel.[4].notiLinks}}
+                    <a href="{{carousel.[4].notiLinks}}">
+                        <button class="btn">Know More</button>
+                    </a>
+                    {{/if}}
+                </div>
+            </div>
+            {{/if}}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
             data-bs-slide="prev">
@@ -108,7 +165,7 @@
                             elit a, vestibulum massa. Vivamus tincidunt, neque ac fermentum viverra, orci nulla tempor
                             neque, quis pretium ipsum odio vel erat. Donec in sem pellentesque, fringilla quam a,
                             aliquam ipsum. Quisque ultrices dictum euismod. Integer ullamcorper nulla in.</p>
-                        <a href="#">
+                        <a href="/about/visionaries">
                             <button class="btn">Know More</button>
                         </a>
                     </div>
@@ -136,7 +193,7 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut ligula rutrum, eleifend
                         elit a, vestibulum massa. Vivamus tincidunt, neque ac fermentum viverra, orci nulla tempor
                         neque, quis pretium ipsum odio vel erat.</p>
-                    <a href="#">
+                    <a href="/about/visionaries">
                         <button class="btn">Know More</button>
                     </a>
                 </div>
@@ -148,7 +205,7 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut ligula rutrum, eleifend
                         elit a, vestibulum massa. Vivamus tincidunt, neque ac fermentum viverra, orci nulla tempor
                         neque, quis pretium ipsum odio vel erat.</p>
-                    <a href="#">
+                    <a href="/about/visionaries">
                         <button class="btn">Know More</button>
                     </a>
                 </div>
@@ -160,7 +217,7 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut ligula rutrum, eleifend
                         elit a, vestibulum massa. Vivamus tincidunt, neque ac fermentum viverra, orci nulla tempor
                         neque, quis pretium ipsum odio vel erat.</p>
-                    <a href="#">
+                    <a href="/about/visionaries">
                         <button class="btn">Know More</button>
                     </a>
                 </div>
@@ -417,6 +474,23 @@
         </div>
     </div>
 </section> --}}
+{{!-- <section id="faculties">
+    <div class="container text-center">
+        <h2>Our Faculties</h2>
+        <p>Faculties who are the backbone of our institution</p>
+        <div class="row mt-5">
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="/images/gpay.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> --}}
 <section id="gallery" class="pt-5 pb-5">
     <div class="container text-center">
         <h2>Gallery</h2>
@@ -434,7 +508,7 @@
             </div>
             {{/each}}
             <div>
-                <a href="">
+                <a href="/gallery">
                     <button class="btn">View More</button>
                 </a>
             </div>
@@ -517,28 +591,4 @@
         toast.show()
         return toast
     })
-</script>
-<script>
-  const toastTrigger = document.getElementById('toastBtn')
-  const toastLiveExamples = document.querySelectorAll('.liveToast')
-  const toastInstances = []
-
-  // Create toast instances
-  toastLiveExamples.forEach((toastEl) => {
-    const toast = new bootstrap.Toast(toastEl)
-    toastInstances.push(toast)
-  })
-
-  if (toastTrigger) {
-    toastTrigger.addEventListener('click', () => {
-      toastInstances.forEach((toast) => {
-        // If the toast is showing, hide it. Otherwise, show it.
-        if (toast._element.classList.contains('show')) {
-          toast.hide()
-        } else {
-          toast.show()
-        }
-      })
-    })
-  }
 </script>
