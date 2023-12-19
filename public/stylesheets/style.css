@@ -758,7 +758,6 @@
     font-size: 12px;
     text-decoration: none;
     color: white;
-    text-align: end;
 }
 
 /* footer end */
@@ -810,14 +809,14 @@
 }
 
 .content h3 {
-    font-size: 25px;
+    font-size: 22px;
     font-weight: 700;
     color: #42929d;
     text-align: start;
 }
 
 .content p {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 400;
     color: #495e5f;
     text-align: start;
@@ -855,7 +854,7 @@
 }
 
 .sub-title p {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 500;
     color: white;
     text-align: start;

@@ -20,6 +20,64 @@
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
   }
+
+  .navbar-toggle {
+    border: none;
+    border-radius: 50%;
+    padding: 10px 10px;
+    background: #42929d !important;
+  }
+
+  .navbar-toggle:hover {
+    background: #42929d !important;
+  }
+
+  .navbar-toggle .icon-bar {
+    width: 22px;
+    height: 3px;
+    display: block;
+    background-color: #fff;
+    margin: 4px 0;
+    border-radius: 1px;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+  }
+
+  /* ANIMATED UP ARROW */
+  .navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(1) {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    width: 22px;
+  }
+
+  .navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(2) {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  .navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(3) {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+    width: 22px;
+  }
+
+  .navbar-toggle.uarr .icon-bar:nth-of-type(1) {
+    transform: translate3d(2px, 0, 0) rotate(-45deg);
+    transform-origin: center center;
+    width: 11px;
+  }
+
+  .navbar-toggle.uarr .icon-bar:nth-of-type(2) {
+    transform: rotate(-90deg);
+    transform-origin: center center;
+  }
+
+  .navbar-toggle.uarr .icon-bar:nth-of-type(3) {
+    transform: translate3d(-1px, -15px, 0) rotate(-135deg);
+    transform-origin: right top;
+    width: 11px;
+  }
+
+
+
+  /* END ANIMATED UP ARROW */
 </style>
 <nav class="navbar sticky-top navbar-expand-lg ps-md-5 pe-md-5 ps-2 pe-2 shadow-sm"
   style="background-color: rgba(255, 255, 255, 0.938);">
@@ -100,7 +158,7 @@
 
       </ul>
     </div>
-    <a class="nav-link sp-btn pt-2 pb-2 ps-4 pe-4 ms-auto" href="/#donation">Donate</a>
+    <a class="sticky-bottom nav-link sp-btn pt-2 pb-2 ps-4 pe-4 ms-auto" href="/#donation">Donate</a>
     <button type="button" class="notiButton btn btn-primary position-relative ms-md-2 ms-2" id="toastBtn"
       data-bs-dismiss="toast" data-bs-target=".toast">
       <i class="fa-regular fa-bell"></i>
@@ -109,10 +167,17 @@
         <span class="visually-hidden">unread messages</span>
       </span> --}}
     </button>
-    <button class="navbar-toggler ms-4 p-0 border border-0" type="button" data-bs-toggle="collapse"
+    {{!-- <button class="navbar-toggler ms-4 p-0 border border-0" type="button" data-bs-toggle="collapse"
       data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
+    </button> --}}
+    <button type="button" class="d-block d-md-none navbar-toggle uarr collapsed ms-2" data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
     </button>
 
 
@@ -150,26 +215,26 @@
   </div>
 </div>
 <script>
-    const toastTrigger = document.getElementById('toastBtn')
-    const toastLiveExamples = document.querySelectorAll('.liveToast')
-    const toastInstances = []
+  const toastTrigger = document.getElementById('toastBtn')
+  const toastLiveExamples = document.querySelectorAll('.liveToast')
+  const toastInstances = []
 
-    // Create toast instances
-    toastLiveExamples.forEach((toastEl) => {
-        const toast = new bootstrap.Toast(toastEl)
-        toastInstances.push(toast)
+  // Create toast instances
+  toastLiveExamples.forEach((toastEl) => {
+    const toast = new bootstrap.Toast(toastEl)
+    toastInstances.push(toast)
+  })
+
+  if (toastTrigger) {
+    toastTrigger.addEventListener('click', () => {
+      toastInstances.forEach((toast) => {
+        // If the toast is showing, hide it. Otherwise, show it.
+        if (toast._element.classList.contains('show')) {
+          toast.hide()
+        } else {
+          toast.show()
+        }
+      })
     })
-
-    if (toastTrigger) {
-        toastTrigger.addEventListener('click', () => {
-            toastInstances.forEach((toast) => {
-                // If the toast is showing, hide it. Otherwise, show it.
-                if (toast._element.classList.contains('show')) {
-                    toast.hide()
-                } else {
-                    toast.show()
-                }
-            })
-        })
-    }
+  }
 </script>

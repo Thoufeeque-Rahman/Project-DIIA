@@ -1,6 +1,5 @@
 <style>
     .blog-page {
-        width: 70%;
         margin: 0 auto;
     }
 
@@ -21,8 +20,8 @@
     }
 
     .blog-page .blog-box .blog-txt p {
-        font-size: 20px;
-        line-height: 30px;
+        font-size: 18px;
+        line-height: 2  8px;
     }
 
     .blog-page .blog-box .blog-txt .date {
@@ -42,7 +41,7 @@
         margin-right: 10px;
 
     }
-
+{{!-- 
     .blog-related {
         margin-top: 50px;
     }
@@ -102,7 +101,7 @@
     .blog-related a {
         text-decoration: none;
         color: white;
-    }
+    } --}}
 
     .feed-container {
         border: 1px solid #42929d;
@@ -115,7 +114,7 @@
 </style>
 <section>
     <div class="container">
-        <div class="blog-page pt-4 pb-5">
+        <div class="blog-page pt-4 pb-5 ps-md-5 ps-2 pe-md-5 pe-2">
 
             <div class="row">
                 <div class="">
@@ -128,7 +127,7 @@
                             </div>
                             <div class="blog-txt p-3">
                                 <h2>{{this.title}}</h2>
-                                <p>{{this.content}}</p>
+                                <p class="word-break">{{this.content}}</p>
                                 <div class="date">
                                     <hr>
                                     <div class="d-flex">
@@ -149,9 +148,9 @@
                             </div>
                         </div>
                         {{/each}}
-                        <div class="blog-related pb-5">
+                        {{!-- <div class="blog-related pb-5">
                             <h2>Related Posts</h2>
-                            <div class="row">
+                            <div class="row g-3">
                                 {{#each relatedFeeds}}
                                 <div class="col-md-4">
                                     <a href="/feeds/{{this._id}}">
@@ -183,7 +182,7 @@
                                 </div>
                             </div>
                         </div>
-                        {{/each}}
+                        {{/each}} --}}
                     </div>
                 </div>
 
