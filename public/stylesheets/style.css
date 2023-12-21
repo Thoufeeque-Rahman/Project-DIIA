@@ -2,7 +2,22 @@
     font-family: 'Poppins', sans-serif;
 }
 
-#495e5f #42929d .h111 {
+:root{
+    --primary-color: #FFb700;
+    --secondary-color: #7b601c;
+    --tertiary-color: #213a3b;
+    --quaternary-color: #f8f8f8;
+    --quinary-color: #ffffff;
+    --senary-color: #000000;
+    --septenary-color: #ffffff00;
+    --octonary-color: #00000040;
+    --s-octonary-color: #fff5da;
+
+}
+
+/* 495e5f 42929d FFD700 */
+
+.h111 {
     font-size: 50px;
     font-weight: bold;
     color: #000;
@@ -46,32 +61,32 @@
 
 .navbar .nav-link {
     font-weight: 600;
-    color: #495e5f;
+    color: var(--secondary-color);
     font-size: 15px;
     transition: .3s;
 }
 
 .navbar .nav-link.active {
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 .navbar .nav-link:hover {
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 .navbar .sp-btn {
-    background-color: #42929d;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
     border-radius: 50px;
-    border: 2px solid #42929d;
+    border: 2px solid var(--primary-color);
     transition: 0.5s ease;
 
 }
 
 .navbar .sp-btn:hover,
 .navbar .sp-btn:focus {
-    background-color: white;
-    color: #42929d;
+    background-color: var(--quinary-color);
+    color: var(--primary-color);
 }
 
 
@@ -89,12 +104,12 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #495e5f;
+    background: var(--secondary-color);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #213a3b;
+    background: var(--tertiary-color);
 }
 
 /* carousel */
@@ -137,16 +152,16 @@
 
 .carousel-caption .btn {
     fill-opacity: 0;
-    color: white;
+    color: var(--quinary-color);
     border-radius: 0px;
-    border: 2px solid white;
+    border: 2px solid var(--quinary-color);
     transition: 0.5s ease;
 }
 
 .carousel-caption .btn:hover,
 .carousel-caption .btn:focus {
-    background-color: white;
-    color: #495e5f;
+    background-color: var(--quinary-color);
+    color: var(--secondary-color);
 }
 
 .carousel-caption h2 {
@@ -167,10 +182,10 @@
 /* About */
 
 .about-div {
-    background-color: #42929d;
+    /* background-color: var(--primary-color); */
     height: 600px;
     width: 100%;
-    background: linear-gradient(rgba(66, 146, 157, 0.5), rgba(66, 146, 157, 0.5)),
+    background: linear-gradient(#fff5da50, #fff5da50),
         url("/images/New folder/20230825_213959.jpg");
     background-size: cover;
     background-position: center;
@@ -183,26 +198,26 @@
 .about-div h1 {
     font-size: 50px;
     font-weight: 600;
-    color: white;
+    color: var(--quinary-color);
 }
 
 .about-div p {
     font-size: 18px;
-    color: white;
+    color: var(--quinary-color);
 }
 
 .about-div .btn {
     fill-opacity: 0;
-    color: white;
+    color: var(--quinary-color);
     border-radius: 0px;
-    border: 2px solid white;
+    border: 2px solid var(--quinary-color);
     transition: 0.5s ease;
 }
 
 .about-div .btn:hover,
 .about-div .btn:focus {
-    background-color: white;
-    color: #495e5f;
+    background-color: var(--quinary-color);
+    color: var(--secondary-color);
 }
 
 .about-div .btn {
@@ -211,7 +226,7 @@
 
 .about-vid video {
     height: 500px;
-    border: white 3px solid;
+    border: var(--quinary-color) 3px solid;
     padding: 5px;
 }
 
@@ -230,75 +245,75 @@
 /* Mission Vision Values */
 
 .m-v-v {
-    background-color: whitesmoke;
+    background-color: var(--s-octonary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v i {
     font-size: 50px;
-    color: #42929d;
+    color: var(--primary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v h5 {
     font-size: 20px;
     font-weight: 600;
-    color: #42929d;
+    color: var(--primary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v p {
     font-size: 16px;
-    color: #42929d;
+    color: var(--primary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v:hover {
-    background-color: #42929d;
+    background-color: var(--primary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v:hover i {
-    color: white;
+    color: var(--quinary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v:hover h5 {
-    color: white;
+    color: var(--quinary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v:hover p {
-    color: white;
+    color: var(--quinary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v:hover .btn {
     fill-opacity: 0;
-    color: white;
+    color: var(--quinary-color);
     border-radius: 0px;
-    border: 2px solid white;
+    border: 2px solid var(--quinary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v:hover .btn:hover,
 .m-v-v:hover .btn:focus {
-    background-color: white;
-    color: #42929d;
+    background-color: var(--quinary-color);
+    color: var(--primary-color);
 }
 
 .m-v-v .btn {
     fill-opacity: 0;
-    color: #42929d;
+    color: var(--primary-color);
     border-radius: 0px;
-    border: 2px solid #42929d;
+    border: 2px solid var(--primary-color);
     transition: 0.5s ease;
 }
 
 .m-v-v .btn:hover,
 .m-v-v .btn:focus {
-    background-color: #42929d;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
 }
 
 .m-v-v .btn {
@@ -308,20 +323,20 @@
 /* facilities */
 
 .facilities-sec {
-    background-color: whitesmoke;
+    background-color: var(--s-octonary-color);
 
 }
 
 .facilities-sec h2 {
     font-size: 50px;
     font-weight: 600;
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 .facilities-sec p {
     font-size: 20px;
     font-weight: 400;
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 .facilities-sec .card-icon {
@@ -338,7 +353,7 @@
     text-align: center;
     width: 72px;
     height: 72px;
-    background: #42929d;
+    background: var(--primary-color);
     color: #fff;
     font-size: 30px;
 }
@@ -346,7 +361,7 @@
 .facilities-sec .card {
     border: none;
     border-radius: 0px;
-    border: 1px solid #42929d00;
+    border: 1px solid #fff;
     transition: 0.5s ease;
 }
 
@@ -363,7 +378,7 @@
 }
 
 .facilities-sec .card:hover {
-    border: 1px solid #42929d;
+    border: 1px solid var(--primary-color);
     border-radius: 0px;
     transition: 0.5s ease;
 }
@@ -374,15 +389,15 @@
 }
 
 .facilities-sec .card:hover .card-title {
-    color: #42929d;
+    color: var(--primary-color);
     transition: 0.5s ease;
 }
 
 /* donation */
 
 #donation {
-    background-color: whitesmoke;
-    color: #42929d;
+    background-color: var(--s-octonary-color);
+    color: var(--primary-color);
 }
 
 #donation h2 {
@@ -396,24 +411,24 @@
 }
 
 #donation .price-card {
-    background-color: white;
+    background-color: var(--quinary-color);
     border-radius: 10px;
     padding: 20px;
     transition: 0.5s ease;
-    box-shadow: 0px 0px 10px 0px #00000040;
+    box-shadow: 0px 0px 10px 0px var(--octonary-color);
 }
 
 #donation .price-card h3 {
     font-size: 30px;
     font-weight: 800;
-    background: -webkit-linear-gradient(95deg, #495e5f 0.84%, #42929d 96.72%);
+    background: -webkit-linear-gradient(95deg, var(--secondary-color) 0.84%, var(--primary-color) 96.72%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 #donation .price-card .price-round {
-    background: linear-gradient(95deg, #495e5f 0.84%, #42929d 96.72%);
+    background: linear-gradient(95deg, var(--secondary-color) 0.84%, var(--primary-color) 96.72%);
     border-radius: 50%;
     width: 200px;
     height: 200px;
@@ -432,23 +447,23 @@
 
 #donation .price-card .price-round h4,
 #donation .price-card .price-round h4 sup {
-    background: -webkit-linear-gradient(95deg, #ffffff 0.84%, #ffffff 96.72%);
+    background: -webkit-linear-gradient(95deg, var(--quinary-color) 0.84%, var(--quinary-color) 96.72%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 #donation .price-card button {
-    background-color: white;
+    background-color: var(--quinary-color);
     border-radius: 10px;
     font-size: 20px;
     font-weight: 700;
-    background: -webkit-linear-gradient(95deg, #495e5f 0.84%, #42929d 96.72%);
+    background: -webkit-linear-gradient(95deg, var(--secondary-color) 0.84%, var(--primary-color) 96.72%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     transition: 0.5s ease;
-    box-shadow: 0px 0px 10px 0px #00000040;
+    box-shadow: 0px 0px 10px 0px var(--octonary-color);
 }
 
 #donation .price-card button:hover,
@@ -458,30 +473,30 @@
 }
 
 #donation .s-price {
-    background: linear-gradient(95deg, #495e5f 0.84%, #42929d 96.72%);
+    background: linear-gradient(95deg, var(--secondary-color) 0.84%, var(--primary-color) 96.72%);
 }
 
 #donation .s-price h3 {
-    background: -webkit-linear-gradient(95deg, #f8f8f8 0.84%, #ffffff 96.72%);
+    background: -webkit-linear-gradient(95deg, var(--quaternary-color) 0.84%, var(--quinary-color) 96.72%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 #donation .s-price .price-round {
-    background: linear-gradient(95deg, #f8f8f8 0.84%, #ffffff 96.72%);
+    background: linear-gradient(95deg, var(--quaternary-color) 0.84%, var(--quinary-color) 96.72%);
 }
 
 #donation .s-price .price-round h4,
 #donation .s-price .price-round h4 sup {
-    background: -webkit-linear-gradient(95deg, #42929d 0.84%, #495e5f 96.72%);
+    background: -webkit-linear-gradient(95deg, var(--primary-color) 0.84%, var(--secondary-color) 96.72%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 #donation .s-price button {
-    background: -webkit-linear-gradient(95deg, #f8f8f8 0.84%, #ffffff 96.72%);
+    background: -webkit-linear-gradient(95deg, var(--quaternary-color) 0.84%, var(--quinary-color) 96.72%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -489,7 +504,7 @@
 
 #donation .s-price button:hover,
 #donation .s-price button:focus {
-    background-color: white;
+    background-color: var(--quinary-color);
     transition: 0.5s ease;
 }
 
@@ -498,13 +513,13 @@
 #gallery h2 {
     font-size: 50px;
     font-weight: 600;
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 #gallery p {
     font-size: 20px;
     font-weight: 400;
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 #gallery img {
@@ -532,7 +547,7 @@
     align-items: center;
     flex-direction: column;
     text-align: center;
-    background-color: rgba(66, 146, 157, 0.692);
+    background-color: rgb(255 183 0 / 70%);
     opacity: 0;
     margin: auto 0;
 }
@@ -540,13 +555,13 @@
 #gallery .image-description h5 {
     font-size: 18px;
     font-weight: 600;
-    color: white;
+    color: var(--quinary-color);
     transition: 0.5s ease;
 }
 
 #gallery .image-description p {
     font-size: 12px;
-    color: white;
+    color: var(--quinary-color);
     transition: 0.5s ease;
 }
 
@@ -557,16 +572,16 @@
 
 #gallery .btn {
     fill-opacity: 0;
-    color: #42929d;
+    color: var(--primary-color);
     border-radius: 0px;
-    border: 2px solid #42929d;
+    border: 2px solid var(--primary-color);
     transition: 0.5s ease;
 }
 
 #gallery .btn:hover,
 #gallery .btn:focus {
-    background-color: #42929d;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
 }
 
 #gallery .btn {
@@ -580,7 +595,7 @@
 }
 
 #gallery .modal-content {
-    background-color: #42929d00;
+    background-color: var(--primary-color)00;
     border: none;
     border-radius: 0px;
 }
@@ -592,10 +607,10 @@
 #gallery .modal-header button,
 #gallery .modal-header button:focus,
 #gallery .modal-header button:hover {
-    background-color: #42929d00;
+    background-color: var(--primary-color)00;
     border: none;
     border-radius: 0px;
-    color: white;
+    color: var(--quinary-color);
     font-size: 25px;
     transition: 0.5s ease;
 }
@@ -606,8 +621,8 @@
 
 /* feeds */
 #feeds {
-    background-color: #42929d;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
 }
 
 #feeds h2 {
@@ -624,34 +639,34 @@
 #feeds .blog .blog-box .blog-txt h2 {
     font-size: 25px;
     margin-bottom: 10px;
-    color: #42929d;
+    color: var(--primary-color);
 
 }
 
 #feeds .btn {
     fill-opacity: 0;
-    color: white;
+    color: var(--quinary-color);
     border-radius: 0px;
-    border: 2px solid white;
+    border: 2px solid var(--quinary-color);
     transition: 0.5s ease;
 }
 
 #feeds .btn:hover,
 #feeds .btn:focus {
-    background-color: white;
-    color: #42929d;
+    background-color: var(--quinary-color);
+    color: var(--primary-color);
 }
 
 
 #feeds .blog .blog-box .blog-txt p {
     font-size: 15px;
     line-height: 25px;
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 #feeds .blog .blog-box .blog-txt .date {
     font-size: 12px;
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 #feeds .blog .blog-box .blog-txt .date hr {
@@ -660,25 +675,25 @@
 
 #feeds .blog-box .blog-txt .social a {
     font-size: 15px;
-    color: #42929d;
+    color: var(--primary-color);
     margin-right: 10px;
 
 }
 
 #feeds .blog-box {
-    border: 1px solid white;
-    background-color: white;
+    border: 1px solid var(--quinary-color);
+    background-color: var(--quinary-color);
     transition: all 0.3s ease-in-out;
 
 }
 
 #feeds .blog-box:hover {
-    border: 1px solid #42929d;
+    border: 1px solid var(--primary-color);
 }
 
 #feeds a {
     text-decoration: none;
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 /* feeds end */
@@ -686,18 +701,18 @@
 /* footer */
 
 #footer {
-    background-color: #42929d;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
 }
 
 #footer .footer-head {
-    background-color: #42929d;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
 }
 
 #footer .footer-footer {
-    background-color: #42929d;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
 }
 
 #footer .footer-title h3 {
@@ -714,7 +729,7 @@
 #footer .footer-contact a {
     font-size: 15px;
     font-weight: 400;
-    color: white;
+    color: var(--quinary-color);
     text-decoration: none;
 }
 
@@ -722,7 +737,7 @@
     list-style-type: none;
     font-size: 20px;
     font-weight: 400;
-    color: white;
+    color: var(--quinary-color);
     text-decoration: none;
 }
 
@@ -730,7 +745,7 @@
 #footer .footer-social a {
     font-size: 20px;
     font-weight: 400;
-    color: white;
+    color: var(--quinary-color);
     text-decoration: none;
 }
 
@@ -739,12 +754,12 @@
 }
 
 #footer .footer-social ul li a:hover i {
-    color: white;
+    color: var(--quinary-color);
     text-decoration: none;
 }
 
 #footer .footer-social ul li a:focus i {
-    color: white;
+    color: var(--quinary-color);
     text-decoration: none;
 }
 
@@ -757,7 +772,7 @@
 #footer .design a {
     font-size: 12px;
     text-decoration: none;
-    color: white;
+    color: var(--quinary-color);
 }
 
 /* footer end */
@@ -765,18 +780,18 @@
 /* status */
 
 #status {
-    background-color: #42929d;
+    background-color: var(--primary-color);
 }
 
 #status h2 {
-    color: #ffffff;
+    color: var(--quinary-color);
     font-size: 50px;
     font-weight: 700;
     margin: 0px;
 }
 
 #status p {
-    color: #ffffff;
+    color: var(--quinary-color);
     font-size: 20px;
     font-weight: 400;
 }
@@ -793,7 +808,7 @@
     display: block;
     width: 100px;
     height: 2px;
-    background-color: #ffffff;
+    background-color: var(--quinary-color);
     margin: 5px auto;
 
 }
@@ -805,20 +820,20 @@
 .content h2 {
     font-size: 50px;
     font-weight: 600;
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 .content h3 {
     font-size: 22px;
     font-weight: 700;
-    color: #42929d;
+    color: var(--primary-color);
     text-align: start;
 }
 
 .content p {
     font-size: 17px;
     font-weight: 400;
-    color: #495e5f;
+    color: var(--secondary-color);
     text-align: start;
 }
 
@@ -830,18 +845,18 @@
 .content span {
     font-size: 20px;
     font-weight: 400;
-    color: #495e5f;
+    color: var(--secondary-color);
 }
 
 #second-content {
-    background-color: whitesmoke;
+    background-color: var(--s-octonary-color);
 }
 
 .title-span {
     display: block;
     width: 300px;
     height: 2px;
-    background-color: #42929d;
+    background-color: var(--primary-color);
     margin: 5px auto;
 
 }
@@ -849,14 +864,14 @@
 .sub-title {
     width: fit-content;
     padding: 5px 10px;
-    background-color: #42929d;
+    background-color: var(--primary-color);
     margin-bottom: 10px;
 }
 
 .sub-title p {
     font-size: 17px;
     font-weight: 500;
-    color: white;
+    color: var(--quinary-color);
     text-align: start;
     margin: 0px;
 }
@@ -898,27 +913,27 @@
     bottom: 20px;
     right: 20px;
     display: none;
-    background-color: white;
-    color: #42929d;
+    background-color: var(--quinary-color);
+    color: var(--primary-color);
     border-radius: 50%;
-    border: 2px solid #42929d;
+    border: 2px solid var(--primary-color);
     transition: 0.5s ease;
 
 }
 
 #btn-back-to-top:hover,
 #btn-back-to-top:focus {
-    background-color: #42929d;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--quinary-color);
 }
 
 #toast .toast-header {
     font-size: 14px;
-    color: #42929d;
+    color: var(--primary-color);
 }
 
 #toast .toast-category {
-    background-color: #42929d;
+    background-color: var(--primary-color);
     color: #fff;
     padding: 2px 5px;
     width: fit-content;
