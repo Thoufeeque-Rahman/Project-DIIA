@@ -93,4 +93,8 @@ router.get('/gallery', function (req, res, next) {
   });
 });
 
+router.get('/about', function (req, res, next) {
+  res.render('pages/user/academics', { admin: false,about:true, title: 'About - DIIA' });
+});
+
 module.exports = router;

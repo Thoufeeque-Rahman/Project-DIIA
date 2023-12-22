@@ -246,6 +246,7 @@
 
 .m-v-v {
     background-color: var(--s-octonary-color);
+    height: 350px;
     transition: 0.5s ease;
 }
 
@@ -316,9 +317,6 @@
     color: var(--quinary-color);
 }
 
-.m-v-v .btn {
-    margin-top: 20px;
-}
 
 /* facilities */
 
