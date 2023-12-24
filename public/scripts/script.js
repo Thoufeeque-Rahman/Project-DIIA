@@ -53,3 +53,68 @@ function backToTop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
+
+let sections = document.querySelectorAll("section")
+
+window.onscroll = () => {
+    sections.forEach(sec => {
+        let top = window.scrollY;
+        let offset = sec.offsetTop - 400;
+        let height = sec.offsetHeight;
+
+        if (top >= offset && top < offset + height) {
+            sec.classList.add("show-animate");
+        }
+        else {
+            sec.classList.remove("show-animate");
+        }
+    })
+}
+
+const counters = document.querySelectorAll('.value');
+const speed = 30000;
+const sec = document.querySelector('#status');
+
+
+window.onload = () => {
+    let top = window.scrollY;
+    let offset = sec.offsetTop - 600;
+    let height = sec.offsetHeight;
+
+    if (top >= offset && top <= offset + height) {
+        startCount();
+    }
+    else {
+        window.addEventListener('scroll', () => {
+            let top = window.scrollY;
+            let offset = sec.offsetTop - 400;
+            let height = sec.offsetHeight;
+
+            if (top >= offset && top <= offset + height) {
+                startCount();
+            }
+        });
+    }
+
+    const startCount = () => {
+
+        counters.forEach(counter => {
+            const animate = () => {
+                const value = +counter.getAttribute('akhi');
+                const data = +counter.innerText;
+
+                const time = value / speed;
+                if (data < value) {
+                    counter.innerText = Math.ceil(data + time);
+                    setTimeout(animate, 1);
+                } else {
+                    counter.innerText = value;
+                }
+
+            }
+
+            animate();
+        });
+    }
+
+}

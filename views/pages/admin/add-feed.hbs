@@ -22,39 +22,28 @@
 
     .login-form input[type="text"],
     .login-form input[type="password"] {
-        border: 1px solid #ccc;
-        border-radius: 3px;
+        
         font-size: 16px;
         padding: 10px;
         width: 100%;
     }
 
     .login-form button[type="submit"] {
-        background-color: #4CAF50;
-        border: none;
-        border-radius: 3px;
-        color: #fff;
+        background-color: var(--primary-color);
+        border: 1px var(--primary-color) solid;
+        border-radius: 0px;
+        color: var(--quinary-color);
         cursor: pointer;
         font-size: 16px;
         margin-top: 20px;
         padding: 10px;
         width: 100%;
+        transition: 0.3s ;
     }
 
     .login-form button[type="submit"]:hover {
-        background-color: #3e8e41;
-    }
-
-    textarea {
-        width: 100%;
-        height: 600px;
-        padding: 12px 20px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        font-size: 16px;
-        resize: none;
+        background-color: var(--quinary-color);
+        color: var(--primary-color);
     }
 
     .login-form img {
@@ -68,35 +57,32 @@
         height: 80px;
         padding: 12px 20px;
         box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        background-color: #f8f8f8;
         font-size: 16px;
         resize: none;
-    }
+    } 
 </style>
 <section>
     
     {{#if editFeed}}
     <form method="POST" action="/admin/edit-feed" class="login-form" enctype="multipart/form-data">
         <h1>Edit Feed</h1>
-        <input type="hidden" name="id" value="{{editFeed._id}}">
+        <input type="hidden" class="form-control" name="id" value="{{editFeed._id}}">
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" value="{{editFeed.title}}" required>
+        <input type="text" id="title" class="form-control" name="title" value="{{editFeed.title}}" required>
 
         <label for="date">Date:</label>
-        <input type="text" id="date" name="date" value="{{editFeed.date}}" readonly>
+        <input type="text" id="date" class="form-control" name="date" value="{{editFeed.date}}" readonly>
 
         <label for="photo">Photo:</label>
-        <input type="file" id="input_img" name="photo" onchange="fileChange()">
+        <input type="file" class="form-control" id="input_img" name="photo" onchange="fileChange()">
         <img id="img_preview" src="/images/uploads/{{editFeed.photo}}" alt="your image" class="pt-3 pb-3" />
         <img id="img_preview" src="#" alt="your image" style="display:none;" class="pt-3 pb-3" />
 
         <label for="description">Description:</label>
-        <textarea id="description" name="description" maxlength="100" required>{{editFeed.description}}</textarea>
+        <textarea id="description" class="form-control" name="description" maxlength="100" required>{{editFeed.description}}</textarea>
 
         <label for="content">Content:</label>
-        <textarea id="content" name="content" required>{{editFeed.content}}</textarea>
+        <textarea id="content" class="form-control" name="content" required>{{editFeed.content}}</textarea>
 
         <button type="submit"><i class="fa-solid fa-save"></i> Save</button>
     </form>
@@ -104,21 +90,21 @@
     <form method="POST" action="/admin/add-feed" class="login-form" enctype="multipart/form-data">
         <h1>Add Feed</h1>
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
+        <input type="text" id="title" class="form-control" name="title" required>
 
         <label for="date">Date:</label>
-        <input type="text" id="date" name="date" value="{{dateNow}}" readonly>
+        <input type="text" id="date" class="form-control" name="date" value="{{dateNow}}" readonly>
 
         <label for="photo">Photo:</label>
-        <input type="file" id="input_img" name="photo" onchange="fileChange()">
+        <input type="file" id="input_img" class="form-control" name="photo" onchange="fileChange()">
 
         <img id="img_preview" src="#" alt="your image" style="display:none;" class="pt-3 pb-3" />
 
         <label for="description">Description:</label>
-        <textarea id="description" name="description" maxlength="100" required></textarea>
+        <textarea id="description" class="form-control" name="description" maxlength="100" required></textarea>
 
         <label for="content">Content:</label>
-        <textarea id="content" name="content" required></textarea>
+        <textarea id="content" class="form-control" name="content" required></textarea>
 
         <button type="submit"><i class="fa-solid fa-save"></i> Save</button>
     </form>
@@ -126,18 +112,18 @@
     <form method="POST" action="/admin/add-photo" class="login-form" enctype="multipart/form-data">
         <h1>Add Photo</h1>
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" maxlength="21" required>
+        <input type="text" id="title" class="form-control" name="title" maxlength="21" required>
 
         <label for="date">Date:</label>
-        <input type="text" id="date" name="date" value="{{dateNow}}" readonly>
+        <input type="text" id="date" class="form-control" name="date" value="{{dateNow}}" readonly>
 
         <label for="photo">Photo:</label>
-        <input type="file" id="input_img" name="photo" onchange="fileChange()">
+        <input type="file" id="input_img" class="form-control" name="photo" onchange="fileChange()">
 
         <img id="img_preview" src="#" alt="your image" style="display:none;" class="pt-3 pb-3" />
 
         <label for="description">Description:</label>
-        <textarea id="description" name="description" maxlength="100" required></textarea>
+        <textarea id="description" class="form-control" name="description" maxlength="100" required></textarea>
 
         <button type="submit"><i class="fa-solid fa-save"></i> Save</button>
     </form>
