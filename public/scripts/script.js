@@ -65,14 +65,14 @@ window.onscroll = () => {
         if (top >= offset && top < offset + height) {
             sec.classList.add("show-animate");
         }
-        else {
-            sec.classList.remove("show-animate");
-        }
+        // else {
+        //     sec.classList.remove("show-animate");
+        // }
     })
 }
 
 const counters = document.querySelectorAll('.value');
-const speed = 30000;
+const speed = 3000000;
 const sec = document.querySelector('#status');
 
 
