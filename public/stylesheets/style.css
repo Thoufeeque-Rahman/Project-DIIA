@@ -2,6 +2,11 @@
     font-family: 'Poppins', sans-serif;
 }
 
+#495e5f
+#42929d
+#919e95
+#4482cd
+#b4c4e5
 :root{
     --primary-color: #FFb700;
     --secondary-color: #7b601c;
@@ -183,7 +188,7 @@
 
 .about-div {
     /* background-color: var(--primary-color); */
-    height: 600px;
+    height: max-content;
     width: 100%;
     background: linear-gradient(#fff5da50, #fff5da50),
         url("/images/New folder/20230825_213959.jpg");
@@ -360,7 +365,7 @@
     border: none;
     border-radius: 0px;
     border: 1px solid #fff;
-    height: 300px;
+    height: max-content;
     transition: 0.5s ease;
 }
 
@@ -839,6 +844,7 @@
 .content img {
     object-fit: cover;
     height: 100%;
+    width: 100%;
 }
 
 .content span {
@@ -868,7 +874,7 @@
 }
 
 .sub-title p {
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 500;
     color: var(--quinary-color);
     text-align: start;
