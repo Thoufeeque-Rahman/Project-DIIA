@@ -1,83 +1,5 @@
 <style>
-  .navbar .notiButton {
-    background-color: #FFb700;
-    font-size: 20px;
-    border-radius: 50%;
-    border: 2px solid #FFb700;
-    transition: all 0.3s ease-in-out;
-  }
-
-  .navbar .notiButton:hover {
-    background-color: #fff;
-    color: #FFb700;
-  }
-
-  .navbar .navbar-toggler,
-  .navbar .navbar-toggler:focus,
-  .navbar .navbar-toggler:active,
-  {
-  border: 0px;
-  border-radius: 5px;
-  transition: all 0.3s ease-in-out;
-  }
-
-  .navbar-toggle {
-    border: none;
-    border-radius: 50%;
-    padding: 10px 10px;
-    background: #FFb700 !important;
-  }
-
-  .navbar-toggle:hover {
-    background: #FFb700 !important;
-  }
-
-  .navbar-toggle .icon-bar {
-    width: 22px;
-    height: 3px;
-    display: block;
-    background-color: #fff;
-    margin: 4px 0;
-    border-radius: 1px;
-    -webkit-transition: all 0.2s;
-    transition: all 0.2s;
-  }
-
-  /* ANIMATED UP ARROW */
-  .navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(1) {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-    width: 22px;
-  }
-
-  .navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(2) {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-  }
-
-  .navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(3) {
-    transform: translate3d(0, 0, 0) rotate(0deg);
-    width: 22px;
-  }
-
-  .navbar-toggle.uarr .icon-bar:nth-of-type(1) {
-    transform: translate3d(2px, 0, 0) rotate(-45deg);
-    transform-origin: center center;
-    width: 11px;
-  }
-
-  .navbar-toggle.uarr .icon-bar:nth-of-type(2) {
-    transform: rotate(-90deg);
-    transform-origin: center center;
-  }
-
-  .navbar-toggle.uarr .icon-bar:nth-of-type(3) {
-    transform: translate3d(-1px, -15px, 0) rotate(-135deg);
-    transform-origin: right top;
-    width: 11px;
-  }
-
-
-
-  /* END ANIMATED UP ARROW */
+  
 </style>
 <nav class="navbar sticky-top navbar-expand-lg ps-md-5 pe-md-5 ps-2 pe-2 shadow-sm"
   style="background-color: rgba(255, 255, 255, 0.938);">
@@ -104,11 +26,10 @@
             Offices
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/offices/#academic-admin">Office of Academics</a></li>
-            <li><a class="dropdown-item" href="/offices/#academic-admin">Office of Administration</a></li>
+            <li><a class="dropdown-item" href="/offices/#academic">Office of Academics</a></li>
+            <li><a class="dropdown-item" href="/offices/#admin">Office of Administration</a></li>
             <li><a class="dropdown-item" href="/offices/#out-reach">Office of Out Reach</a></li>
             <li><a class="dropdown-item" href="/offices/#welfare">Office of Welfare</a></li>
-            <li><a class="dropdown-item" href="/offices/#himayathussuniya">Himayathussuniya</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -159,19 +80,14 @@
       </ul>
     </div>
     <a class="sticky-bottom nav-link sp-btn pt-2 pb-2 ps-4 pe-4 ms-auto" href="/#donation">Donate</a>
+    {{#if home}}
     <button type="button" class="notiButton btn btn-primary position-relative ms-md-2 ms-2" id="toastBtn"
       data-bs-dismiss="toast" data-bs-target=".toast">
       <i class="fa-regular fa-bell"></i>
-      {{!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-        4
-        <span class="visually-hidden">unread messages</span>
-      </span> --}}
+      
     </button>
-    {{!-- <button class="navbar-toggler ms-4 p-0 border border-0" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-      aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button> --}}
+    {{/if}}
+    
     <button type="button" class="d-block d-md-none navbar-toggle uarr collapsed ms-2" data-bs-toggle="collapse"
       data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
       aria-label="Toggle navigation">

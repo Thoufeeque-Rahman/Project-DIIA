@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
         userHelpers.getCarousel().then((carousel) => {
           console.log(announcement);
           console.log(carousel);
-          res.render('pages/user/user-homePage', { admin: false, carousel, announcement, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo });
+          res.render('pages/user/user-homePage', { admin: false, carousel, announcement, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo, home:true });
         })
       })
     })
@@ -95,6 +95,10 @@ router.get('/gallery', function (req, res, next) {
 
 router.get('/about', function (req, res, next) {
   res.render('pages/user/academics', { admin: false,about:true, title: 'About - DIIA' });
+});
+
+router.get('/maintenance', function (req, res, next) {
+  res.render('pages/user/maintenance', { admin: false, title: 'Maintenance - DIIA' });
 });
 
 module.exports = router;
