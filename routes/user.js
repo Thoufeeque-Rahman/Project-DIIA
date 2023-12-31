@@ -101,4 +101,8 @@ router.get('/maintenance', function (req, res, next) {
   res.render('pages/user/maintenance', { admin: false, title: 'Maintenance - DIIA' });
 });
 
+router.get('/about/principle-message', function (req, res, next) {
+  res.render('pages/user/academics', { admin: false, princi:true, title: 'Principle Message - DIIA' });
+});
+
 module.exports = router;
