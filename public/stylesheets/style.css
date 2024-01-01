@@ -1,9 +1,8 @@
 * {
     font-family: 'Poppins', sans-serif;
 }
-    
-#42929d #42929d #919e95 #4482cd #b4c4e5
-:root {
+
+#42929d #42929d #919e95 #4482cd #b4c4e5:root {
     --primary-color: #42929d;
     --secondary-color: #184e55;
     --tertiary-color: #4482cd;
@@ -1097,50 +1096,50 @@ section .animate {
     border-radius: 50%;
     border: 2px solid #42929d;
     transition: all 0.3s ease-in-out;
-  }
+}
 
-  .navbar .notiButton:hover {
+.navbar .notiButton:hover {
     background-color: #fff;
     color: #42929d;
-  }
+}
 
-  .navbar .dropdown-menu {
+.navbar .dropdown-menu {
     border-radius: 5px;
     border: 1px solid #42929d;
     transition: all 0.3s ease-in-out;
-  }
+}
 
-  .navbar .dropdown-item{
+.navbar .dropdown-item {
     transition: all 0.2s ease-in-out;
-  }
+}
 
-  .navbar .dropdown-item:focus,
-  .navbar .dropdown-item:active,
-  .navbar .dropdown-item:hover {
+.navbar .dropdown-item:focus,
+.navbar .dropdown-item:active,
+.navbar .dropdown-item:hover {
     color: #fff;
     background-color: #42929d;
-  }
+}
 
-  .navbar .navbar-toggler,
-  .navbar .navbar-toggler:focus,
-  .navbar .navbar-toggler:active{
-  border: 0px;
-  border-radius: 5px;
-  transition: all 0.3s ease-in-out;
-  }
+.navbar .navbar-toggler,
+.navbar .navbar-toggler:focus,
+.navbar .navbar-toggler:active {
+    border: 0px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
 
-  .navbar-toggle {
+.navbar-toggle {
     border: none;
     border-radius: 50%;
     padding: 10px 10px;
     background: #42929d !important;
-  }
+}
 
-  .navbar-toggle:hover {
+.navbar-toggle:hover {
     background: #42929d !important;
-  }
+}
 
-  .navbar-toggle .icon-bar {
+.navbar-toggle .icon-bar {
     width: 22px;
     height: 3px;
     display: block;
@@ -1149,40 +1148,88 @@ section .animate {
     border-radius: 1px;
     -webkit-transition: all 0.2s;
     transition: all 0.2s;
-  }
+}
 
-  /* ANIMATED UP ARROW */
-  .navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(1) {
+/* ANIMATED UP ARROW */
+.navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(1) {
     transform: translate3d(0, 0, 0) rotate(0deg);
     width: 22px;
-  }
+}
 
-  .navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(2) {
+.navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(2) {
     transform: translate3d(0, 0, 0) rotate(0deg);
-  }
+}
 
-  .navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(3) {
+.navbar-toggle.uarr.collapsed .icon-bar:nth-of-type(3) {
     transform: translate3d(0, 0, 0) rotate(0deg);
     width: 22px;
-  }
+}
 
-  .navbar-toggle.uarr .icon-bar:nth-of-type(1) {
+.navbar-toggle.uarr .icon-bar:nth-of-type(1) {
     transform: translate3d(2px, 0, 0) rotate(-45deg);
     transform-origin: center center;
     width: 11px;
-  }
+}
 
-  .navbar-toggle.uarr .icon-bar:nth-of-type(2) {
+.navbar-toggle.uarr .icon-bar:nth-of-type(2) {
     transform: rotate(-90deg);
     transform-origin: center center;
-  }
+}
 
-  .navbar-toggle.uarr .icon-bar:nth-of-type(3) {
+.navbar-toggle.uarr .icon-bar:nth-of-type(3) {
     transform: translate3d(-1px, -15px, 0) rotate(-135deg);
     transform-origin: right top;
     width: 11px;
-  }
+}
 
 
 
-  /* END ANIMATED UP ARROW */
+/* END ANIMATED UP ARROW */
+
+#princi-msg {
+    background-color: #42929d;
+    background: linear-gradient(#42929dbe, #42929dbe),
+        url("/images/princi-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#princi-msg img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+#princi-msg h2 {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 35px;
+}
+
+#princi-msg p {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+#princi-msg button {
+    background-color: #ffffff;
+    border: none;
+    color: #42929d;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: 2px solid #ffffff;
+    border-radius: 0px;
+    transition: all 0.3s ease-in-out;
+}
+
+#princi-msg button:hover {
+    background-color: #42929d00;
+    color: #ffffff;
+}
