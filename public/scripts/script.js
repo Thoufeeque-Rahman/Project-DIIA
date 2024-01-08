@@ -107,6 +107,18 @@ window.onload = () => {
 
 let sections = document.querySelectorAll("section")
 
+var prevScrollpos = window.scrollY;
+
+function scrollNav() {
+    var currentScrollPos = window.scrollY;
+    if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar").style.top = "0";
+    } else {
+        document.getElementById("navbar").style.top = "-100px";
+    }
+    prevScrollpos = currentScrollPos;
+}
+
 window.onscroll = () => {
 
     sections.forEach(sec => {
@@ -122,4 +134,7 @@ window.onscroll = () => {
         // }
     })
     scrollFunction();
+    scrollNav();
+
 }
+

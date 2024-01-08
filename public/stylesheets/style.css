@@ -1,5 +1,6 @@
 * {
     font-family: 'Poppins', sans-serif;
+    font-size: 15px;
 }
 
 #42929d #42929d #919e95 #4482cd #b4c4e5:root {
@@ -50,12 +51,12 @@
 /* navbar */
 .navbar {
     background-color: rgba(255, 255, 255, 0.322);
-    transition: 0.4s;
     /* Adds a transition effect when the padding is decreased */
     width: 100%;
     top: 0;
     /* At the top */
     z-index: 5;
+    transition: top 0.4s;
 }
 
 .navbar .nav-link {
@@ -197,7 +198,7 @@
 
 
 .about-div h1 {
-    font-size: 50px;
+    font-size: 45px;
     font-weight: 600;
     color: #ffffff;
 }
@@ -265,7 +266,7 @@
 }
 
 .m-v-v p {
-    font-size: 16px;
+    font-size: 15px;
     color: #42929d;
     transition: 0.5s ease;
 }
@@ -327,13 +328,13 @@
 }
 
 .facilities-sec h2 {
-    font-size: 50px;
+    font-size: 45px;
     font-weight: 600;
     color: #42929d;
 }
 
 .facilities-sec p {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     color: #42929d;
 }
@@ -355,6 +356,11 @@
     background: #42929d;
     color: #fff;
     font-size: 30px;
+}
+
+.facilities-sec .card-icon i {
+    font-size: 30px;
+    color: #fff;
 }
 
 .facilities-sec .card {
@@ -402,12 +408,12 @@
 }
 
 #donation h2 {
-    font-size: 50px;
+    font-size: 45px;
     font-weight: 600;
 }
 
 #donation p {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
 }
 
@@ -442,7 +448,7 @@
 
 
 #donation .price-card .price-round h4 {
-    font-size: 50px;
+    font-size: 45px;
     font-weight: 800;
 }
 
@@ -512,13 +518,13 @@
 /* gallery */
 
 #gallery h2 {
-    font-size: 50px;
+    font-size: 45px;
     font-weight: 600;
     color: #42929d;
 }
 
 #gallery p {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     color: #42929d;
 }
@@ -566,7 +572,7 @@
     transition: 0.5s ease;
 }
 
-#gallery img:hover~.image-description,
+#gallery img:hover.image-description,
 #gallery .image-description:hover {
     opacity: 1;
 }
@@ -786,14 +792,14 @@
 
 #status h2 {
     color: #ffffff;
-    font-size: 50px;
+    font-size: 45px;
     font-weight: 700;
     margin: 0px;
 }
 
 #status p {
     color: #ffffff;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
 }
 
@@ -819,7 +825,7 @@
 /* common */
 
 .content h2 {
-    font-size: 50px;
+    font-size: 45px;
     font-weight: 600;
     color: #42929d;
 }
