@@ -34,7 +34,10 @@ module.exports = {
     },
     getForm: () => {
         return new Promise(async (resolve, reject) => {
-            let form = await db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: 1 }).toArray()
+            let Academics = await db.get().collection(collection.FORM_COLLECTION).find({formCategory: "ACADEMIC"}).sort({ _id: 1 }).toArray()
+            let General = await db.get().collection(collection.FORM_COLLECTION).find({formCategory: "GENERAL"}).sort({ _id: 1 }).toArray()
+            let Exam = await db.get().collection(collection.FORM_COLLECTION).find({formCategory: "EXAM"}).sort({ _id: 1 }).toArray()
+            let form = {Academics, General, Exam}
             resolve(form)
         })
     },

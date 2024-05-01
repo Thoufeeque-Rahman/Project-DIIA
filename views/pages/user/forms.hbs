@@ -10,7 +10,8 @@
     .form-control {
         border-radius: 0px;
         border: 1px solid #42929d;
-        margin-bottom: 20px;
+        margin-top: 20px;
+        border-width: 1px;
     }
 
     .form-control:focus {
@@ -52,15 +53,218 @@
     .modal-content {
         border-radius: 0px;
     }
+
+    .nav-tabs .nav-link.active {
+        color: #fff;
+        background-color: #42929d;
+        transition: all 0.3s ease-in-out;
+        border: 1px solid #42929d;
+    }
+
+    .nav-tabs .nav-link {
+        color: #42929d;
+        background-color: #e5f7f9;
+        border: 1px solid #42929d;
+        margin-right: 5px;
+        border-radius: 10px 10px 0px 0px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .nav-tabs .nav-link:hover {
+        color: #fff;
+        background-color: #42929d;
+        border: 1px solid #42929d;
+    }
+
+    
+
+    .nav-tabs {
+        border-bottom: #42929d 1px solid;
+    }
 </style>
 <section id="second-content" class="content pt-5 pb-5">
     <div class="container">
         <h2 class="text-center">Official Forms</h2>
         <span class="title-span"></span>
         <div class="form-tables table-bordered border-primary mt-5">
-            <input id="searchbar" onkeyup="myFunction()" class="form-control searchbar" onkeyup="search_animal()"
-                type="text" name="search" placeholder="Search Forms...">
-            <div class="table-responsive">
+            {{!-- <input id="searchbar" onkeyup="searchFunction()" class="form-control searchbar" onkeyup="search_animal()"
+                type="text" name="search" placeholder="Search Forms..."> --}}
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="academics-tab" data-bs-toggle="tab"
+                        data-bs-target="#academics-tab-pane" type="button" role="tab" aria-controls="academics-tab-pane"
+                        aria-selected="true">Academics</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="general-tab" data-bs-toggle="tab" data-bs-target="#general-tab-pane"
+                        type="button" role="tab" aria-controls="general-tab-pane" aria-selected="false">General</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="exam-tab" data-bs-toggle="tab" data-bs-target="#exam-tab-pane"
+                        type="button" role="tab" aria-controls="exam-tab-pane" aria-selected="false">Exam</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="academics-tab-pane" role="tabpanel"
+                    aria-labelledby="academics-tab" tabindex="0">
+                    <div>
+                        <input id="searchbarAC" onkeyup="searchFunctionAC()" class="form-control searchbar"
+                        type="text" name="search" placeholder="Search Forms...">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table mt-4 table-bordered table-hover" id="myTableAC">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">SI.No</th>
+                                    <th scope="col">Form Name</th>
+                                    <th scope="col">Form Type</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Download</th>
+                                    {{#if admin}}
+                                    <th scope="col">Delete</th>
+                                    {{/if}}
+                                </tr>
+
+                            </thead>
+                            <tbody id="tableRows">
+                                {{#if admin}}
+                                {{#each AcademicForms}}
+                                <tr class="text-center">
+                                    <td scope="row" class="create_index">{{inc @index}}</td>
+                                    <td class="text-start">{{this.formName}}</td>
+                                    <td>{{this.formType}}</td>
+                                    <td>{{this.formCategory}}</td>
+                                    <td><a href="{{this.fileURL}}">Download
+                                            <i class="fa-solid fa-download"></i></a></td>
+                                    <td><a href="/admin/delete-form/{{this._id}}"><i class="fa-solid fa-trash"></i> </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                                {{else}}
+                                {{#each AcademicForms}}
+                                <tr class="text-center">
+                                    <td scope="row" class="create_index">{{inc @index}}</td>
+                                    <td class="text-start">{{this.formName}}</td>
+                                    <td>{{this.formType}}</td>
+                                    <td>{{this.formCategory}}</td>
+                                    <td><a href="{{this.fileURL}}">Download
+                                            <i class="fa-solid fa-download"></i></a></td>
+                                </tr>
+                                {{/each}}
+
+                                {{/if}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="general-tab-pane" role="tabpanel" aria-labelledby="general-tab"
+                    tabindex="0">
+                    <div>
+                        <input id="searchbarG" onkeyup="searchFunctionG()" class="form-control searchbar"
+                        type="text" name="search" placeholder="Search Forms...">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table mt-4 table-bordered table-hover" id="myTableG">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">SI.No</th>
+                                    <th scope="col">Form Name</th>
+                                    <th scope="col">Form Type</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Download</th>
+                                    {{#if admin}}
+                                    <th scope="col">Delete</th>
+                                    {{/if}}
+                                </tr>
+
+                            </thead>
+                            <tbody id="tableRows">
+                                {{#if admin}}
+                                {{#each GeneralForms}}
+                                <tr class="text-center">
+                                    <td scope="row" class="create_index">{{inc @index}}</td>
+                                    <td class="text-start">{{this.formName}}</td>
+                                    <td>{{this.formType}}</td>
+                                    <td>{{this.formCategory}}</td>
+                                    <td><a href="{{this.fileURL}}">Download
+                                            <i class="fa-solid fa-download"></i></a></td>
+                                    <td><a href="/admin/delete-form/{{this._id}}"><i class="fa-solid fa-trash"></i> </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                                {{else}}
+                                {{#each GeneralForms}}
+                                <tr class="text-center">
+                                    <td scope="row" class="create_index">{{inc @index}}</td>
+                                    <td class="text-start">{{this.formName}}</td>
+                                    <td>{{this.formType}}</td>
+                                    <td>{{this.formCategory}}</td>
+                                    <td><a href="{{this.fileURL}}">Download
+                                            <i class="fa-solid fa-download"></i></a></td>
+                                </tr>
+                                {{/each}}
+
+                                {{/if}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="exam-tab-pane" role="tabpanel" aria-labelledby="exam-tab" tabindex="0">
+                    <div>
+                        <input id="searchbarE" onkeyup="searchFunctionE()" class="form-control searchbar"
+                        type="text" name="search" placeholder="Search Forms...">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table mt-4 table-bordered table-hover" id="myTableE">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">SI.No</th>
+                                    <th scope="col">Form Name</th>
+                                    <th scope="col">Form Type</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Download</th>
+                                    {{#if admin}}
+                                    <th scope="col">Delete</th>
+                                    {{/if}}
+                                </tr>
+
+                            </thead>
+                            <tbody id="tableRows">
+                                {{#if admin}}
+                                {{#each ExamForms}}
+                                <tr class="text-center">
+                                    <td scope="row" class="create_index">{{inc @index}}</td>
+                                    <td class="text-start">{{this.formName}}</td>
+                                    <td>{{this.formType}}</td>
+                                    <td>{{this.formCategory}}</td>
+                                    <td><a href="{{this.fileURL}}">Download
+                                            <i class="fa-solid fa-download"></i></a></td>
+                                    <td><a href="/admin/delete-form/{{this._id}}"><i class="fa-solid fa-trash"></i> </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                                {{else}}
+                                {{#each ExamForms}}
+                                <tr class="text-center">
+                                    <td scope="row" class="create_index">{{inc @index}}</td>
+                                    <td class="text-start">{{this.formName}}</td>
+                                    <td>{{this.formType}}</td>
+                                    <td>{{this.formCategory}}</td>
+                                    <td><a href="{{this.fileURL}}">Download
+                                            <i class="fa-solid fa-download"></i></a></td>
+                                </tr>
+                                {{/each}}
+
+                                {{/if}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {{!-- <div class="table-responsive">
                 <table class="table mt-5 table-bordered table-hover" id="myTable">
                     <thead>
                         <tr class="text-center">
@@ -104,7 +308,7 @@
 
                     </tbody>
                 </table>
-            </div>
+            </div> --}}
             {{#if admin}}
 
             <!-- Button trigger modal -->
@@ -158,12 +362,54 @@
 </section>
 <script>
 
-    function myFunction() {
+    function searchFunctionAC() {
         // Declare variables
         var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchbar");
+        input = document.getElementById("searchbarAC");
         filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
+        table = document.getElementById("myTableAC");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function searchFunctionG() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchbarG");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTableG");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+    function searchFunctionE() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchbarE");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTableE");
         tr = table.getElementsByTagName("tr");
 
         // Loop through all table rows, and hide those who don't match the search query

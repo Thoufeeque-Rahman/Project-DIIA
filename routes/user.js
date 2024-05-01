@@ -78,8 +78,8 @@ router.get('/feeds-page', function (req, res, next) {
 
 router.get('/forms', function (req, res, next) {
   userHelpers.getForm().then((forms) => {
-    console.log(forms);
-    res.render('pages/user/forms', { admin: false, forms, title: 'Forms - DIIA' });
+    console.log(forms.Academics);
+    res.render('pages/user/forms', { admin: false, AcademicForms: forms.Academics, GeneralForms: forms.General, ExamForms: forms.Exam, title: 'Forms - DIIA' });
   });
 });
 
