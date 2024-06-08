@@ -37,7 +37,7 @@ module.exports = {
             let Academics = await db.get().collection(collection.FORM_COLLECTION).find({formCategory: "ACADEMIC"}).sort({ _id: 1 }).toArray()
             let General = await db.get().collection(collection.FORM_COLLECTION).find({formCategory: "GENERAL"}).sort({ _id: 1 }).toArray()
             let Exam = await db.get().collection(collection.FORM_COLLECTION).find({formCategory: "EXAM"}).sort({ _id: 1 }).toArray()
-            let form = {Academics, General, Exam}
+            let form = await {Academics, General, Exam}
             console.log(form);
             resolve(form)
         })

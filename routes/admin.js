@@ -287,9 +287,13 @@ router.get('/delete-photo/:id', function (req, res, next) {
 
 router.get('/view-forms', function (req, res, next) {
   if (req.session.loggedIn) {
-    db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: 1 }).toArray().then((forms) => {
-      res.render('pages/user/forms', { admin: true, user: req.session.user, forms, title: 'Admin View Forms - DIIA' });
-    })
+    // db.get().collection(collection.FORM_COLLECTION).find().sort({ _id: 1 }).toArray().then((forms) => {
+    //   res.render('pages/user/forms', { admin: true, user: req.session.user, forms, title: 'Admin View Forms - DIIA' });
+    // })
+    userHelpers.getForm().then((forms) => {
+      console.log(forms.Academics);
+      res.render('pages/user/forms', { admin: false, AcademicForms: forms.Academics, GeneralForms: forms.General, ExamForms: forms.Exam, title: 'Forms - DIIA' });
+    });
   } else {
     res.redirect('/admin/auth/login')
   }
