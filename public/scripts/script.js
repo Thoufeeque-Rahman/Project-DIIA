@@ -24,7 +24,6 @@ document.querySelectorAll('.grid-image').forEach(item => {
         console.log('modalImg:', modalImg); // Debugging line
         modalImg.setAttribute('src', imgSrc);
         imgSrc.toggleclass('grid-image-hover');
-
     });
 });
 
