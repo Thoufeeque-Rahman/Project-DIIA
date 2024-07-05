@@ -1,0 +1,405 @@
+<style>
+  .content {
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  .content h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #42929d;
+    font-weight: 600;
+  }
+
+  .content table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .content table thead tr th {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .content table tbody tr td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .content table tbody tr td img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+
+  .content table tbody tr td i {
+    font-size: 20px;
+    background-color: #42929d;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .content table tbody tr td input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .content table tbody tr td input:hover {
+    background-color: #42929d;
+  }
+
+  .content table tbody tr td i:hover {
+    background-color: #fff;
+    color: #42929d;
+  }
+
+  .content button {
+    background-color: #42929d;
+    color: #fff;
+    padding: 10px 20px;
+    border: 1px solid #42929d;
+    border-radius: 0px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .content button:hover {
+    border: 1px solid #42929d;
+    background-color: #fff;
+    color: #42929d;
+    border-radius: 0px;
+  }
+
+  .form-control {
+    border-radius: 0px;
+    border: 1px solid #42929d;
+    margin-bottom: 20px;
+  }
+
+  .form-control:focus {
+    border-color: #42929d;
+    box-shadow: 2px #42929d;
+  }
+
+  .modal-content {
+    border-radius: 0px;
+  }
+
+  #img_preview {
+    width: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<section class="pt-5 pb-5">
+  <div class="content">
+    <a href="/admin/clab"><button><i class="fa-solid fa-arrow-left"></i> Back</button></a>
+     <a href="/admin/data-entry" style="float: right;"><button>Add New Data</button></a>
+    {{#if dataPage}}
+    <h1>Computer Lab Data</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Ad.no</th>
+          <th>Name</th>
+          <th>Purpose</th>
+          <th>Date</th>
+          <th>Edit Data</th>
+          <th>Delete Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each datas}}
+        <tr>
+          <td>{{this.adNo}}</td>
+          <td>{{this.username}}</td>
+          <td>{{this.userPurpose}}</td>
+          <td>{{this.date}}</td>
+          {{!-- <td><a href="/admin/edit-feeds/{{this._id}}"><i class="fa-solid fa-edit"></i></a></td> --}}
+          <td>
+            <input type="text" value="/feeds/{{this._id}}" id="myInput{{this._id}}" class="visually-hidden">
+            <button onclick="myFunction{{this._id}}()">Copy text</button>
+            <script>
+              function myFunction{{this._id}}() {
+                var copyText = document.getElementById("myInput{{this._id}}");
+                copyText.select();
+                copyText.setSelectionRange(0, 99999)
+                document.execCommand("copy");
+                alert("Copied the text: " + copyText.value);
+                
+              }
+            </script>
+          </td>
+          <td>{{this.date}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <a href="/admin/data-entry"><button>Add New Data</button></a>
+
+    {{else if photoPage}}
+    <h1>View Photos</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Title</th>
+          <th>Delete Photo</th>
+          <th>Last Update Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each photos}}
+        <tr>
+          <td><img src="/images/uploads/gallery/{{this.photo}}" alt="Feed Image"></td>
+          <td>{{this.title}}</td>
+          <td><a href="/admin/delete-photo/{{this._id}}"><i class="fa-solid fa-trash"></i></a></td>
+          {{!-- <td><a href="/admin/edit-feeds/{{this._id}}"><i class="fa-solid fa-edit"></i></a></td> --}}
+          <td>{{this.date}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <a href="/admin/add-photo"><button>Add New Photo</button></a>
+
+    {{else if formPage}}
+    <h1>View Forms</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>File</th>
+          <th>Show Form</th>
+          <th>Delete Form</th>
+          <th>Last Update Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each forms}}
+        <tr>
+          <td>{{this.title}}</td>
+          <td><a href="/images/uploads/forms/{{this.file}}" target="_blank">View File</a></td>
+          <td><a href="/admin/forms/{{this._id}}"><i class="fa-solid fa-eye"></i></a></td>
+          <td><a href="/admin/delete-form/{{this._id}}"><i class="fa-solid fa-trash"></i></a></td>
+          {{!-- <td><a href="/admin/edit-feeds/{{this._id}}"><i class="fa-solid fa-edit"></i></a></td> --}}
+          <td>{{this.date}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <a href="/admin/add-form"><button>Add New Form</button></a>
+
+    {{else if notificationPage}}
+    <h1>View Notifications</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Edit</th>
+          <th>Delete</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each notifications}}
+        <tr>
+          <td>
+            <img src="/images/uploads/notifications/{{this.notiImage}}" alt="Notification Image">
+          </td>
+          <td>
+            {{this.notiCategory}}
+          </td>
+          <td>
+            {{#ifEquals this.notiStatus "true"}}
+            <a href="/admin/change-notification-status/{{this._id}}"><i class="fa-solid fa-check"></i></a>
+            {{else}}
+            <a href="/admin/change-notification-status/{{this._id}}"><i class="fa-solid fa-times"></i></a>
+            {{/ifEquals}}
+          </td>
+          <td>
+            <a href="/admin/edit-notification/{{this._id}}" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                class="fa-solid fa-edit"></i></a>
+          <td>
+            <a href="/admin/delete-notification/{{this._id}}"><i class="fa-solid fa-trash"></i></a>
+          </td>
+          <td>
+            {{this.notiDate}}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><button>Add New
+        Notification</button></a>
+
+    {{else if announcementPage}}
+    <h1>View Announcements</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each announcements}}
+        <tr>
+          <td>{{this.annTitle}}</td>
+          <td>{{this.annDescrip}}</td>
+          <td>{{this.annDate}}</td>
+          <td>
+            {{#ifEquals this.annStatus "true"}}
+            <a href="/admin/change-announcement-status/{{this._id}}"><i class="fa-solid fa-check"></i></a>
+            {{else}}
+            <a href="/admin/change-announcement-status/{{this._id}}"><i class="fa-solid fa-times"></i></a>
+            {{/ifEquals}}
+          <td><a href="/admin/delete-announcement/{{this._id}}"><i class="fa-solid fa-trash"></i></a></td>
+        </tr>
+        {{/each}}
+      </tbody>
+
+    </table>
+
+    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#annModal"><button>Add New
+        Announcement</button></a>
+    {{/if}}
+  </div>
+
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new Notification</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="/admin/add-notification" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="notiImage" class="form-label">Notification Image</label>
+            <input type="file" name="notiImage" id="notifImage" onchange="fileChange()" class="form-control">
+            <img id="img_preview" src="#" alt="your image" style="display:none;" class="pt-3 pb-3" />
+          </div>
+          <div class="mb-3">
+            <label for="notiStatus" class="form-label">Notification Status</label>
+            <select name="notiStatus" id="notiStatus" class="form-control">
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="notiDate" class="form-label">Date</label>
+            <input type="text" class="form-control" id="notiDate" name="notiDate" value="{{date}}" required readonly>
+          </div>
+          <div class="mb-3">
+            <label for="notiCategory" class="form-label">Category</label>
+            <select class="form-control" name="notiCategory" id="notiCategory" required>
+              <option value="blog">Blog</option>
+              <option value="poster">Poster</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="notiLinks" class="form-label">Additional Links (if Blog or other links there)</label>
+            <input type="text" autocomplete="off" class="form-control" id="notiLinks" name="notiLinks" placeholder="Give Additional Links">
+          </div>
+          <button type="submit" class="btn btn-primary">Add Notification</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="annModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new Announcement</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/admin/add-announcement" method="POST">
+                    <div class="mb-3">
+                        <label for="annTitle" class="form-label">Announcement Title</label>
+                        <input type="text" autocomplete="off" class="form-control" id="annTitle" name="annTitle"
+                            placeholder="Give an Announcement Title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annDescrip" class="form-label">Announcement Description</label>
+                        <input type="text" autocomplete="off" class="form-control" id="annDescrip" name="annDescrip"
+                            placeholder="Give an Announcement Description" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annDate" class="form-label">Date</label>
+                        <input type="text" class="form-control" id="annDate" name="annDate"
+                            value="{{date}}" required read-only>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annStatus" class="form-label">Announcement Status</label>
+                        <select name="annStatus" id="annStatus" class="form-control">
+                            <option value="true">Active</option>
+                            <option value="false">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+
+                        <select class="form-control" name="category" id="category" required>
+                            <option value="">Select a Category</option>
+                            <option value="General">General</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Admission">Admission</option>
+                            <option value="Examination">Examination</option>
+                            <option value="Scholarship">Scholarship</option>
+                            <option value="Co-Curricular">Co-Curricular</option>
+                            <option value="Extra-Curricular">Extra-Curricular</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="annLinkTitle" class="form-label">Additional Link button Title (if any)</label>
+                        <input type="text" autocomplete="off" class="form-control" id="annLinkTitle" name="annLinkTitle"
+                            placeholder="Give Additional Link Title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="annLinks" class="form-label">Additional Links (if any)</label>
+                        <input type="text"autocomplete="off" class="form-control" id="annLinks" name="annLinks"
+                            placeholder="Give Additional Links">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Announcement</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  function fileChange() {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+
+      document.getElementById("img_preview").src = e.target.result;
+    };
+    reader.readAsDataURL(document.getElementById("notifImage").files[0]);
+    document.getElementById("img_preview").style.display = "block";
+  }
+</script>

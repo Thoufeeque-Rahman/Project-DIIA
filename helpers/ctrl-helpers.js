@@ -149,4 +149,70 @@ module.exports = {
             })
         })
     },
+
+    //Computer Lab
+    doSuperSignup:(userData)=>{
+        return new Promise(async (resolve, reject) => {
+
+            let username = await db.get().collection(collection.SUPERVISOR_COLLECTION).findOne({ username: userData.username })
+            console.log(username)
+            if (username) {
+                resolve({ status: false })
+            } else {
+                userData.password = await bcrypt.hash(userData.password, 10)
+                db.get().collection(collection.SUPERVISOR_COLLECTION).insertOne(userData).then((data) => {
+                    userData.status = true
+                    resolve(userData)
+
+                })
+
+
+            }
+        })
+    }, 
+    doSuperLogin: (userData) => {
+        return new Promise(async (resolve, reject) => {
+            let loginStatus = false
+            let response = {}
+            let user = await db.get().collection(collection.SUPERVISOR_COLLECTION).findOne({ username: userData.username })
+            if (user) {
+                bcrypt.compare(userData.password, user.password).then((status) => {
+                    if (status) {
+                        console.log("login success");
+                        response.user = user
+                        response.status = true
+                        resolve(response)
+                    } else {
+                        console.log("login Failed");
+                        resolve({ status: false })
+                    }
+                })
+            } else {
+                console.log("login failed");
+                resolve({ status: false })
+            }
+        })
+    },
+    // userSuggestion: (input, callback) => {
+    //     const students = db.collection(collection.STUDENTS_COLLECTION);
+    //     students.findOne({ 'ad.no': input }, (err, result) => {
+    //         if (err) {
+    //             console.error('Error querying MongoDB:', err);
+    //             callback({ error: 'Internal server error' });
+    //         } else if (!result) {
+    //             callback({ error: 'Username not found' });
+    //         } else {
+    //             callback({ username: result.student.name });
+    //         }
+    //     });
+    // },
+    addData: (data) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.DATA_COLLECTIONS).insertOne(data).then((response) => {
+                resolve(response)
+            })
+        })
+    }
+      
+
 }

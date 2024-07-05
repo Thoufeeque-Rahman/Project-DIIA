@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry Form</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .entry-form {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 50px auto;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .entry-form h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .entry-form label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .entry-form input[type="text"],
+        .entry-form input[type="password"] {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .entry-form button[type="submit"] {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .entry-form button[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+</head>
+<body>
+
+<form action="/admin/data-entry" method="post" class="entry-form">
+    <h1>Data Entry</h1>
+    <label for="adNo">Ad.no</label>
+    <input type="text" id="adNo" name="adNo" >
+    <label for="username">Name</label>
+    <input type="text" id="username" name="username">
+    <label for="userPurpose">Purpose</label>
+    <input type="text" id="userPurpose" name="userPurpose">
+    <button type="submit">Submit</button>
+</form>
+{{!-- oninput="fetchUsername()" --}}
+<script>
+    function fetchUsername() {
+        const adNo = document.getElementById('adNo').value;
+        const usernameField = document.getElementById('username');
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('GET', `/admin/fetch-username?adNo=${encodeURIComponent(adNo)}`, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.username) {
+                        usernameField.value = response.username; // Set value directly to the username input
+                    } else {
+                        usernameField.value = ''; // Clear the input if username not found
+                    }
+                } else {
+                    console.error('Error fetching username');
+                    usernameField.value = ''; // Clear the input on error
+                }
+            }
+        };
+        xhr.send();
+    }
+</script>
+
+</body>
+</html>
