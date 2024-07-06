@@ -1,6 +1,9 @@
 var db = require('../config/connection')
 var collection = require('../config/collection')
 var bcrypt = require('bcryptjs')
+const { ObjectId } = require('mongodb')
+const userHelpers = require('./user-helpers')
+const { response } = require('express')
 
 module.exports = {
     doSignup: (userData) => {
@@ -212,7 +215,23 @@ module.exports = {
                 resolve(response)
             })
         })
-    }
-      
+    },
+    findUser: async (adno) => {
+        try {
+          const student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne({ adNo: adno });
+          return student;
+        } catch (err) {
+          throw new Error('Database query failed');
+        }
+      },
 
-}
+
+
+
+
+
+
+
+    }
+
+

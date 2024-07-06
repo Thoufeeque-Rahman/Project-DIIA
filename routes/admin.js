@@ -601,6 +601,22 @@ router.get('/view-data', function (req, res, next) {
   }
 });
 
+router.get('/getStudentName/:adno', async (req, res) => {
+  const adno = req.params.adno;
+  try {
+    const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
+    console.log(student);
+    if (student) {
+      res.json({ name: student.name });
+    } else {
+      res.json({ name: null });
+    }
+  } catch (err) {
+    res.status(500).send('An error occurred');
+  }
+});
+
+
 
 
 module.exports = router;
