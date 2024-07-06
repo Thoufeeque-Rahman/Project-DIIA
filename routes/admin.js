@@ -9,6 +9,9 @@ const path = require('path');
 const userHelpers = require('../helpers/user-helpers');
 const { ObjectId } = require('mongodb');
 const fs = require('fs');
+const { default: ro } = require('date-and-time/locale/ro');
+const { default: ru } = require('date-and-time/locale/ru');
+const { log } = require('console');
 
 
 /* GET users listing. */
@@ -492,5 +495,128 @@ router.get('/change-announcement-status/:id', function (req, res, next) {
     res.redirect('/admin/auth/login')
   }
 });
+
+
+//Computer Lab 
+router.get('/clab', async (req, res) => {
+  if (req.session.loggedIn) {
+    var date = dateCreate();
+   res.render('pages/admin/computer-lab', { supervisor: true, date, user: req.session.user, title: 'Computer Lab - DIIA' });
+  } else {
+    res.redirect('/admin/auth/super-login')
+  } 
+});
+
+router.get('/auth/super-login',(req,res)=>{
+  res.render('pages/supervisor/ctrl-login',{login:true});
+});
+
+router.post('/auth/super-login',(req,res)=>{
+
+  ctrlHelpers.doSuperLogin(req.body).then((response) => {
+    if (response.status) {
+      req.session.loggedIn = true
+      req.session.user = response.user
+      req.session.userId = response.user._id
+      res.redirect('/admin/clab')
+    } else {
+
+      res.redirect('/admin/auth/super-login')
+    }
+
+  })
+});
+
+router.get('/auth/super-signup',(req,res)=>{
+  res.render('pages/supervisor/ctrl-login',{signup:true});
+});
+
+router.post('/auth/super-signup',(req,res)=>{
+  console.log(req.body);
+
+  ctrlHelpers.doSuperSignup(req.body).then((response) => {
+    if (response.status) {
+      console.log('signup success')
+      res.redirect('/admin/auth/super-login')
+    } else {
+      console.log('signup failed')
+      res.redirect('/admin/auth/super-signup')
+    }
+
+    console.log(response);
+
+  })
+})
+
+router.get('/auth/super-logout', (req, res) => {
+  req.session.user = null
+  req.session.userLoggidIn = false
+  res.redirect('/')
+})
+
+
+router.get('/data-entry', (req, res) => {
+  if (req.session.loggedIn) {
+    res.render('pages/supervisor/data-entry', { supervisor: true, user: req.session.user, title: 'Computer Lab - DIIA' });
+  } else {
+    res.redirect('/admin/auth/super-login');
+  }
+});
+
+
+router.post('/data-entry',(req,res)=>{
+  console.log(req.body);
+  const now = new Date();
+  const pattern = date.compile('YYYY, MM, DD');
+  const dateNow = date.format(now, pattern);
+  const user = req.session.user ? req.session.user.username : '';
+  req.body.date = dateNow;
+  req.body.supervisor = user;
+  console.log(user);
+  console.log('Supervisor:',req.body.supervisor);
+  ctrlHelpers.addData(req.body).then((response)=>{
+    res.redirect('/admin/data-entry')
+  })
+})
+
+router.get('/view-data', function (req, res, next) {
+  // res.set('Cache-Control', 'no-store');
+  if (req.session.loggedIn) {
+    db.get().collection(collection.DATA_COLLECTIONS).find().toArray()
+      .then((datas) => {
+        res.render('pages/supervisor/view-data', {
+          supervisor: true,
+          user: req.session.user,
+          dataPage: true,
+          datas,
+          title: 'Computer Lab Data  - DIIA'
+        });
+      })
+      .catch((err) => {
+        console.error('Error fetching data:', err);
+        res.status(500).send('Internal Server Error');
+      });
+  } else {
+    res.redirect('/admin/auth/super-login');
+  }
+});
+
+router.get('/getStudentName/:adno', async (req, res) => {
+  const adno = req.params.adno;
+  try {
+    const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
+    console.log(student);
+    if (student) {
+      res.json({ name: student.name });
+    } else {
+      res.json({ name: null });
+    }
+  } catch (err) {
+    res.status(500).send('An error occurred');
+  }
+});
+
+
+
 
 module.exports = router;
