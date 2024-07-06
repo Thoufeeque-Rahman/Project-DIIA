@@ -1,0 +1,87 @@
+
+<style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .entry-form {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 50px auto;
+            max-width: 400px;
+            padding: 20px;
+        }
+
+        .entry-form h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .entry-form label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .entry-form input[type="text"],
+        .entry-form input[type="password"] {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .entry-form button[type="submit"] {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 3px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .entry-form button[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+    </style>
+
+<form action="/admin/data-entry" method="post" class="entry-form">
+    <h1>Data Entry</h1>
+    <label for="adno">Ad.no</label>
+            <input type="text" id="adno" name="adno" onblur="fetchStudentName()" required>
+            <br>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" readonly>
+            <br>
+            <label for="purpose">Purpose</label>
+            <input type="text" id="purpose" name="purpose" required>
+            <br>
+            <button type="submit">Submit</button>
+</form>
+
+
+
+    <script>
+        function fetchStudentName() {
+            const adno = document.getElementById('adno').value;
+            if (adno) {
+                fetch(`/getStudentName/${adno}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.name) {
+                            document.getElementById('name').value = data.name;
+                        } else {
+                            alert('Student not found');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        }
+    </script>

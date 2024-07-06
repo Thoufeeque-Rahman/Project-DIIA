@@ -6,4 +6,7 @@ module.exports={
     FORM_COLLECTION:'forms',
     ANNOUNCEMENT_COLLECTION:'announcements',  
     NOTIFICATION_COLLECTION:'notifications',
+    SUPERVISOR_COLLECTION:'clab supervisors',
+    STUDENTS_COLLECTION:'users',
+    DATA_COLLECTIONS:'lab data',
 }
