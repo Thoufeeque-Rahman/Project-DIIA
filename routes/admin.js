@@ -601,7 +601,7 @@ router.post('/data-entry',(req,res)=>{
   ctrlHelpers.addData(req.body).then((response)=>{
     setTimeout(() => {
       res.redirect('/admin/data-entry'); // Redirect user after data is added
-  }, 10000); // 3000 milliseconds = 3 seconds
+  }, 300); // 3000 milliseconds = 3 seconds
 })
   })
 
