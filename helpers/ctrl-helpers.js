@@ -216,6 +216,25 @@ module.exports = {
             })
         })
     },
+    calcRent:(userId, newData)=>{
+        return new Promise(async(resolve, reject)=>{
+            let userData = await db.get().collection(collection.DATABASE_COLLECTIONS).findOne({ _id: userId });
+            if (!userData) {
+                userData = { _id: userId, rent: 0, ...newData }; // Initialize with default rent of 0
+                await db.get().collection(collection.DATABASE_COLLECTIONS).insertOne(userData);
+            }
+            if (newData.userPurpose === 'personal' || newData.userPurpose === 'class') {
+                const newRent = (userData.rent || 0) + 5;
+                userData = { ...userData, rent: newRent };
+                await db.get().collection(collection.DATABASE_COLLECTIONS).updateOne({ _id: userId }, { $set: userData });
+                console.log('Rent calculation and update completed successfully');
+                resolve({success: true})
+            }else{
+                reject(Error)
+            }
+        })
+    },
+
     findUser: async (adno) => {
         try {
           const student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne({ adNo: adno });

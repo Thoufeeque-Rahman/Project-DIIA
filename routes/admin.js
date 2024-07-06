@@ -12,6 +12,7 @@ const fs = require('fs');
 const { default: ro } = require('date-and-time/locale/ro');
 const { default: ru } = require('date-and-time/locale/ru');
 const { log } = require('console');
+const moment = require('moment-timezone');
 
 
 /* GET users listing. */
@@ -563,22 +564,6 @@ router.get('/data-entry', (req, res) => {
   }
 });
 
-
-router.post('/data-entry',(req,res)=>{
-  console.log(req.body);
-  const now = new Date();
-  const pattern = date.compile('YYYY, MM, DD');
-  const dateNow = date.format(now, pattern);
-  const user = req.session.user ? req.session.user.username : '';
-  req.body.date = dateNow;
-  req.body.supervisor = user;
-  console.log(user);
-  console.log('Supervisor:',req.body.supervisor);
-  ctrlHelpers.addData(req.body).then((response)=>{
-    res.redirect('/admin/data-entry')
-  })
-})
-
 router.get('/view-data', function (req, res, next) {
   // res.set('Cache-Control', 'no-store');
   if (req.session.loggedIn) {
@@ -601,20 +586,87 @@ router.get('/view-data', function (req, res, next) {
   }
 });
 
-router.get('/getStudentName/:adno', async (req, res) => {
-  const adno = req.params.adno;
-  try {
-    const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
-    console.log(student);
-    if (student) {
-      res.json({ name: student.name });
-    } else {
-      res.json({ name: null });
-    }
-  } catch (err) {
-    res.status(500).send('An error occurred');
+router.post('/data-entry',(req,res)=>{
+  console.log(req.body);
+  const now = moment().tz('Asia/Kolkata');
+  const dateNow = now.format('YYYY-MM-DD');
+  const timeNow = now.format('hh:mm:ss A'); // 12-hour format with AM/PM
+  const user = req.session.user ? req.session.user.username : '';
+
+  req.body.date = `${dateNow} ${timeNow}`;
+  req.body.supervisor = user;
+
+  console.log(user);
+  console.log('Supervisor:',req.body.supervisor);
+  ctrlHelpers.addData(req.body).then((response)=>{
+    setTimeout(() => {
+      res.redirect('/admin/data-entry'); // Redirect user after data is added
+  }, 10000); // 3000 milliseconds = 3 seconds
+})
+  })
+
+router.get('/data-base',(req, res)=>{
+  if (req.session.loggedIn) {
+    db.get().collection(collection.DATABASE_COLLECTIONS).find().toArray()
+      .then((dat) => {
+        res.render('pages/supervisor/view-data', {
+          supervisor: true,
+          user: req.session.user,
+          dataBase: true,
+          dat,
+          title: 'Computer Lab Data  - DIIA'
+        });
+      })
+      .catch((err) => {
+        console.error('Error fetching data:', err);
+        res.status(500).send('Internal Server Error');
+      });
+  } else {
+    res.redirect('/admin/auth/super-login');
   }
-});
+})
+
+
+// router.post('/calculate-rent', async (req, res) => {
+//   try {
+//     // Fetch all data entries
+//     const Data = await collection(collection.DATA_COLLECTIONS).find();
+
+//     // Calculate rent and update users collection
+//     for (const entry of collection(collection.DATA_COLLECTIONS)) {
+//       let rent = 0;
+//       if (entry.purpose === 'personal' || entry.purpose === 'class') {
+//         rent = 5;
+//       }
+
+//       // Update the corresponding user's rent in the users collection
+//       await collection(collection.STUDENTS_COLLECTION).updateOne(
+//         { _id: entry.userId }, // Assuming userId is linked to users collection
+//         { $inc: { rent: rent } } // Increment rent field in users collection
+//       );
+//     }
+
+//     res.status(200).json({ message: 'Rent calculation and update completed successfully' });
+//   } catch (error) {
+//     console.error('Error calculating rent:', error);
+//     res.status(500).json({ error: 'Error calculating rent' });
+//   }
+// });
+
+// router.get('/getStudentName/:adno', async (req, res) => {
+//   const adno = req.params.adno;
+//   try {
+//     const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
+//     console.log(student);
+//     if (student) {
+//       res.json({ name: student.name });
+//     } else {
+//       res.json({ name: null });
+//     }
+//   } catch (err) {
+//     res.status(500).send('An error occurred');
+//   }
+// });
 
 
 

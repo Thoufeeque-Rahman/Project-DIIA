@@ -50,25 +50,50 @@
         .entry-form button[type="submit"]:hover {
             background-color: #3e8e41;
         }
+         .notification {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 450px;
+        left: 78%;
+        transform: translateX(-50%);
+        background-color: #4CAF50; /* Green */
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        z-index: 1000; /* Ensure it is on top */
+    }
     </style>
-
-<form action="/admin/data-entry" method="post" class="entry-form">
+   <div id="notification" class="notification"></div>
+<form action="/admin/data-entry" method="post" class="entry-form" onsubmit="sendLoginNotification(event)">
     <h1>Data Entry</h1>
     <label for="adno">Ad.no</label>
-            <input type="text" id="adno" name="adno" onblur="fetchStudentName()" required>
-            <br>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" readonly>
-            <br>
-            <label for="purpose">Purpose</label>
-            <input type="text" id="purpose" name="purpose" required>
-            <br>
-            <button type="submit">Submit</button>
+    <input type="text" id="userId" name="userId" onblur="fetchStudentName()" required>
+    <br>
+    <label for="name">Name</label>
+    <input type="text" id="username" name="username">
+    <br>
+    <label for="purpose">Purpose</label>
+    <input type="text" id="userpurpose" name="userpurpose" required>
+    <br>
+    <button type="submit">Submit</button>
 </form>
 
 
 
     <script>
+         // Function to show the notification
+    function sendLoginNotification() {
+        var notification = document.getElementById("notification");
+        var username = document.getElementById("username").value;
+        var userpurpose = document.getElementById("userpurpose").value;
+        notification.innerHTML = "You have successfully logged " + username + " for his " + userpurpose + " usage";
+        notification.style.display = "block";
+        
+        // Set a timer to hide the notification after 10 seconds
+        setTimeout(function() {
+            notification.style.display = "none";
+        }, 10000); // 10000 milliseconds = 10 seconds
+    }
         function fetchStudentName() {
             const adno = document.getElementById('adno').value;
             if (adno) {
