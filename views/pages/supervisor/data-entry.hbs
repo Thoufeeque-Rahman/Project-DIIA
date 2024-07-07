@@ -94,19 +94,32 @@
             notification.style.display = "none";
         }, 10000); // 10000 milliseconds = 10 seconds
     }
-        function fetchStudentName() {
-            const adno = document.getElementById('adno').value;
-            if (adno) {
-                fetch(`/getStudentName/${adno}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.name) {
-                            document.getElementById('name').value = data.name;
-                        } else {
-                            alert('Student not found');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
+
+
+         function fetchStudentName() {
+  const adno = document.getElementById('userId').value;
+  if (adno) {
+    fetch(`/admin/getStudentName/${adno}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+        return response.json();
+      })
+      .then(data => {
+        if (data.name) {
+          document.getElementById('username').value = data.name;
+        } else {
+          alert('Student not found');
+        }
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+        alert('Error fetching student name');
+      });
+  } else {
+    alert('Please enter a userId');
+  }
+}
+
     </script>
