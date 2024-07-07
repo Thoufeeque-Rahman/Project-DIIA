@@ -4,6 +4,7 @@ var bcrypt = require('bcryptjs')
 const { ObjectId } = require('mongodb')
 const userHelpers = require('./user-helpers')
 const { response } = require('express')
+const { promises } = require('nodemailer/lib/xoauth2')
 
 module.exports = {
     doSignup: (userData) => {
@@ -211,40 +212,62 @@ module.exports = {
     // },
     addData: (data) => {
         return new Promise((resolve, reject) => {
-            db.get().collection(collection.DATA_COLLECTIONS).insertOne(data).then((response) => {
-                resolve(response)
+          db.get().collection(collection.DATA_COLLECTIONS).insertOne(data)
+            .then(async (response) => {
+              if (data.userpurpose === "Personal" || data.userpurpose === "Class") {
+                try {
+                  const userIdStr = data.userId;
+                  const userIdInt = parseInt(data.userId);
+      
+                  // Attempt to find user data using userId as string
+                  let userData = await db.get().collection(collection.DATABASE_COLLECTIONS).findOne({ userId: userIdStr });
+      
+                  // If not found, attempt to find user data using userId as integer
+                  if (!userData && !isNaN(userIdInt)) {
+                    userData = await db.get().collection(collection.DATABASE_COLLECTIONS).findOne({ userId: userIdInt });
+                  }
+      
+                  if (userData) {
+                    // Add 5 to the rent
+                    const updatedRent = (userData.rent || 0) + 5;
+                    const updateResult = await db.get().collection(collection.DATABASE_COLLECTIONS).updateOne(
+                      { _id: userData._id },
+                      { $set: { rent: updatedRent } }
+                    );
+      
+                    console.log(`Rent updated for userId ${userData.userId}: New rent is ${updatedRent}`);
+                    console.log("Update result:", updateResult);
+                  } else {
+                    // If no userData, initialize rent with 5 rupees
+                    const initialRent = 5;
+                    const newUserId = isNaN(userIdInt) ? userIdStr : userIdInt;
+                    const insertResult = await db.get().collection(collection.DATABASE_COLLECTIONS).insertOne({
+                      userId: newUserId,
+                      rent: initialRent
+                    });
+      
+                    console.log(`Initialized rent for userId ${newUserId} with ${initialRent} rupees`);
+                  }
+                } catch (error) {
+                  console.error("Error updating/inserting rent:", error);
+                  reject(error);
+                }
+              }
+              resolve(response);
             })
-        })
-    },
-    calcRent:(userId, newData)=>{
-        return new Promise(async(resolve, reject)=>{
-            let userData = await db.get().collection(collection.DATABASE_COLLECTIONS).findOne({ _id: userId });
-            if (!userData) {
-                userData = { _id: userId, rent: 0, ...newData }; // Initialize with default rent of 0
-                await db.get().collection(collection.DATABASE_COLLECTIONS).insertOne(userData);
-            }
-            if (newData.userPurpose === 'personal' || newData.userPurpose === 'class') {
-                const newRent = (userData.rent || 0) + 5;
-                userData = { ...userData, rent: newRent };
-                await db.get().collection(collection.DATABASE_COLLECTIONS).updateOne({ _id: userId }, { $set: userData });
-                console.log('Rent calculation and update completed successfully');
-                resolve({success: true})
-            }else{
-                reject(Error)
-            }
-        })
-    },
-
-    findUser: async (adno) => {
-        try {
-          const student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne({ adNo: adno });
-          return student;
-        } catch (err) {
-          throw new Error('Database query failed');
-        }
+            .catch((error) => {
+              console.error("Error inserting data:", error);
+              reject(error);
+            });
+        });
       },
+      
 
-
+      deleteData:(data)=>{
+        return new Promise ((resolve, reject)=>{
+            
+        })
+      }
 
 
 
