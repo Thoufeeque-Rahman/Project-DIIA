@@ -500,12 +500,22 @@ router.get('/change-announcement-status/:id', function (req, res, next) {
 
 //Computer Lab 
 router.get('/clab', async (req, res) => {
-  if (req.session.loggedIn) {
-    var date = dateCreate();
-   res.render('pages/admin/computer-lab', { supervisor: true, date, user: req.session.user, title: 'Computer Lab - DIIA' });
+  if (req.session.loggedIn && req.session.user) {
+    try {
+      const supervisor = await db.get().collection(collection.SUPERVISOR_COLLECTION).findOne({ username: req.session.user.username });
+      if (supervisor) {
+        var date = dateCreate();
+        res.render('pages/admin/computer-lab', { supervisor: true, date, user: req.session.user, title: 'Computer Lab - DIIA' });
+      } else {
+        res.redirect('/admin/auth/super-login');
+      }
+    } catch (err) {
+      console.error(err);
+      res.redirect('/admin/auth/super-login');
+    }
   } else {
-    res.redirect('/admin/auth/super-login')
-  } 
+    res.redirect('/admin/auth/super-login');
+  }
 });
 
 router.get('/auth/super-login',(req,res)=>{
@@ -555,14 +565,24 @@ router.get('/auth/super-logout', (req, res) => {
   res.redirect('/')
 })
 
-
-router.get('/data-entry', (req, res) => {
-  if (req.session.loggedIn) {
-    res.render('pages/supervisor/data-entry', { supervisor: true, user: req.session.user, title: 'Computer Lab - DIIA' });
+router.get('/data-entry', async (req, res) => {
+  if (req.session.loggedIn && req.session.user) {
+    try {
+      const supervisor = await db.get().collection(collection.SUPERVISOR_COLLECTION).findOne({ username: req.session.user.username });
+      if (supervisor) {
+        res.render('pages/supervisor/data-entry', { supervisor: true, user: req.session.user, title: 'Computer Lab - DIIA' });
+      } else {
+        res.redirect('/admin/auth/super-login');
+      }
+    } catch (err) {
+      console.error(err);
+      res.redirect('/admin/auth/super-login');
+    }
   } else {
     res.redirect('/admin/auth/super-login');
   }
 });
+
 
 router.get('/view-data', function (req, res, next) {
   // res.set('Cache-Control', 'no-store');
