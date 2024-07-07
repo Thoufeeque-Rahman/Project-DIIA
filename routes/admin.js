@@ -647,46 +647,36 @@ router.get('/data-base',(req, res)=>{
 })
 
 
-// router.post('/calculate-rent', async (req, res) => {
-//   try {
-//     // Fetch all data entries
-//     const Data = await collection(collection.DATA_COLLECTIONS).find();
+router.get('/getStudentName/:adno', async (req, res) => {
+  const adno = req.params.adno; // Keep adno as string initially
+  console.log('Searching for userId:', adno); // Log the userId being searched
+  try {
+    // Try querying with adno as string
+    let student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne({ userId: adno });
+    
+    // If not found, try querying with adno as integer
+    if (!student) {
+      const adnoInt = parseInt(adno);
+      if (!isNaN(adnoInt)) {
+        student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne({ userId: adnoInt });
+      }
+    }
+    
+    if (student) {
+      res.json({ name: student.username });
+    } else {
+      res.status(404).json({ error: 'Student not found' });
+    }
+  } catch (err) {
+    console.error('Error fetching student:', err);
+    res.status(500).json({ error: 'An error occurred while fetching student' });
+  }
+});
 
-//     // Calculate rent and update users collection
-//     for (const entry of collection(collection.DATA_COLLECTIONS)) {
-//       let rent = 0;
-//       if (entry.purpose === 'personal' || entry.purpose === 'class') {
-//         rent = 5;
-//       }
 
-//       // Update the corresponding user's rent in the users collection
-//       await collection(collection.STUDENTS_COLLECTION).updateOne(
-//         { _id: entry.userId }, // Assuming userId is linked to users collection
-//         { $inc: { rent: rent } } // Increment rent field in users collection
-//       );
-//     }
 
-//     res.status(200).json({ message: 'Rent calculation and update completed successfully' });
-//   } catch (error) {
-//     console.error('Error calculating rent:', error);
-//     res.status(500).json({ error: 'Error calculating rent' });
-//   }
-// });
 
-// router.get('/getStudentName/:adno', async (req, res) => {
-//   const adno = req.params.adno;
-//   try {
-//     const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
-//     console.log(student);
-//     if (student) {
-//       res.json({ name: student.name });
-//     } else {
-//       res.json({ name: null });
-//     }
-//   } catch (err) {
-//     res.status(500).send('An error occurred');
-//   }
-// });
+
 
 
 
