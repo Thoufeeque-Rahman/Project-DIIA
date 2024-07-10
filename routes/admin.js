@@ -673,7 +673,17 @@ router.get('/getStudentName/:adno', async (req, res) => {
   }
 });
 
-
+router.get('/delete-entry/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    db.get().collection(collection.DATA_COLLECTIONS).findOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+      console.log(response);
+      ctrlHelpers.deleteData(response)
+      res.redirect('/admin/view-data')
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
 
 
 
