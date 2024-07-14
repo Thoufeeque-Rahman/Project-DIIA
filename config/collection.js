@@ -9,4 +9,5 @@ module.exports={
     SUPERVISOR_COLLECTION:'clab supervisors',
     STUDENTS_COLLECTION:'users',
     DATA_COLLECTIONS:'lab data',
+    DATABASE_COLLECTIONS:'data base',
 }
