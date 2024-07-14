@@ -12,6 +12,7 @@ const fs = require('fs');
 const { default: ro } = require('date-and-time/locale/ro');
 const { default: ru } = require('date-and-time/locale/ru');
 const { log } = require('console');
+const moment = require('moment-timezone');
 
 
 /* GET users listing. */
@@ -499,12 +500,22 @@ router.get('/change-announcement-status/:id', function (req, res, next) {
 
 //Computer Lab 
 router.get('/clab', async (req, res) => {
-  if (req.session.loggedIn) {
-    var date = dateCreate();
-   res.render('pages/admin/computer-lab', { supervisor: true, date, user: req.session.user, title: 'Computer Lab - DIIA' });
+  if (req.session.loggedIn && req.session.user) {
+    try {
+      const supervisor = await db.get().collection(collection.SUPERVISOR_COLLECTION).findOne({ username: req.session.user.username });
+      if (supervisor) {
+        var date = dateCreate();
+        res.render('pages/admin/computer-lab', { supervisor: true, date, user: req.session.user, title: 'Computer Lab - DIIA' });
+      } else {
+        res.redirect('/admin/auth/super-login');
+      }
+    } catch (err) {
+      console.error(err);
+      res.redirect('/admin/auth/super-login');
+    }
   } else {
-    res.redirect('/admin/auth/super-login')
-  } 
+    res.redirect('/admin/auth/super-login');
+  }
 });
 
 router.get('/auth/super-login',(req,res)=>{
@@ -554,30 +565,24 @@ router.get('/auth/super-logout', (req, res) => {
   res.redirect('/')
 })
 
-
-router.get('/data-entry', (req, res) => {
-  if (req.session.loggedIn) {
-    res.render('pages/supervisor/data-entry', { supervisor: true, user: req.session.user, title: 'Computer Lab - DIIA' });
+router.get('/data-entry', async (req, res) => {
+  if (req.session.loggedIn && req.session.user) {
+    try {
+      const supervisor = await db.get().collection(collection.SUPERVISOR_COLLECTION).findOne({ username: req.session.user.username });
+      if (supervisor) {
+        res.render('pages/supervisor/data-entry', { supervisor: true, user: req.session.user, title: 'Computer Lab - DIIA' });
+      } else {
+        res.redirect('/admin/auth/super-login');
+      }
+    } catch (err) {
+      console.error(err);
+      res.redirect('/admin/auth/super-login');
+    }
   } else {
     res.redirect('/admin/auth/super-login');
   }
 });
 
-
-router.post('/data-entry',(req,res)=>{
-  console.log(req.body);
-  const now = new Date();
-  const pattern = date.compile('YYYY, MM, DD');
-  const dateNow = date.format(now, pattern);
-  const user = req.session.user ? req.session.user.username : '';
-  req.body.date = dateNow;
-  req.body.supervisor = user;
-  console.log(user);
-  console.log('Supervisor:',req.body.supervisor);
-  ctrlHelpers.addData(req.body).then((response)=>{
-    res.redirect('/admin/data-entry')
-  })
-})
 
 router.get('/view-data', function (req, res, next) {
   // res.set('Cache-Control', 'no-store');
@@ -601,20 +606,87 @@ router.get('/view-data', function (req, res, next) {
   }
 });
 
+router.post('/data-entry',(req,res)=>{
+  console.log(req.body);
+  const now = moment().tz('Asia/Kolkata');
+  const dateNow = now.format('YYYY-MM-DD');
+  const timeNow = now.format('hh:mm:ss A'); // 12-hour format with AM/PM
+  const user = req.session.user ? req.session.user.username : '';
+
+  req.body.date = `${dateNow} ${timeNow}`;
+  req.body.supervisor = user;
+
+  console.log(user);
+  console.log('Supervisor:',req.body.supervisor);
+  ctrlHelpers.addData(req.body,req.body.userId).then((response)=>{
+    setTimeout(() => {
+      res.redirect('/admin/data-entry'); // Redirect user after data is added
+  }, 300); // 3000 milliseconds = 3 seconds
+})
+  })
+
+router.get('/data-base',(req, res)=>{
+  if (req.session.loggedIn) {
+    db.get().collection(collection.DATABASE_COLLECTIONS).find().toArray()
+      .then((dat) => {
+        res.render('pages/supervisor/view-data', {
+          supervisor: true,
+          user: req.session.user,
+          dataBase: true,
+          dat,
+          title: 'Computer Lab Data  - DIIA'
+        });
+      })
+      .catch((err) => {
+        console.error('Error fetching data:', err);
+        res.status(500).send('Internal Server Error');
+      });
+  } else {
+    res.redirect('/admin/auth/super-login');
+  }
+})
+
+
 router.get('/getStudentName/:adno', async (req, res) => {
-  const adno = req.params.adno;
+  const adno = req.params.adno; // Keep adno as string initially
+  console.log('Searching for userId:', adno); // Log the userId being searched
   try {
-    const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
-    console.log(student);
+    // Try querying with adno as string
+    let student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne({ userId: adno });
+    
+    // If not found, try querying with adno as integer
+    if (!student) {
+      const adnoInt = parseInt(adno);
+      if (!isNaN(adnoInt)) {
+        student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne({ userId: adnoInt });
+      }
+    }
+    
     if (student) {
-      res.json({ name: student.name });
+      res.json({ name: student.username });
     } else {
-      res.json({ name: null });
+      res.status(404).json({ error: 'Student not found' });
     }
   } catch (err) {
-    res.status(500).send('An error occurred');
+    console.error('Error fetching student:', err);
+    res.status(500).json({ error: 'An error occurred while fetching student' });
   }
 });
+
+router.get('/delete-entry/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    db.get().collection(collection.DATA_COLLECTIONS).findOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+      console.log(response);
+      ctrlHelpers.deleteData(response)
+      res.redirect('/admin/view-data')
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+
+
 
 
 
