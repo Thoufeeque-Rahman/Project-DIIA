@@ -75,9 +75,6 @@
         background-color: #42929d;
         border: 1px solid #42929d;
     }
-
-
-
     .nav-tabs {
         border-bottom: #42929d 1px solid;
     }
@@ -110,6 +107,7 @@
                                     <th scope="col">Delete</th>
                                     <th scope="col">Edit</th>
                                     {{/if}}
+                                    <th scope="col">Updated Date</th>
                                 </tr>
 
                             </thead>
@@ -133,16 +131,13 @@
                                     </td>
                                     <td>
                                         <a href="#" class="edit-btn" data-bs-toggle="modal" data-bs-target="#editModal"
-                                            data-id="{{this._id}}"
-                                            data-title="{{this.formTitle}}"
-                                            data-section="{{this.formSection}}" 
-                                            data-category="{{this.formCategory}}"
-                                            data-urlv="{{this.fileURLV}}"
-                                            data-urld="{{this.fileURLD}}">
+                                            data-id="{{this._id}}" data-title="{{this.formTitle}}"
+                                            data-section="{{this.formSection}}" data-category="{{this.formCategory}}"
+                                            data-urlv="{{this.fileURLV}}" data-urld="{{this.fileURLD}}">
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
                                     </td>
-
+                                    <td>{{this.updatedAt}}</td>
                                 </tr>
                                 {{/each}}
                                 {{else}}
@@ -158,8 +153,10 @@
                                             <i class="fa-solid fa-download"></i></a></td>
                                     <td><a href="{{this.fileURLV}}">View
                                             <i class="fa-solid fa-eye"></i></a></td>
+                                    <td>{{this.updatedAt}}</td>
 
-                                    {{!-- <td><a href="/admin/delete-fest-form/{{this._id}}"><i class="fa-solid fa-trash"></i>
+                                    {{!-- <td><a href="/admin/delete-fest-form/{{this._id}}"><i
+                                                class="fa-solid fa-trash"></i>
                                         </a>
                                     </td>
                                     <td>
@@ -174,7 +171,7 @@
                                 </tr>
                                 {{/each}}
                                 {{/if}}
-                                
+
 
 
 
@@ -264,7 +261,8 @@
                                     <label for="fileURL" class="form-label">File URL</label>
                                     <input type="text" class="form-control" id="fileURLV" name="fileURLV"
                                         placeholder="Enter Form File URL " required>
-                                    <input style="display: none;" class="form-control" id="fileURLD" name="fileURLD"  required>
+                                    <input style="display: none;" class="form-control" id="fileURLD" name="fileURLD"
+                                        required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Add Form</button>
                             </form>
@@ -273,8 +271,7 @@
                 </div>
             </div>
             <!-- Edit Modal -->
-            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -303,7 +300,8 @@
                                     <label for="editfileURL" class="form-label">File URL</label>
                                     <input type="text" class="form-control" id="editfileURLV" name="fileURLV"
                                         placeholder="Enter Form File URL " required>
-                                    <input style="display: none;" class="form-control" id="editfileURLD" name="fileURLD"  required>
+                                    <input style="display: none;" class="form-control" id="editfileURLD" name="fileURLD"
+                                        required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Edit Form</button>
                             </form>
@@ -387,29 +385,29 @@
 
     //fest
     document.addEventListener('DOMContentLoaded', function () {
-    const editButtons = document.querySelectorAll('.edit-btn');
+        const editButtons = document.querySelectorAll('.edit-btn');
 
-    editButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            const title = this.getAttribute('data-title');
-            const section = this.getAttribute('data-section');
-            const category = this.getAttribute('data-category');
-            const urlv = this.getAttribute('data-urlv');
-            const urld = this.getAttribute('data-urld');
+        editButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+                const title = this.getAttribute('data-title');
+                const section = this.getAttribute('data-section');
+                const category = this.getAttribute('data-category');
+                const urlv = this.getAttribute('data-urlv');
+                const urld = this.getAttribute('data-urld');
 
-            document.getElementById('edit-id').value = id;
-            document.getElementById('editTitle').value = title;
-            document.getElementById('editSection').value = section;
-            document.getElementById('editCategory').value = category;
-            document.getElementById('editfileURLV').value = urlv;
-            
-            // Update editfileURLD based on editfileURLV
-            const directLink = convertDriveLink(urlv);
-            document.getElementById('editfileURLD').value = directLink;
+                document.getElementById('edit-id').value = id;
+                document.getElementById('editTitle').value = title;
+                document.getElementById('editSection').value = section;
+                document.getElementById('editCategory').value = category;
+                document.getElementById('editfileURLV').value = urlv;
+
+                // Update editfileURLD based on editfileURLV
+                const directLink = convertDriveLink(urlv);
+                document.getElementById('editfileURLD').value = directLink;
+            });
         });
     });
-});
     function convertDriveLink(url) {
         const regex = /\/file\/d\/([^\/]+)\/view/;
         const match = url.match(regex);
@@ -422,33 +420,33 @@
         }
     }
 
-   document.addEventListener('DOMContentLoaded', () => {
-    // Get the elements by their ID
-    const fileURLV = document.getElementById('fileURLV');
-    const editfileURLV = document.getElementById('editfileURLV');
-    const fileURLD = document.getElementById('fileURLD');
-    const editfileURLD = document.getElementById('editfileURLD');
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get the elements by their ID
+        const fileURLV = document.getElementById('fileURLV');
+        const editfileURLV = document.getElementById('editfileURLV');
+        const fileURLD = document.getElementById('fileURLD');
+        const editfileURLD = document.getElementById('editfileURLD');
 
-    // Function to update the direct download links
-    function updateDirectLinks() {
-        // Update fileURLD
+        // Function to update the direct download links
+        function updateDirectLinks() {
+            // Update fileURLD
+            if (fileURLV) {
+                fileURLD.value = convertDriveLink(fileURLV.value);
+            }
+            // Update editfileURLD
+            if (editfileURLV) {
+                editfileURLD.value = convertDriveLink(editfileURLV.value);
+            }
+        }
+
+        // Add event listeners for both input fields
         if (fileURLV) {
-            fileURLD.value = convertDriveLink(fileURLV.value);
+            fileURLV.addEventListener('input', updateDirectLinks);
         }
-        // Update editfileURLD
         if (editfileURLV) {
-            editfileURLD.value = convertDriveLink(editfileURLV.value);
+            editfileURLV.addEventListener('input', updateDirectLinks);
         }
-    }
+    });
 
-    // Add event listeners for both input fields
-    if (fileURLV) {
-        fileURLV.addEventListener('input', updateDirectLinks);
-    }
-    if (editfileURLV) {
-        editfileURLV.addEventListener('input', updateDirectLinks);
-    }
-});
-
-
+   
 </script>
