@@ -72,7 +72,7 @@
         function fetchStudentName() {
             const adno = document.getElementById('adno').value;
             if (adno) {
-                fetch(`/getStudentName/${adno}`)
+                fetch(`getStudentName/${adno}`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.name) {
