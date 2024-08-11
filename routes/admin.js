@@ -602,12 +602,13 @@ router.get('/view-data', function (req, res, next) {
 });
 
 router.get('/getStudentName/:adno', async (req, res) => {
+  console.log("hi");
   const adno = req.params.adno;
   try {
-    const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
+    const student = await db.get().collection(collection.STUDENTS_COLLECTION)
     console.log(student);
     if (student) {
-      res.json({ name: student.name });
+      res.json({ name: student.username });
     } else {
       res.json({ name: null });
     }
