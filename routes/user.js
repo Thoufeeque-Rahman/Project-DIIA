@@ -105,4 +105,20 @@ router.get('/about/principle-message', function (req, res, next) {
   res.render('pages/user/academics', { admin: false, princi:true, title: 'Principle Message - DIIA' });
 });
 
+
+//fest Documents
+
+router.get('/fest', function (req, res, next) {
+  db.get().collection(collection.FEST_COLLECTION).find().toArray().then((festDocuments) => {
+    res.render('pages/user/fest-docs', { 
+      admin: false, 
+      festDocuments, 
+      user: req.session.user, 
+      title: 'Fest Docs - DIIA' 
+    });
+    console.log(festDocuments);
+    
+})
+})
+
 module.exports = router;

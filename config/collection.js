@@ -10,4 +10,5 @@ module.exports={
     STUDENTS_COLLECTION:'users',
     DATA_COLLECTIONS:'lab data',
     DATABASE_COLLECTIONS:'data base',
+    FEST_COLLECTION:'fest docs',
 }
