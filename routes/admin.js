@@ -12,6 +12,7 @@ const fs = require('fs');
 const { default: ro } = require('date-and-time/locale/ro');
 const { default: ru } = require('date-and-time/locale/ru');
 const { log } = require('console');
+const moment = require('moment-timezone');
 
 
 /* GET users listing. */
@@ -47,7 +48,7 @@ router.post('/auth/signup', (req, res) => {
 })
 
 router.get('/auth/login', function (req, res, next) {
-  res.render('pages/admin/ctrl-signup', { ctrl: true, login: true, admin: true, title: 'Admin Login - DIIA' });
+  res.render('pages/admin/ctrl-signup', { ctrl: true, login: true, admin: false, title: 'Admin Login - DIIA' });
 });
 
 router.post('/auth/login', (req, res) => {
@@ -68,7 +69,7 @@ router.post('/auth/login', (req, res) => {
 router.get('/auth/logout', (req, res) => {
   req.session.user = null
   req.session.userLoggidIn = false
-  res.redirect('/admin')
+  res.redirect('/admin/auth/login')
 })
 
 router.get('/add-feed', function (req, res, next) {
@@ -295,7 +296,7 @@ router.get('/view-forms', function (req, res, next) {
     // })
     userHelpers.getForm().then((forms) => {
       console.log(forms.Academics);
-      res.render('pages/user/forms', { admin: false, AcademicForms: forms.Academics, GeneralForms: forms.General, ExamForms: forms.Exam, title: 'Forms - DIIA' });
+      res.render('pages/user/forms', { admin: true, AcademicForms: forms.Academics, GeneralForms: forms.General, ExamForms: forms.Exam, title: 'Forms - DIIA' });
     });
   } else {
     res.redirect('/admin/auth/login')
@@ -304,7 +305,7 @@ router.get('/view-forms', function (req, res, next) {
 
 router.post('/add-form', (req, res) => {
   console.log(req.body);
-  ctrlHelpers.addForm(req.body).then((response) => {
+  ctrlHelpers.addFestDocs(req.body).then((response) => {
     if (response.status) {
       res.redirect('/admin')
     } else {
@@ -497,14 +498,167 @@ router.get('/change-announcement-status/:id', function (req, res, next) {
 });
 
 
+
+router.post('/add-docs', (req, res) => {
+  console.log(req.body);
+
+  // Create the timestamps
+  const now = moment().tz('Asia/Kolkata');
+  const createdAt = now.format('YYYY-MM-DD hh:mm:ss A'); // Creation time
+  const updatedAt = createdAt;  // Initial update time (same as creation time)
+
+  // Add timestamps and formNames to the request body
+  req.body.createdAt = createdAt;
+  req.body.updatedAt = updatedAt; 
+  req.body.formNames = `${req.body.formTitle}-${req.body.formSection}-${req.body.formCategory}`;
+
+  // Pass the modified req.body to addFestDocs
+  ctrlHelpers.addFestDocs(req.body).then((response) => {
+    if (response.status) {
+      res.redirect('/admin');
+    } else {
+      res.redirect('/admin/add-fest-docs');
+    }
+  }).catch((error) => {
+    console.error('Error adding fest docs:', error);
+    res.redirect('/admin/add-fest-docs');
+  });
+});
+
+
+router.get('/add-fest-docs', function (req, res, next) {
+  if (req.session.loggedIn) {
+    const now = new Date();
+    const pattern = date.compile('ddd, MMM DD YYYY , HH:mm:ss');
+    const dateNow = date.format(now, pattern);
+
+    db.get().collection(collection.FEST_COLLECTION).find().toArray().then((festDocuments) => {
+      res.render('pages/user/fest-docs', { 
+        admin: true, 
+        festDocuments, 
+        dateNow, 
+        user: req.session.user, 
+        title: 'Admin Add Fest Docs - DIIA' 
+      });
+    }).catch((error) => {
+      next(error);  // Handle any errors that occur during fetching the documents
+    });
+  } else {
+    res.redirect('/admin/auth/login');
+  }
+});
+router.get('/delete-fest-form/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    db.get().collection(collection.FEST_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+      res.redirect('/admin/add-fest-docs')
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+router.get('/edit-fest-form/:id', async function (req, res, next) {
+  if (req.session.loggedIn) {
+    try {
+      const festDocId = req.params.id;
+      const editForm = await db.get().collection(collection.FEST_COLLECTION).findOne({ _id: new ObjectId(festDocId) });
+
+      if (!editForm) {
+        return res.status(404).send('Fest document not found');
+      }
+
+      res.render('pages/admin/add-feed', { 
+        admin: true, 
+        user: req.session.user, 
+        editForm, 
+        title: 'Admin Edit Fest Docs - DIIA' 
+      });
+    } catch (error) {
+      console.error('Error fetching fest document:', error);
+      next(error); // Pass the error to the error handling middleware
+    }
+  } else {
+    res.redirect('/admin/auth/login');
+  }
+});
+
+
+router.post('/edit-fest-docs', async (req, res) => {
+  if (req.session.loggedIn) {
+    try {
+      console.log('Received POST request at /edit-fest-docs/:id with ID:', req.body.id);
+      const festDocId = req.body.id;
+
+      // Create formNames from request body
+      req.body.formNames = `${req.body.formTitle}-${req.body.formSection}-${req.body.formCategory}`;
+
+      // Get current time in IST
+      const now = moment().tz('Asia/Kolkata');
+      const updatedAt = now.format('YYYY-MM-DD hh:mm:ss A'); // Updated time
+
+      // Add updated timestamp to request body
+      req.body.updatedAt = updatedAt;
+
+      // Ensure _id is included in the request body for update
+      req.body._id = new ObjectId(festDocId);
+
+      // Update the document in the database
+      const result = await db.get().collection(collection.FEST_COLLECTION).updateOne(
+        { _id: req.body._id },
+        { $set: {
+          formTitle: req.body.formTitle,
+          formSection: req.body.formSection,
+          formCategory: req.body.formCategory,
+          fileURLV: req.body.fileURLV,
+          fileURLD: req.body.fileURLD,
+          formNames: req.body.formNames,
+          updatedAt: req.body.updatedAt
+        }}
+      );
+
+      if (result.matchedCount === 0) {
+        return res.status(404).send('Fest document not found');
+      }
+
+      // Redirect or respond with success
+      res.redirect('/admin/add-fest-docs');
+    } catch (error) {
+      console.error('Error updating document:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  } else {
+    res.redirect('/admin/auth/login');
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
 //Computer Lab 
 router.get('/clab', async (req, res) => {
-  if (req.session.loggedIn) {
-    var date = dateCreate();
-   res.render('pages/admin/computer-lab', { supervisor: true, date, user: req.session.user, title: 'Computer Lab - DIIA' });
+  if (req.session.loggedIn && req.session.user) {
+    try {
+      const supervisor = await db.get().collection(collection.SUPERVISOR_COLLECTION).findOne({ username: req.session.user.username });
+      if (supervisor) {
+        var date = dateCreate();
+        res.render('pages/admin/computer-lab', { supervisor: true, date, user: req.session.user, title: 'Computer Lab - DIIA' });
+      } else {
+        res.redirect('/admin/auth/super-login');
+      }
+    } catch (err) {
+      console.error(err);
+      res.redirect('/admin/auth/super-login');
+    }
   } else {
-    res.redirect('/admin/auth/super-login')
-  } 
+    res.redirect('/admin/auth/super-login');
+  }
 });
 
 router.get('/auth/super-login',(req,res)=>{
@@ -554,30 +708,24 @@ router.get('/auth/super-logout', (req, res) => {
   res.redirect('/')
 })
 
-
-router.get('/data-entry', (req, res) => {
-  if (req.session.loggedIn) {
-    res.render('pages/supervisor/data-entry', { supervisor: true, user: req.session.user, title: 'Computer Lab - DIIA' });
+router.get('/data-entry', async (req, res) => {
+  if (req.session.loggedIn && req.session.user) {
+    try {
+      const supervisor = await db.get().collection(collection.SUPERVISOR_COLLECTION).findOne({ username: req.session.user.username });
+      if (supervisor) {
+        res.render('pages/supervisor/data-entry', { supervisor: true, user: req.session.user, title: 'Computer Lab - DIIA' });
+      } else {
+        res.redirect('/admin/auth/super-login');
+      }
+    } catch (err) {
+      console.error(err);
+      res.redirect('/admin/auth/super-login');
+    }
   } else {
     res.redirect('/admin/auth/super-login');
   }
 });
 
-
-router.post('/data-entry',(req,res)=>{
-  console.log(req.body);
-  const now = new Date();
-  const pattern = date.compile('YYYY, MM, DD');
-  const dateNow = date.format(now, pattern);
-  const user = req.session.user ? req.session.user.username : '';
-  req.body.date = dateNow;
-  req.body.supervisor = user;
-  console.log(user);
-  console.log('Supervisor:',req.body.supervisor);
-  ctrlHelpers.addData(req.body).then((response)=>{
-    res.redirect('/admin/data-entry')
-  })
-})
 
 router.get('/view-data', function (req, res, next) {
   // res.set('Cache-Control', 'no-store');
@@ -601,21 +749,77 @@ router.get('/view-data', function (req, res, next) {
   }
 });
 
+router.post('/data-entry',(req,res)=>{
+  console.log(req.body);
+  const now = moment().tz('Asia/Kolkata');
+  const dateNow = now.format('YYYY-MM-DD');
+  const timeNow = now.format('hh:mm:ss A'); // 12-hour format with AM/PM
+  const user = req.session.user ? req.session.user.username : '';
+
+  req.body.date = `${dateNow} ${timeNow}`;
+  req.body.supervisor = user;
+
+  console.log(user);
+  console.log('Supervisor:',req.body.supervisor);
+  ctrlHelpers.addData(req.body,req.body.userId).then((response)=>{
+    setTimeout(() => {
+      res.redirect('/admin/data-entry'); // Redirect user after data is added
+  }, 300); // 3000 milliseconds = 3 seconds
+})
+  })
+
+router.get('/data-base',(req, res)=>{
+  if (req.session.loggedIn) {
+    db.get().collection(collection.DATABASE_COLLECTIONS).find().toArray()
+      .then((dat) => {
+        res.render('pages/supervisor/view-data', {
+          supervisor: true,
+          user: req.session.user,
+          dataBase: true,
+          dat,
+          title: 'Computer Lab Data  - DIIA'
+        });
+      })
+      .catch((err) => {
+        console.error('Error fetching data:', err);
+        res.status(500).send('Internal Server Error');
+      });
+  } else {
+    res.redirect('/admin/auth/super-login');
+  }
+})
+
+
 router.get('/getStudentName/:adno', async (req, res) => {
-  console.log("hi");
   const adno = req.params.adno;
   try {
-    const student = await db.get().collection(collection.STUDENTS_COLLECTION)
+    const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
     console.log(student);
     if (student) {
       res.json({ name: student.username });
     } else {
-      res.json({ name: null });
+      res.status(404).json({ error: 'Student not found' });
     }
   } catch (err) {
-    res.status(500).send('An error occurred');
+    console.error('Error fetching student:', err);
+    res.status(500).json({ error: 'An error occurred while fetching student' });
   }
 });
+
+router.get('/delete-entry/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    db.get().collection(collection.DATA_COLLECTIONS).findOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+      console.log(response);
+      ctrlHelpers.deleteData(response)
+      res.redirect('/admin/view-data')
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+
+
 
 
 
