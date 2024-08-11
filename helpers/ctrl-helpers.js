@@ -124,6 +124,48 @@ module.exports = {
             })
         })
     },
+    addFestDocs: (docs) => {
+        return new Promise((resolve, reject) => {
+            // Merge formName, formSection, and formCategory to create formNames
+            docs.formNames = `${docs.formTitle}-${docs.formSection}-${docs.formCategory}`;
+            
+    
+            db.get().collection(collection.FEST_COLLECTION).insertOne(docs).then((data) => {
+                resolve(data);
+            })
+        });
+    },
+    // // updateFestDocs : (docs) => {
+    // //     return new Promise((resolve, reject) => {
+    // //         try {
+    // //             // Update the document in the database
+    // //             db.get().collection(collection.FEST_COLLECTION).updateOne(
+    // //                 { _id: docs._id },
+    // //                 {
+    // //                     $set: {
+    // //                         formTitle: docs.formTitle,
+    // //                         formSection: docs.formSection,
+    // //                         formCategory: docs.formCategory,
+    // //                         fileURL: docs.fileURL,
+    // //                         formNames: docs.formNames,
+    // //                         updatedAt: docs.updatedAt // Ensure updatedAt is set
+    // //                     }
+    // //                 },
+    // //                 (err, result) => {
+    // //                     if (err) {
+    // //                         console.error('Error updating document:', err);
+    // //                         return reject(err);
+    // //                     }
+    // //                     resolve(result);
+    // //                 }
+    // //             );
+    // //         } catch (error) {
+    // //             console.error('Caught error in updateFestDocs:', error);
+    // //             reject(error);
+    // //         }
+    // //     });
+    // // }
+    // ,
     addAnnouncement : (announcement) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ANNOUNCEMENT_COLLECTION).insertOne(announcement).then((data) => {
