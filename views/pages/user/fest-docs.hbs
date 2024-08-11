@@ -75,8 +75,20 @@
         background-color: #42929d;
         border: 1px solid #42929d;
     }
+
     .nav-tabs {
         border-bottom: #42929d 1px solid;
+    }
+
+    /* Ensure new-doc styles are applied correctly */
+    .form-tables tbody tr.new-doc td {
+        color: #42929d !important;
+        /* Change font color for new documents */
+    }
+
+    .form-tables tbody tr.new-doc td a {
+        color: #42929d !important;
+        /* Ensure link color is also updated */
     }
 </style>
 <section id="second-content" class="content pt-5 pb-5">
@@ -137,7 +149,7 @@
                                             <i class="fa-solid fa-edit"></i>
                                         </a>
                                     </td>
-                                    <td>{{this.updatedAt}}</td>
+                                    <td data-date="{{this.updatedAt}}">{{this.updatedAt}}</td>
                                 </tr>
                                 {{/each}}
                                 {{else}}
@@ -153,7 +165,8 @@
                                             <i class="fa-solid fa-download"></i></a></td>
                                     <td><a href="{{this.fileURLV}}">View
                                             <i class="fa-solid fa-eye"></i></a></td>
-                                    <td>{{this.updatedAt}}</td>
+                                    <td data-date="{{this.updatedAt}}">{{this.updatedAt}}</td>
+
 
                                     {{!-- <td><a href="/admin/delete-fest-form/{{this._id}}"><i
                                                 class="fa-solid fa-trash"></i>
@@ -447,6 +460,23 @@
             editfileURLV.addEventListener('input', updateDirectLinks);
         }
     });
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll("#tableRows tr");
+        const thresholdDate = new Date(); // Define a threshold for new documents
+        thresholdDate.setDate(thresholdDate.getDate() - 1); // Set threshold to 1 day ago
 
-   
+        rows.forEach(row => {
+            const updatedDateText = row.querySelector("td[data-date]").getAttribute("data-date");
+            const updatedDate = new Date(updatedDateText);
+
+            if (updatedDate >= thresholdDate) {
+                row.classList.add("new-doc");
+            } else {
+                row.classList.remove("new-doc");
+            }
+        });
+    });
+
+
+
 </script>
