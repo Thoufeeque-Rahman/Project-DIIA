@@ -109,7 +109,7 @@ router.get('/about/principle-message', function (req, res, next) {
 //fest Documents
 
 router.get('/fest', function (req, res, next) {
-  db.get().collection(collection.FEST_COLLECTION).find().toArray().then((festDocuments) => {
+  db.get().collection(collection.FEST_COLLECTION).find().sort({updatedAt: -1}).toArray().then((festDocuments) => {
     res.render('pages/user/fest-docs', { 
       admin: false, 
       festDocuments, 
