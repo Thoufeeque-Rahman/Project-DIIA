@@ -532,7 +532,7 @@ router.get('/add-fest-docs', function (req, res, next) {
     const pattern = date.compile('ddd, MMM DD YYYY , HH:mm:ss');
     const dateNow = date.format(now, pattern);
 
-    db.get().collection(collection.FEST_COLLECTION).find().toArray().then((festDocuments) => {
+    db.get().collection(collection.FEST_COLLECTION).find().sort({updatedAt: -1}).toArray().then((festDocuments) => {
       res.render('pages/user/fest-docs', { 
         admin: true, 
         festDocuments, 
