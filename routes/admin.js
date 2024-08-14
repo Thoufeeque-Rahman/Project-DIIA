@@ -532,7 +532,7 @@ router.get('/add-fest-docs', function (req, res, next) {
     const pattern = date.compile('ddd, MMM DD YYYY , HH:mm:ss');
     const dateNow = date.format(now, pattern);
 
-    db.get().collection(collection.FEST_COLLECTION).find().toArray().then((festDocuments) => {
+    db.get().collection(collection.FEST_COLLECTION).find().sort({updatedAt: -1}).toArray().then((festDocuments) => {
       res.render('pages/user/fest-docs', { 
         admin: true, 
         festDocuments, 
@@ -791,20 +791,10 @@ router.get('/data-base',(req, res)=>{
 
 
 router.get('/getStudentName/:adno', async (req, res) => {
-  const adno = req.params.adno; // Keep adno as string initially
-  console.log('Searching for userId:', adno); // Log the userId being searched
+  const adno = req.params.adno;
   try {
-    // Try querying with adno as string
-    let student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne({ userId: adno });
-    
-    // If not found, try querying with adno as integer
-    if (!student) {
-      const adnoInt = parseInt(adno);
-      if (!isNaN(adnoInt)) {
-        student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne({ userId: adnoInt });
-      }
-    }
-    
+    const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
+    console.log(student);
     if (student) {
       res.json({ name: student.username });
     } else {

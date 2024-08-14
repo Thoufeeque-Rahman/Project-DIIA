@@ -110,19 +110,17 @@ router.get('/about/principle-message', function (req, res, next) {
 
 router.get('/fest', function (req, res, next) {
 
-       
-            db.get().collection(collection.FEST_COLLECTION).find().toArray().then((festDocuments) => {
-              res.render('pages/user/fest-docs', { 
-                admin: false, 
-                festDocuments,
-                user: req.session.user, 
-                title: 'Fest Docs - DIIA' 
-              });
-              console.log(festDocuments);
-          })
-         
-        })
-    
+  db.get().collection(collection.FEST_COLLECTION).find().sort({updatedAt: -1}).toArray().then((festDocuments) => {
+    res.render('pages/user/fest-docs', { 
+      admin: false, 
+      festDocuments, 
+      user: req.session.user, 
+      title: 'Fest Docs - DIIA' 
+    });
+    console.log(festDocuments);
+
+  })
+})    
 
 
 
