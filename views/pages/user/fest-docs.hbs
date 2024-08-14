@@ -90,7 +90,59 @@
         color: #42929d !important;
         /* Ensure link color is also updated */
     }
+
+    
 </style>
+
+
+
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="https://i.postimg.cc/d1zh85Qq/IMG-7922.jpg" class="d-block mx-auto" style="width: 80%;" alt="Slide 1">
+        </div>
+        <div class="carousel-item">
+            <img src="https://i.postimg.cc/fTRGcDFR/IMG-7952.jpg"  class="d-block w-100" alt="Slide 2">
+        </div>
+        <div class="carousel-item">
+            <img src="https://i.postimg.cc/26THyBCF/IMG-7962.jpg" class="d-block w-100" alt="Slide 3">
+        </div>
+        <div class="carousel-item">
+            <img src="https://i.postimg.cc/zBqDC4KS/siri.jpg" class="d-block w-100" alt="Slide 4">
+        </div>
+        <div class="carousel-item">
+            <img src="https://i.postimg.cc/pdfXnPhL/cortana.jpg" class="d-block w-100" alt="Slide 5">
+        </div>
+        <div class="carousel-item">
+            <img src="https://i.postimg.cc/3wsm3rMr/alexa.jpg" class="d-block w-100" alt="Slide 6">
+        </div>
+        <div class="carousel-item">
+            <img src="https://i.postimg.cc/c4kKs1wq/bixby.jpg" class="d-block w-100" alt="Slide 7">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+
+
+
 <section id="second-content" class="content pt-5 pb-5">
     <div class="container">
         <h2 class="text-center">Fest Documents</h2>
@@ -476,6 +528,12 @@
             }
         });
     });
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    var toastList = toastElList.map(function (toastEl) {
+        var toast = new bootstrap.Toast(toastEl)
+        toast.show()
+        return toast
+    })
 
 
 
