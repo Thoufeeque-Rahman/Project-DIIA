@@ -7,7 +7,7 @@ var hbs = require('express-handlebars');
 const multer = require('multer');
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
-
+const bodyParser = require('body-parser');
 var app = express();
 var db = require('./config/connection')
 var session = require('express-session')
@@ -20,6 +20,9 @@ Handlebars.registerHelper("inc", function (value, options) {
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // view engine setup
 app.use(express.static(__dirname + '/public'));

@@ -6,6 +6,7 @@ var Handlebars = require('handlebars');
 var db = require('../config/connection')
 var collection = require('../config/collection')
 const date = require('date-and-time');
+const transporter =require('../emailConfig')
 
 
 /* GET home page. */
@@ -121,7 +122,26 @@ router.get('/fest', function (req, res, next) {
 
   })
 })    
+router.get('/scoreboard',(req,res)=>{
+  res.render('pages/user/scoreboard')
+})
 
 
+router.post('/submit-report', (req, res) => {
+  const reportDescription = req.body['report-description'];
+
+  const mailOptions = {
+    to: 'itsmeiboyno9@gmail.com',
+    subject: 'New Report Submission',
+    text: `Report Description: ${reportDescription}`
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return res.status(500).send('Error occurred: ' + error.message);
+    }
+    res.status(200).send('Report submitted successfully!');
+  });
+});
 
 module.exports = router;

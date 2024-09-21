@@ -1,0 +1,448 @@
+<style>
+.mainbody {
+  background-color: #070f1f;
+  height: 800px;
+  border-radius: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 100%;
+}
+
+.headbar {
+  background-color: #1b2d42;
+  color: #fff;
+  border-radius: 15px;
+  width: 90%;
+  margin-left: 55px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  z-index: 0;
+}
+
+.logoside, .logosside, .rightside {
+  background-color: #1b2d42;
+  height: 150px;
+  border-radius: 15px;
+}
+
+.logoside {
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.logosside {
+  padding-top: 30px;
+  padding-left: 50px;
+}
+
+.rightside {
+  padding-top: 40px; /* Adjust padding to fit */
+  padding-right: 20px;
+}
+
+.change-icon {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.fest-logo {
+  margin-left: 70px;
+  margin-top: 5px;
+}
+
+.fest-typo {
+  margin-left: 43px;
+  font-size: x-large;
+  font-weight: 700;
+}
+
+.logo {
+  margin-right: 5px;
+}
+
+.scoreboard-typo {
+  font-weight: 800;
+  margin-left: 60px;
+  font-size: larger;
+}
+
+.exit {
+  margin-top: 10px;
+}
+
+.updation-typo {
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.updation-date {
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.exit-typo {
+  font-weight: 600;
+}
+.sidebar {
+    margin-top: 90px;
+    background-color: #101a29;
+    height: min-content;
+    border-radius: 25px;
+    padding: 0px 0px 0px 0px;
+}
+.content {
+    padding: 20px;
+}
+.table-container {
+    margin-top: 20px;
+    overflow: hidden; /* Ensures that border radius works on table */
+}
+.table {
+    border-radius: 25px; /* Adjust as needed */
+    overflow: hidden; /* Keeps corners rounded */
+    padding-right: 0px;
+    margin-right: 0px;
+}
+.nav-link {
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 25px;
+}
+
+    /* Style for the active state */
+.nav-link.onwork {
+    background-color: #ee9821;
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Optional: style for hover */
+.nav-link:hover {
+    background-color: #f0b456;
+    color: white;
+}
+ /* Hide all sections initially */
+.content-section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+    /* Display and fade in the active section */
+.active-section {
+    display: block;
+    opacity: 1;
+}
+.table>:not(caption)>*>* {
+    padding: 0.5rem 2rem;
+}
+.table {
+  overflow-x: auto; /* Horizontal scrolling for table overflow */
+  border-radius: 25px;
+  border-collapse: collapse; /* Prevents border-radius issues */
+}
+
+.table-container {
+  overflow-x: auto; /* For a smooth scrollable container */
+  border-radius: 25px;
+  padding: 10px;
+}
+
+/* Optional: Add a box shadow for better visual effect */
+.table {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+/* Scrollbar styles for WebKit browsers (Chrome, Safari, Edge) */
+.table-container::-webkit-scrollbar {
+    width: 12px; /* Width of the scrollbar */
+    height: 12px; /* Height of the scrollbar */
+    border-radius: 25px;
+}
+
+.table-container::-webkit-scrollbar-track {
+   background-color: #f1f1f1; /* Background of the scrollbar track */
+    border-radius: 25px; /* Match table border radius */
+    border: 3px solid #e0e0e0; /* Border around the track*/
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background-color: #ee9821; /* Color of the scrollbar thumb */
+    border-radius: 25px; /* Rounded scrollbar thumb */
+    border: 3px solid #ffffff; /* Adds padding around thumb for extra styling */
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background-color: #d67f00; /* Darker shade on hover */
+}
+
+/* Scrollbar styling for Firefox */
+.table-container {
+    scrollbar-width: thin; /* Thinner scrollbar */
+    scrollbar-color: #ee9821 #f1f1f1; /* Thumb color and track color */
+    scrollbar-border
+}
+textarea {
+    width: 500px;
+    margin-top:75px
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    /* Styles for iPad Air and similar devices */
+    .headbar {
+    margin-left: 22px; /* Adjust margin as needed */
+    margin-top: 2.75px;
+    border-radius: 25px;
+  }
+  .sidebar{
+    width: 85%;
+  }
+  .rightside {
+    padding-top: 25px;
+    padding-right: 17px;
+}
+.content{
+  margin-left: 20px;
+}
+
+}
+
+</style>
+
+
+<div class="container mainbody bg-blue-800">
+  <div class="row">
+    <div class="col-md-12 navbar headbar d-flex justify-content-between align-items-center flex-wrap`d-md-ms-0">
+      <div class="col-3 col-md-8 col-lg-3 logoside">
+        <img src="https://i.postimg.cc/mk2bhZjv/image.png" alt="changing icon" style="height: 20px;" class="change-icon">
+        <br>   
+        <img src="https://i.postimg.cc/xTL2Yz9X/fest-logo-icon.png" alt="fest logo icon" style="height: 50px;" class="fest-logo">
+        <br>
+        <span class="fest-typo">Artificia'24</span>
+      </div>
+      
+      <div class="col-lg-6 logosside d-none d-lg-block">
+        <span class="scoreboard-typo">ARTIFICIA'24 SCOREBOARD</span>
+        <br>
+        <img src="https://i.postimg.cc/xCmSL7hg/siri-icon.png" alt="siri-logo" class="logo siri" style="height: 60px;">
+        <img src="https://i.postimg.cc/28NtdjZv/image-1-removebg-preview.png" class="logo" alt="vs" style="height: 20px;">
+        <img src="https://i.postimg.cc/wv6Kk6P0/bixby.png" alt="bixby-logo" class="logo bixby" style="height: 50px;">
+        <img src="https://i.postimg.cc/28NtdjZv/image-1-removebg-preview.png" alt="vs" class="logo" style="height: 20px;">
+        <img src="https://i.postimg.cc/R0LyhkFf/cortona-removebg-preview.png" class="logo cortona" alt="cortona-logo" style="height: 60px;">
+        <img src="https://i.postimg.cc/28NtdjZv/image-1-removebg-preview.png" alt="vs" class="logo" style="height: 20px;">
+        <img src="https://i.postimg.cc/rmybrf0H/alexa-1.png" alt="alexa-logo" class="logo alexa" style="height: 55px;">
+      </div>
+
+      <div class="col-3 col-md-4 col-lg-3 rightside text-right">
+        <span class="updation-typo">Updated On:</span>
+        <br>
+        <span class="updation-date">15/03/2006</span>
+        <div class="exit" style="cursor: pointer;">
+          <img src="https://i.postimg.cc/tRFsvDYf/exit-round.png" alt="exit-round" style="height: 25px;">
+          <span class="exit-typo">Back</span>
+        </div>
+      </div>
+    </div>
+
+
+    {{!-- Table and Navbar --}}
+ <div class="row">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 ms-5 sidebar">
+        <ul class="nav flex-md-column flex-lg-column  flex-sm-row">
+            <li class="nav-item">
+                <a class="nav-link active onwork d-none d-lg-block" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#siri">Siri</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#bixby">Bixby</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#cortona">Cortona</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#alexa">Alexa</a>
+            </li>
+            <li class="nav-item"></li>
+                <a class="nav-link d-none d-lg-block" href="#help">Help</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="col-md-9 ms-lg-auto col-lg-9 px-4 content">
+        <!-- Home Section -->
+        <section id="home-section" class="content-section active-section">
+            <h2>Welcome to Artificia'24</h2>
+            <p>Welcome to the team performance dashboard. The scoreboard reflects the total points of each team. The data is dynamically updated based on the latest available information and the updated date displayed in the navbar. This is your central hub for monitoring and analyzing team performance metrics. You can switch views to see the total points based on teams or categories using the button in the top navbar. Ensure you are always viewing the latest data as the scoreboard updates dynamically based on the most recent information.</p>
+        </section>
+
+        <!-- Siri Section -->
+        <section id="siri-section" class="content-section">
+            <h2>Siri Table</h2>
+            <div class="table-container">
+                <table class="table table-striped rounded">
+                    <thead>
+                        <tr>
+                            <th>SI.NO</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Siri Doe</td>
+                            <td>Admin</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Siri Smith</td>
+                            <td>Editor</td>
+                            <td>Inactive</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+         <!-- Bixby Section -->
+        <section id="bixby-section" class="content-section">
+            <h2>Bixby Table</h2>
+            <div class="table-container">
+                <table class="table table-striped rounded">
+                    <thead>
+                        <tr>
+                            <th>SI.NO</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Bixby Doe</td>
+                            <td>Admin</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Bixby Smith</td>
+                            <td>Editor</td>
+                            <td>Inactive</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+         <!-- Cortona Section -->
+        <section id="cortona-section" class="content-section">
+            <h2>Cortona Table</h2>
+            <div class="table-container">
+                <table class="table table-striped rounded">
+                    <thead>
+                        <tr>
+                            <th>SI.NO</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Cortona Doe</td>
+                            <td>Admin</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Cortona Smith</td>
+                            <td>Editor</td>
+                            <td>Inactive</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+         <!-- Alexa Section -->
+        <section id="alexa-section" class="content-section">
+            <h2>Alexa Table</h2>
+            <div class="table-container">
+                <table class="table table-striped rounded">
+                    <thead>
+                        <tr>
+                            <th>SI.NO</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Alexa Doe</td>
+                            <td>Admin</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Alexa Smith</td>
+                            <td>Editor</td>
+                            <td>Inactive</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Help Section -->
+        <section id="help-section" class="content-section">
+          <form action="/submit-report" method="POST">
+          <textarea id="report-description" name="report-description" rows="12" style="width: 522px;" placeholder="Please Write the problem you faced while using this website" required></textarea>
+         <br>
+          <button type="submit" class="btn btn-primary">Submit Report</button>
+          </form>
+        </section>
+
+    </main>
+</div>
+
+
+  </div>
+</div>
+
+
+<script>
+  document.querySelector('.exit').addEventListener('click', function() {
+        window.location.href = '/fest';  // Replace with your target URL
+    });
+  // JavaScript to handle navigation and switching sections
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.content-section');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            
+            // Remove active class from all nav links
+            navLinks.forEach(link => link.classList.remove('onwork'));
+            this.classList.add('onwork');
+
+            // Hide all sections and remove active-section class
+            sections.forEach(section => section.classList.remove('active-section'));
+
+            // Show the section that corresponds to the clicked link
+            const sectionId = this.getAttribute('href').substring(1) + '-section';
+            document.getElementById(sectionId).classList.add('active-section');
+        });
+    });
+</script>

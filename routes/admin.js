@@ -629,7 +629,9 @@ router.post('/edit-fest-docs', async (req, res) => {
     res.redirect('/admin/auth/login');
   }
 });
-
+router.get('/scoreboard',(req, res)=>{
+  res.render('pages/user/scoreboard')
+})
 
 
 
