@@ -7,7 +7,11 @@ var db = require('../config/connection')
 var collection = require('../config/collection')
 const date = require('date-and-time');
 const transporter =require('../emailConfig')
-
+const {google} = require('googleapis')
+const auth = new google.auth.GoogleAuth({
+  keyFile: './config/festtes-f7f9565d3e60.json', // Ensure the path is correct
+  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+});
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -122,9 +126,101 @@ router.get('/fest', function (req, res, next) {
 
   })
 })    
-router.get('/scoreboard',(req,res)=>{
-  res.render('pages/user/scoreboard')
-})
+router.get('/arts-scoreboard', async (req, res) => {
+  async function readSheet() {
+    const sheets = google.sheets({ version: 'v4', auth });
+    const spreadsheetId = '1vGCP6KdqsrOMqDciYu1LtqfoLas6-cghgqT1Z9lQ1K4';
+    const range = 'Arts!A1:E10'; // Specify your desired range
+
+    try {
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range,
+      });
+      const rows = response.data.values;
+
+      const jsonData = {
+        Siri: {},
+        Alexa: {},
+        Bixby: {},
+        Cortona: {},
+      };
+
+      // Process the rows and populate the jsonData object
+      rows.slice(1).forEach(row => {
+        const category = row[0]; // Category column
+        jsonData.Siri[category] = row[1];   // Siri score
+        jsonData.Alexa[category] = row[2];  // Alexa score
+        jsonData.Bixby[category] = row[3];  // Bixby score
+        jsonData.Cortona[category] = row[4]; // Cortona score
+      });
+
+      return jsonData;
+    } catch (error) {
+      console.error('Error reading from the sheet:', error);
+      throw new Error('Data fetch error');
+    }
+  }
+
+  try {
+    const data = await readSheet(); // Get the data from Google Sheets
+    console.log(data);
+    
+    res.render('pages/user/scoreboard.hbs', {
+      data,
+      arts:true
+     }); // Pass data to the template for rendering
+  } catch (error) {
+    res.status(500).send('Error accessing the data');
+  }
+});
+
+router.get('/sports-scoreboard', async (req, res) => {
+  async function readSheet() {
+    const sheets = google.sheets({ version: 'v4', auth });
+    const spreadsheetId = '1vGCP6KdqsrOMqDciYu1LtqfoLas6-cghgqT1Z9lQ1K4';
+    const range = 'Sports!A1:E10'; // Specify your desired range
+
+    try {
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range,
+      });
+      const rows = response.data.values;
+
+      const jsonData = {
+        Siri: {},
+        Alexa: {},
+        Bixby: {},
+        Cortona: {},
+      };
+
+      // Process the rows and populate the jsonData object
+      rows.slice(1).forEach(row => {
+        const category = row[0]; // Category column
+        jsonData.Siri[category] = row[1];   // Siri score
+        jsonData.Alexa[category] = row[2];  // Alexa score
+        jsonData.Bixby[category] = row[3];  // Bixby score
+        jsonData.Cortona[category] = row[4]; // Cortona score
+      });
+
+      return jsonData;
+    } catch (error) {
+      console.error('Error reading from the sheet:', error);
+      throw new Error('Data fetch error');
+    }
+  }
+
+  try {
+    const data = await readSheet(); // Get the data from Google Sheets
+    console.log(data);
+    
+    res.render('pages/user/scoreboard.hbs', { data, 
+      sports:true}); // Pass data to the template for rendering
+  } catch (error) {
+    res.status(500).send('Error accessing the data');
+  }
+});
 
 
 router.post('/submit-report', (req, res) => {
