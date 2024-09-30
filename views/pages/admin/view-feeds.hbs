@@ -126,13 +126,13 @@
             <input type="text" value="/feeds/{{this._id}}" id="myInput{{this._id}}" class="visually-hidden">
             <button onclick="myFunction{{this._id}}()">Copy text</button>
             <script>
-              function myFunction{{this._id}}() {
+              function myFunction{ { this._id } } () {
                 var copyText = document.getElementById("myInput{{this._id}}");
                 copyText.select();
                 copyText.setSelectionRange(0, 99999)
                 document.execCommand("copy");
                 alert("Copied the text: " + copyText.value);
-                
+
               }
             </script>
           </td>
@@ -228,8 +228,8 @@
             {{/ifEquals}}
           </td>
           <td>
-            <a href="/admin/edit-notification/{{this._id}}" onclick="/" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                class="fa-solid fa-edit"></i></a>
+            <a href="/admin/edit-notification/{{this._id}}" onclick="/" data-bs-toggle="modal"
+              data-bs-target="#exampleModal"><i class="fa-solid fa-edit"></i></a>
           <td>
             <a href="/admin/delete-notification/{{this._id}}"><i class="fa-solid fa-trash"></i></a>
           </td>
@@ -277,10 +277,49 @@
 
     <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#annModal"><button>Add New
         Announcement</button></a>
-    {{/if}}
-  </div>
+
+    {{else if mediaSlides}}
+    <h1>View Media Slides</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Status</th>
+          <th>Delete</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each slides}}
+        <tr>
+          <td>
+            <img src="/images/uploads/media/{{this.slideImage}}" alt="Slide Image">
+          </td>
+          <td>
+            {{#ifEquals this.slideStatus "true"}}
+            <a href="/admin/change-media-slide-status/{{this._id}}"><i class="fa-solid fa-check"></i></a>
+            {{else}}
+            <a href="/admin/change-media-slide-status/{{this._id}}"><i class="fa-solid fa-times"></i></a>
+            {{/ifEquals}}
+          </td>
+          <td>
+            <a href="/admin/delete-slide/{{this._id}}"><i class="fa-solid fa-trash"></i></a>
+          </td>
+          <td>
+            {{this.slideDate}}
+          </td>
+        </tr>
+        {{/each}}
       </tbody>
     </table>
+
+    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#Modalexample"><button>Add New
+        Slide</button></a>
+
+    {{/if}}
+  </div>
+  </tbody>
+  </table>
 
 </section>
 
@@ -320,7 +359,8 @@
           </div>
           <div class="mb-3">
             <label for="notiLinks" class="form-label">Additional Links (if Blog or other links there)</label>
-            <input type="text" autocomplete="off" class="form-control" id="notiLinks" name="notiLinks" placeholder="Give Additional Links">
+            <input type="text" autocomplete="off" class="form-control" id="notiLinks" name="notiLinks"
+              placeholder="Give Additional Links">
           </div>
           <button type="submit" class="btn btn-primary">Add Notification</button>
         </form>
@@ -330,71 +370,115 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="annModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new Announcement</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <form action="/admin/add-announcement" method="POST">
-                    <div class="mb-3">
-                        <label for="annTitle" class="form-label">Announcement Title</label>
-                        <input type="text" autocomplete="off" class="form-control" id="annTitle" name="annTitle"
-                            placeholder="Give an Announcement Title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="annDescrip" class="form-label">Announcement Description</label>
-                        <input type="text" autocomplete="off" class="form-control" id="annDescrip" name="annDescrip"
-                            placeholder="Give an Announcement Description" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="annDate" class="form-label">Date</label>
-                        <input type="text" class="form-control" id="annDate" name="annDate"
-                            value="{{date}}" required read-only>
-                    </div>
-                    <div class="mb-3">
-                        <label for="annStatus" class="form-label">Announcement Status</label>
-                        <select name="annStatus" id="annStatus" class="form-control">
-                            <option value="true">Active</option>
-                            <option value="false">Inactive</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="category" class="form-label">Category</label>
-
-                        <select class="form-control" name="category" id="category" required>
-                            <option value="">Select a Category</option>
-                            <option value="General">General</option>
-                            <option value="Academic">Academic</option>
-                            <option value="Admission">Admission</option>
-                            <option value="Examination">Examination</option>
-                            <option value="Scholarship">Scholarship</option>
-                            <option value="Co-Curricular">Co-Curricular</option>
-                            <option value="Extra-Curricular">Extra-Curricular</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="annLinkTitle" class="form-label">Additional Link button Title (if any)</label>
-                        <input type="text" autocomplete="off" class="form-control" id="annLinkTitle" name="annLinkTitle"
-                            placeholder="Give Additional Link Title">
-                    </div>
-                    <div class="mb-3">
-                        <label for="annLinks" class="form-label">Additional Links (if any)</label>
-                        <input type="text"autocomplete="off" class="form-control" id="annLinks" name="annLinks"
-                            placeholder="Give Additional Links">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Announcement</button>
-                </form>
-            </div>
-        </div>
+<div class="modal fade" id="Modalexample" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new Slide</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/add-media-slide" method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="slideImage" class="form-label">Slide Image</label>
+            <input type="file" name="slideImage" id="sfImage" onchange="fileChanging()" class="form-control">
+            <img id="img_preview" src="#" alt="Image Preview" style="display:none; width: 100%; height: auto;" class="pt-3 pb-3" />
+          </div>
+          <div class="mb-3">
+            <label for="slideStatus" class="form-label">Slide Status</label>
+            <select name="slideStatus" id="slideStatus" class="form-control">
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="slideDate" class="form-label">Date</label>
+            <input type="text" class="form-control" id="slideDate" name="slideDate" value="{{date}}" required readonly>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Notification</button>
+        </form>
+      </div>
     </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="annModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new Announcement</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form action="/admin/add-announcement" method="POST">
+          <div class="mb-3">
+            <label for="annTitle" class="form-label">Announcement Title</label>
+            <input type="text" autocomplete="off" class="form-control" id="annTitle" name="annTitle"
+              placeholder="Give an Announcement Title" required>
+          </div>
+          <div class="mb-3">
+            <label for="annDescrip" class="form-label">Announcement Description</label>
+            <input type="text" autocomplete="off" class="form-control" id="annDescrip" name="annDescrip"
+              placeholder="Give an Announcement Description" required>
+          </div>
+          <div class="mb-3">
+            <label for="annDate" class="form-label">Date</label>
+            <input type="text" class="form-control" id="annDate" name="annDate" value="{{date}}" required read-only>
+          </div>
+          <div class="mb-3">
+            <label for="annStatus" class="form-label">Announcement Status</label>
+            <select name="annStatus" id="annStatus" class="form-control">
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+
+            <select class="form-control" name="category" id="category" required>
+              <option value="">Select a Category</option>
+              <option value="General">General</option>
+              <option value="Academic">Academic</option>
+              <option value="Admission">Admission</option>
+              <option value="Examination">Examination</option>
+              <option value="Scholarship">Scholarship</option>
+              <option value="Co-Curricular">Co-Curricular</option>
+              <option value="Extra-Curricular">Extra-Curricular</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="annLinkTitle" class="form-label">Additional Link button Title (if any)</label>
+            <input type="text" autocomplete="off" class="form-control" id="annLinkTitle" name="annLinkTitle"
+              placeholder="Give Additional Link Title">
+          </div>
+          <div class="mb-3">
+            <label for="annLinks" class="form-label">Additional Links (if any)</label>
+            <input type="text" autocomplete="off" class="form-control" id="annLinks" name="annLinks"
+              placeholder="Give Additional Links">
+          </div>
+          <button type="submit" class="btn btn-primary">Add Announcement</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
   function fileChange() {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+
+      document.getElementById("img_preview").src = e.target.result;
+    };
+    reader.readAsDataURL(document.getElementById("notifImage").files[0]);
+    document.getElementById("img_preview").style.display = "block";
+  }
+
+
+  function fileChanging() {
     var reader = new FileReader();
     reader.onload = function (e) {
 

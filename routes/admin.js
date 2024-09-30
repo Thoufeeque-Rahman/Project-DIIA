@@ -820,10 +820,106 @@ router.get('/delete-entry/:id', function (req, res, next) {
   }
 });
 
+router.get('/view-media-slides', function (req, res, next) {
+  if (req.session.loggedIn) {
+    var date = dateCreate();
+    db.get().collection(collection.MEDIA_COLLECTION).find().sort({ _id: -1 }).toArray().then((slides) => {
+      res.render('pages/admin/view-feeds', { admin: true, date, mediaSlides: true, user: req.session.user, slides, title: 'Admin View Media  Slides - DIIA' });
 
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+const slideImageStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../public/images/uploads/media'))
+  },
+  filename: function (req, file, cb) {
+    cb(null, dateCreate() + path.extname(file.originalname))
+  }
+})
+const slideImageUpload = multer({ storage: slideImageStorage });
+router.post('/add-media-slide', slideImageUpload.single('slideImage'), (req, res, next) => {
+  console.log(req.body);
+  console.log(req.file);
+  if (req.file) {
+    console.log(req.file);
+    console.log(req.body);
 
+    const newSlide = {
+      ...req.body,
+      slideImage: req.file.filename // Corrected property name
+    };
 
+    ctrlHelpers.addMediaSlide(newSlide).then((response) => {
+      if (response.status) {
+        res.redirect('/admin')
+      } else {
+        res.redirect('/admin/view-media-slides')
+      }
+    })
+  } else {
+    res.status(400).send({ error: 'No file uploaded' });
+  }
+});
 
+router.get('/change-media-slide-status/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    ctrlHelpers.getMediaSlide(new ObjectId(req.params.id)).then((existingSlide) => {
+      console.log(existingSlide);
+      console.log('slideStatus:', existingSlide[0].slideStatus); // log the notiStatus
+      if (existingSlide[0].slideStatus == "true") {
+        db.get().collection(collection.MEDIA_COLLECTION).updateOne({ _id: new ObjectId(req.params.id) },
+          {
+            $set: {
+              slideStatus: "false"
+            }
+          }).then((response) => {
+            console.log(response);
+            res.redirect('/admin/view-media-slides')
+          })
+      } else if (existingSlide[0].slideStatus == "false") {
+        db.get().collection(collection.MEDIA_COLLECTION).updateOne({ _id: new ObjectId(req.params.id) },
+          {
+            $set: {
+              slideStatus: "true"
+            }
+          }).then((response) => {
+            console.log(response);
+            res.redirect('/admin/view-media-slides')
+          })
+      } else {
+        console.log('Unexpected slideStatus:', existingSlide.slideStatus); // log unexpected notiStatus
+        res.redirect('/admin/view-media-slides')
+      }
+    }).catch((error) => {
+      console.log('Error getting slide:', error); // log any errors
+      res.redirect('/admin/view-media-slides')
+    });
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+router.get('/delete-slide/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    ctrlHelpers.getMediaSlide(new ObjectId(req.params.id)).then((existingSlide) => {
+      console.log(existingSlide);
+      if (existingSlide && existingSlide.slideImage) {
+        // Delete the existing image file
+        console.log(existingSlide.slideImage);
+        fs.unlinkSync(path.join(__dirname, '../public/images/uploads/media/', existingSlide.slideImage));
+      }
+    }).then(() => {
+      db.get().collection(collection.MEDIA_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+        res.redirect('/admin/view-media-slides')
+      })
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
 
 
 module.exports = router;

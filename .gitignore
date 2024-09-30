@@ -1,2 +1,3 @@
 node_modules
-client_secret.json
+.env
+config\festtes-2c30a257bf90.json

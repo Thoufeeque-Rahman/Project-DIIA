@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -13,12 +14,22 @@ var db = require('./config/connection')
 var session = require('express-session')
 var Handlebars = require('handlebars');
 
-Handlebars.registerHelper("inc", function (value, options) {
+console.log('MY_SECRET_KEY_PATH:', process.env.MY_SECRET_KEY_PATH);
+
+
+// Register custom Handlebars helpers
+Handlebars.registerHelper("inc", function(value) {
   return parseInt(value) + 1;
 });
 
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+  return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
+});
+
+// Middleware to set current path
+app.use((req, res, next) => {
+  res.locals.currentPath = req.path; // Store the current path
+  next();
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,7 +46,6 @@ app.engine('hbs', hbs.engine({
   layoutsDir: __dirname + '/views/layout/',
   partialsDir: __dirname + '/views/partials/'
 }))
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -64,8 +74,6 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + '-' + Date.now())
   }
 })
-
-
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

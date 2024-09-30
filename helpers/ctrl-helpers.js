@@ -405,8 +405,27 @@ module.exports = {
                 });
         });
     },
-      
-      
+    addMediaSlide : (slide) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.MEDIA_COLLECTION).insertOne(slide).then((data) => {
+                resolve(data)
+            })
+        })
+    },
+    getMediaSlide : (slideId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.MEDIA_COLLECTION).find({_id: slideId}).sort({ _id: -1 }).toArray().then((slides) => {
+                
+                resolve(slides)
+            })
+        })
+    },
+    getSlide: () => {   
+        return new Promise(async (resolve, reject) => {
+            let carousel = await db.get().collection(collection.MEDIA_COLLECTION).find({slideStatus: "true"}).sort({ _id: -1 }).limit(5).toArray()
+            resolve(carousel)
+        })
+    }
       
 
 
