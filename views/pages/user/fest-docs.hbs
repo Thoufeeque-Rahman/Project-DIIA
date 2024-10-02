@@ -90,57 +90,71 @@
         color: #42929d !important;
         /* Ensure link color is also updated */
     }
+   .scoreboardButton {
+    text-decoration: none;
+    margin-left: 1000px;
+    --bs-btn-bg: #42929d;
+    --bs-btn-border-color: #42929d;
+    --bs-btn-hover-bg: #fff;
+    --bs-btn-hover-color: #000000;
+    --bs-btn-hover-border-color: #42939e;
+    --bs-btn-focus-shadow-rgb: 60, 153, 110;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #3e8e99;
+    --bs-btn-active-border-color: #3e8e99;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #66a9af;
+    --bs-btn-disabled-border-color: #66a9af;
+}
 </style>
 
 
 
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+<!-- Bootstrap Carousel -->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" aria-label="Image Carousel">
+    <!-- Indicators -->
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-            aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-            aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-            aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
-            aria-label="Slide 4"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"
-            aria-label="Slide 5"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5"
-            aria-label="Slide 6"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6"
-            aria-label="Slide 7"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
     </div>
+
+    <!-- Carousel Items -->
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://i.postimg.cc/d1zh85Qq/IMG-7922.jpg" class="d-block mx-auto" alt="Slide 1">
+            <img src="https://i.postimg.cc/T3wpShk5/logo-for-web.jpg" class="d-block w-100" alt="Logo">
         </div>
         <div class="carousel-item">
-            <img src="https://i.postimg.cc/fTRGcDFR/IMG-7952.jpg" class="d-block w-100" alt="Slide 2">
+            <img src="https://i.postimg.cc/fTRGcDFR/IMG-7952.jpg" class="d-block w-100" alt="Image 2">
         </div>
         <div class="carousel-item">
-            <img src="https://i.postimg.cc/26THyBCF/IMG-7962.jpg" class="d-block w-100" alt="Slide 3">
+            <img src="https://i.postimg.cc/26THyBCF/IMG-7962.jpg" class="d-block w-100" alt="Image 3">
         </div>
         <div class="carousel-item">
-            <img src="https://i.postimg.cc/zBqDC4KS/siri.jpg" class="d-block w-100" alt="Slide 4">
+            <img src="https://i.postimg.cc/zBqDC4KS/siri.jpg" class="d-block w-100" alt="Image 4">
         </div>
         <div class="carousel-item">
-            <img src="https://i.postimg.cc/pdfXnPhL/cortana.jpg" class="d-block w-100" alt="Slide 5">
+            <img src="https://i.postimg.cc/pdfXnPhL/cortana.jpg" class="d-block w-100" alt="Image 5">
         </div>
         <div class="carousel-item">
-            <img src="https://i.postimg.cc/3wsm3rMr/alexa.jpg" class="d-block w-100" alt="Slide 6">
+            <img src="https://i.postimg.cc/3wsm3rMr/alexa.jpg" class="d-block w-100" alt="Image 6">
         </div>
         <div class="carousel-item">
-            <img src="https://i.postimg.cc/c4kKs1wq/bixby.jpg" class="d-block w-100" alt="Slide 7">
+            <img src="https://i.postimg.cc/c4kKs1wq/bixby.jpg" class="d-block w-100" alt="Image 7">
         </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev">
+
+    <!-- Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
@@ -150,10 +164,12 @@
 
 
 
+
 <section id="second-content" class="content pt-5 pb-5">
     <div class="container">
-        <h2 class="text-center">Fest Documents</h2>
+        <h2 class="text-center">Fest Documents</h2>  
         <span class="title-span"></span>
+        <a href="/arts-scoreboard"class="btn btn-success ms-auto scoreboardButton">Score board</a>
         <div class="form-tables table-bordered border-primary mt-5">
             {{!-- <input id="searchbar" onkeyup="searchFunction()" class="form-control searchbar"
                 onkeyup="search_animal()" type="text" name="search" placeholder="Search Forms..."> --}}
@@ -194,7 +210,7 @@
                                     <td>{{this.formCategory}}</td>
                                     <td><a href="{{this.fileURLD}}">Download
                                             <i class="fa-solid fa-download"></i></a></td>
-                                    <td><a href="{{this.fileURLV}}">View
+                                    <td><a href="{{this.fileURLV}}" target="_blank">View
                                             <i class="fa-solid fa-eye"></i></a></td>
 
                                     <td><a href="/admin/delete-fest-form/{{this._id}}"><i class="fa-solid fa-trash"></i>
@@ -222,7 +238,7 @@
                                     <td>{{this.formCategory}}</td>
                                     <td><a href="{{this.fileURLD}}">Download
                                             <i class="fa-solid fa-download"></i></a></td>
-                                    <td><a href="{{this.fileURLV}}">View
+                                    <td><a href="{{this.fileURLV}}" target="_blank">View
                                             <i class="fa-solid fa-eye"></i></a></td>
                                     <td data-date="{{this.updatedAt}}">{{this.updatedAt}}</td>
 

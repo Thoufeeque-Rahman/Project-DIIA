@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -7,80 +8,91 @@ var hbs = require('express-handlebars');
 const multer = require('multer');
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
-
+const bodyParser = require('body-parser');
 var app = express();
-var db = require('./config/connection')
-var session = require('express-session')
+var db = require('./config/connection');
+var session = require('express-session');
 var Handlebars = require('handlebars');
 
-Handlebars.registerHelper("inc", function (value, options) {
+console.log('MY_SECRET_KEY_PATH:', process.env.MY_SECRET_KEY_PATH);
+
+// Register custom Handlebars helpers
+Handlebars.registerHelper("inc", function(value) {
   return parseInt(value) + 1;
 });
-
 Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+  return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
 });
 
-// view engine setup
-app.use(express.static(__dirname + '/public'));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+// Middleware to set current path
+app.use((req, res, next) => {
+  res.locals.currentPath = req.path; // Store the current path
+  next();
+});
 
-app.engine('hbs', hbs.engine({
+// Body parser middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// View engine setup
+app.engine('hbs', hbs({
   extname: 'hbs',
   defaultLayout: 'layout',
-  layoutsDir: __dirname + '/views/layout/',
-  partialsDir: __dirname + '/views/partials/'
-}))
-
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+  layoutsDir: path.join(__dirname, 'views/layout/'),
+  partialsDir: path.join(__dirname, 'views/partials/')
+}));
+app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(logger('dev'));
+app.use(cookieParser());
 app.use(session({
-  secret: "Key",
+  secret: process.env.SESSION_SECRET || 'Key',
   resave: false,
   saveUninitialized: false
 }));
 
+// Database connection
 db.connect((err) => {
   if (err) {
-    console.log('Error' + err);
+    console.log('Error: ' + err);
   } else {
     console.log('Database Connected');
   }
-})
+});
 
+// Multer configuration
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now())
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix);
   }
-})
+});
+const upload = multer({ storage: storage });
 
-
-
+// Define routes
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
+// Catch 404 and forward to error handler
+app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
+// Error handler
+app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error'); // Ensure you have an error.hbs view
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;
