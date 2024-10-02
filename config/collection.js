@@ -11,4 +11,5 @@ module.exports={
     DATA_COLLECTIONS:'lab data',
     DATABASE_COLLECTIONS:'data base',
     FEST_COLLECTION:'fest docs',
+    MEDIA_COLLECTION:'media slides',
 }

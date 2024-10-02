@@ -90,6 +90,23 @@
         color: #42929d !important;
         /* Ensure link color is also updated */
     }
+   .scoreboardButton {
+    text-decoration: none;
+    margin-left: 1000px;
+    --bs-btn-bg: #42929d;
+    --bs-btn-border-color: #42929d;
+    --bs-btn-hover-bg: #fff;
+    --bs-btn-hover-color: #000000;
+    --bs-btn-hover-border-color: #42939e;
+    --bs-btn-focus-shadow-rgb: 60, 153, 110;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #3e8e99;
+    --bs-btn-active-border-color: #3e8e99;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #66a9af;
+    --bs-btn-disabled-border-color: #66a9af;
+}
 </style>
 
 
@@ -152,6 +169,9 @@
     <div class="container">
         <h2 class="text-center">Fest Documents</h2>
         <span class="title-span"></span>
+        <h2 class="text-center">Fest Documents</h2>  
+        <span class="title-span"></span>
+        <a href="/arts-scoreboard"class="btn btn-success ms-auto scoreboardButton">Score board</a>
         <div class="form-tables table-bordered border-primary mt-5">
             {{!-- <input id="searchbar" onkeyup="searchFunction()" class="form-control searchbar"
                 onkeyup="search_animal()" type="text" name="search" placeholder="Search Forms..."> --}}
