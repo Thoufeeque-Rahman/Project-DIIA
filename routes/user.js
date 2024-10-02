@@ -6,7 +6,19 @@ var Handlebars = require('handlebars');
 var db = require('../config/connection')
 var collection = require('../config/collection')
 const date = require('date-and-time');
+const transporter = require('../emailConfig')
+const { google } = require('googleapis')
+const path = require('path');
+const { slides } = require('googleapis/build/src/apis/slides');
+const secretKeyPath = process.env.MY_SECRET_KEY_PATH;
+if (!secretKeyPath) {
+  throw new Error("MY_SECRET_KEY_PATH is not set in the environment variables.");
+}
 
+const auth = new google.auth.GoogleAuth({
+  keyFile: path.resolve(__dirname, secretKeyPath),
+  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+});
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -16,7 +28,7 @@ router.get('/', function (req, res, next) {
         userHelpers.getCarousel().then((carousel) => {
           console.log(announcement);
           console.log(carousel);
-          res.render('pages/user/user-homePage', { admin: false, carousel, announcement, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo, home:true });
+          res.render('pages/user/user-homePage', { admin: false, carousel, announcement, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo, home: true });
         })
       })
     })
@@ -94,7 +106,7 @@ router.get('/gallery', function (req, res, next) {
 });
 
 router.get('/about', function (req, res, next) {
-  res.render('pages/user/academics', { admin: false,about:true, title: 'About - DIIA' });
+  res.render('pages/user/academics', { admin: false, about: true, title: 'About - DIIA' });
 });
 
 router.get('/maintenance', function (req, res, next) {
@@ -102,7 +114,7 @@ router.get('/maintenance', function (req, res, next) {
 });
 
 router.get('/about/principle-message', function (req, res, next) {
-  res.render('pages/user/academics', { admin: false, princi:true, title: 'Principle Message - DIIA' });
+  res.render('pages/user/academics', { admin: false, princi: true, title: 'Principle Message - DIIA' });
 });
 
 
@@ -110,18 +122,140 @@ router.get('/about/principle-message', function (req, res, next) {
 
 router.get('/fest', function (req, res, next) {
 
-  db.get().collection(collection.FEST_COLLECTION).find().sort({updatedAt: -1}).toArray().then((festDocuments) => {
-    res.render('pages/user/fest-docs', { 
-      admin: false, 
-      festDocuments, 
-      user: req.session.user, 
-      title: 'Fest Docs - DIIA' 
+  db.get().collection(collection.FEST_COLLECTION).find().sort({ updatedAt: -1 }).toArray().then((festDocuments) => {
+    res.render('pages/user/fest-docs', {
+      admin: false,
+      festDocuments,
+      user: req.session.user,
+      title: 'Fest Docs - DIIA'
     });
     console.log(festDocuments);
 
   })
-})    
+})
+router.get('/arts-scoreboard', async (req, res) => {
+  async function readSheet() {
+    const sheets = google.sheets({ version: 'v4', auth });
+    const spreadsheetId = '1vGCP6KdqsrOMqDciYu1LtqfoLas6-cghgqT1Z9lQ1K4';
+    const range = 'Arts!A1:E10'; // Specify your desired range
 
+    try {
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range,
+      });
+      const rows = response.data.values;
 
+      const jsonData = {
+        Siri: {},
+        Alexa: {},
+        Bixby: {},
+        Cortona: {},
+      };
+
+      // Process the rows and populate the jsonData object
+      rows.slice(1).forEach(row => {
+        const category = row[0]; // Category column
+        jsonData.Siri[category] = row[1];   // Siri score
+        jsonData.Alexa[category] = row[2];  // Alexa score
+        jsonData.Bixby[category] = row[3];  // Bixby score
+        jsonData.Cortona[category] = row[4]; // Cortona score
+      });
+
+      return jsonData;
+    } catch (error) {
+      console.error('Error reading from the sheet:', error);
+      throw new Error('Data fetch error');
+    }
+  }
+
+  try {
+    const data = await readSheet(); // Get the data from Google Sheets
+    console.log(data);
+
+    res.render('pages/user/scoreboard.hbs', {
+      data,
+      arts: true
+    }); // Pass data to the template for rendering
+  } catch (error) {
+    res.status(500).send('Error accessing the data');
+  }
+});
+
+router.get('/sports-scoreboard', async (req, res) => {
+  async function readSheet() {
+    const sheets = google.sheets({ version: 'v4', auth });
+    const spreadsheetId = '1vGCP6KdqsrOMqDciYu1LtqfoLas6-cghgqT1Z9lQ1K4';
+    const range = 'Sports!A1:E10'; // Specify your desired range
+
+    try {
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range,
+      });
+      const rows = response.data.values;
+
+      const jsonData = {
+        Siri: {},
+        Alexa: {},
+        Bixby: {},
+        Cortona: {},
+      };
+
+      // Process the rows and populate the jsonData object
+      rows.slice(1).forEach(row => {
+        const category = row[0]; // Category column
+        jsonData.Siri[category] = row[1];   // Siri score
+        jsonData.Alexa[category] = row[2];  // Alexa score
+        jsonData.Bixby[category] = row[3];  // Bixby score
+        jsonData.Cortona[category] = row[4]; // Cortona score
+      });
+
+      return jsonData;
+    } catch (error) {
+      console.error('Error reading from the sheet:', error);
+      throw new Error('Data fetch error');
+    }
+  }
+
+  try {
+    const data = await readSheet(); // Get the data from Google Sheets
+    console.log(data);
+
+    res.render('pages/user/scoreboard.hbs', {
+      data,
+      sports: true
+    }); // Pass data to the template for rendering
+  } catch (error) {
+    res.status(500).send('Error accessing the data');
+  }
+});
+
+router.get('/full-screen', (req, res) => {
+    userHelpers.getSlide().then((slides)=>{
+      res.render('pages/user/fullScreen.hbs', {
+        slides,
+        user:false,
+        hideUserHeader:true
+    })
+})
+})
+
+// router.post('/submit-report', (req, res) => {
+//   const reportDescription = req.body['report-description'];
+
+//   const mailOptions = {
+//     to: 'itsmeiboyno9@gmail.com',
+//     subject: 'New Report Submission',
+//     text: `Report Description: ${reportDescription}`
+//   };
+
+//   transporter.sendMail(mailOptions, (error, info) => {
+//     if (error) {
+//       return res.status(500).send('Error occurred: ' + error.message);
+//     }
+//     res.status(200).send('Report submitted successfully!');
+//   });
+// });
 
 module.exports = router;
