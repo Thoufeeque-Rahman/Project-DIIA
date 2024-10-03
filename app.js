@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var hbs = require('express-handlebars');
+var exHbs = require('express-handlebars');
 const multer = require('multer');
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
@@ -35,7 +35,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // View engine setup
-app.engine('hbs', hbs({
+app.engine('hbs', exHbs.engine({
   extname: 'hbs',
   defaultLayout: 'layout',
   layoutsDir: path.join(__dirname, 'views/layout/'),
@@ -90,7 +90,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
