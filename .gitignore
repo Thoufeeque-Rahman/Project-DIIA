@@ -1,9 +1,3 @@
 node_modules
-<<<<<<< HEAD
 config/data.json
 .env
-.env
-.env
-=======
-config/data.json
->>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5
