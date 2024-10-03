@@ -122,12 +122,15 @@ router.get('/about/principle-message', function (req, res, next) {
 
 router.get('/fest', function (req, res, next) {
 
+<<<<<<< HEAD
   db.get().collection(collection.FEST_COLLECTION).find().sort({updatedAt: -1}).toArray().then((festDocuments) => {
     res.render('pages/user/fest-docs', { 
       admin: false, 
       festDocuments, 
       user: req.session.user, 
       title: 'Fest Docs - DIIA' 
+=======
+>>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5
   db.get().collection(collection.FEST_COLLECTION).find().sort({ updatedAt: -1 }).toArray().then((festDocuments) => {
     res.render('pages/user/fest-docs', {
       admin: false,
@@ -138,9 +141,12 @@ router.get('/fest', function (req, res, next) {
     console.log(festDocuments);
 
   })
+<<<<<<< HEAD
 })    
 
 
+=======
+>>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5
 })
 router.get('/arts-scoreboard', async (req, res) => {
   async function readSheet() {

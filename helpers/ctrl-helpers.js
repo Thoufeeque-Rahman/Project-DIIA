@@ -284,6 +284,7 @@ module.exports = {
                 }
               }
               resolve(response);
+<<<<<<< HEAD
             })
             .catch((error) => {
               console.error("Error inserting data:", error);
@@ -406,6 +407,8 @@ module.exports = {
         });
     },
       
+=======
+>>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5
             })
             .catch((error) => {
               console.error("Error inserting data:", error);
@@ -547,7 +550,12 @@ module.exports = {
             let carousel = await db.get().collection(collection.MEDIA_COLLECTION).find({slideStatus: "true"}).sort({ _id: -1 }).limit(5).toArray()
             resolve(carousel)
         })
+<<<<<<< HEAD
     }      
+=======
+    }
+      
+>>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5
 
 
 

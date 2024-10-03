@@ -629,7 +629,10 @@ router.post('/edit-fest-docs', async (req, res) => {
     res.redirect('/admin/auth/login');
   }
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5
 router.get('/scoreboard',(req, res)=>{
   res.render('pages/user/scoreboard')
 })
@@ -821,8 +824,11 @@ router.get('/delete-entry/:id', function (req, res, next) {
   }
 });
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5
 router.get('/view-media-slides', function (req, res, next) {
   if (req.session.loggedIn) {
     var date = dateCreate();
