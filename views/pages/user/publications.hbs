@@ -53,6 +53,7 @@
         </div>
         <div class="mt-3 ">
 
+            {{#if admin}}
             {{#each articles}}
             <div class="d-flex justify-content-center">
                 <div class="article-card">
@@ -65,14 +66,31 @@
                         <p>{{abstract}}</p>
                         <div>
                             <a href={{fileURL}} class="download-btn btn btn-primary">Download Full Paper</a>
-                            {{#if admin}}
                             <a href="delete-article/{{_id}}" class="ms-2 delete-btn btn btn-primary">Delete Article</a>
-                            {{/if}}
                         </div>
                     </div>
                 </div>
             </div>
             {{/each}}
+            {{else}}
+            {{#each articles}}
+            <div class="d-flex justify-content-center">
+                <div class="article-card">
+                    <div class="container">
+                        <h5>{{articleTitle}}</h5>
+                        <div class="author">
+                            <i class="fa-solid fa-user"></i>
+                            <p>{{authorName}}</p>
+                        </div>
+                        <p>{{abstract}}</p>
+                        <div>
+                            <a href={{fileURL}} class="download-btn btn btn-primary">Download Full Paper</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+            {{/if}}
 
 
             {{#if admin}}
