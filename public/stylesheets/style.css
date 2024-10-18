@@ -1243,3 +1243,158 @@ section .animate {
     color: #ffffff;
 }
 
+/* DSC Publications */
+.searchbar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.searchbarPub {
+    width: 500px;
+    padding: 10px;
+    border-radius: 50px;
+    border: 1px solid #fff;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.searchbarPub:hover {
+    border: 1px solid #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.searchbarPub input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: none;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0;
+    padding-left: 40px;
+}
+
+.searchbarPub i {
+    color: #42929d;
+    font-size: 1.2rem;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20px;
+}
+
+.article-card {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 20px;
+    width: 70%;
+}
+
+.article-card .container {
+    padding: 20px;
+}
+
+.article-card h5 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.article-card .author {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.article-card .author i {
+    width: 25px;
+    height: 25px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #42929d;
+    border: 1px solid #42929d;
+    font-size: 0.9rem;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.article-card .author p {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    margin-right: 10px;
+    margin-left: 1px;
+    margin-bottom: 0;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: transform 0.3s ease-in-out;
+}
+
+.article-card p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    text-align: justify;
+    text-justify: inter-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.article-card .download-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: #fff;
+    color: #42929d;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid #42929d;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.article-card .download-btn:hover {
+    background-color: #42929d;
+    color: #fff;
+    border: 1px solid #42929d;
+}
+
+.article-card .delete-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: #fff;
+    color: red;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid red;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.article-card .delete-btn:hover {
+    background-color: red;
+    color: #fff;
+    border: 1px solid red;
+}
+

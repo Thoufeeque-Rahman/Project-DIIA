@@ -525,6 +525,41 @@ router.post('/add-docs', (req, res) => {
   });
 });
 
+router.get('/publications', function (req, res, next) {
+  if (req.session.loggedIn) {
+    var date = dateCreate();
+    db.get().collection(collection.ARTICLE_COLLECTION).find().sort({ _id: -1 }).toArray().then((articles) => {
+      res.render('pages/user/publications', { admin: true, user: req.session.user, articles, title: 'Admin View Publications - DIIA' });
+      // res.render('pages/admin/view-feeds', { admin: true, date, announcementPage: true, user: req.session.user, announcements, title: 'Admin View Announcements - DIIA' });
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+router.post('/add-article', function (req, res, next) {
+  console.log(req.body);
+  const now = new Date();
+  const pattern = date.compile('YYYY, MM, DD');
+  const dateNow = date.format(now, pattern);
+  req.body.date = dateNow;
+  ctrlHelpers.addArticle(req.body).then((response) => {
+    res.redirect('/admin/publications')
+  })
+});
+
+router.get('/delete-article/:id', function (req, res, next) {
+  if (req.session.loggedIn) {
+    db.get().collection(collection.ARTICLE_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
+      res.redirect('/admin/publications')
+    })
+  } else {
+    res.redirect('/admin/auth/login')
+  }
+});
+
+
+
 
 router.get('/add-fest-docs', function (req, res, next) {
   if (req.session.loggedIn) {
@@ -629,13 +664,10 @@ router.post('/edit-fest-docs', async (req, res) => {
     res.redirect('/admin/auth/login');
   }
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5
 router.get('/scoreboard',(req, res)=>{
   res.render('pages/user/scoreboard')
 })
+
 
 
 
@@ -824,11 +856,6 @@ router.get('/delete-entry/:id', function (req, res, next) {
   }
 });
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5
 router.get('/view-media-slides', function (req, res, next) {
   if (req.session.loggedIn) {
     var date = dateCreate();
@@ -929,6 +956,8 @@ router.get('/delete-slide/:id', function (req, res, next) {
     res.redirect('/admin/auth/login')
   }
 });
+
+
 
 
 module.exports = router;

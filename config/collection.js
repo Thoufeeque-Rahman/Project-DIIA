@@ -12,8 +12,5 @@ module.exports={
     DATABASE_COLLECTIONS:'data base',
     FEST_COLLECTION:'fest docs',
     MEDIA_COLLECTION:'media slides',
-<<<<<<< HEAD
+    ARTICLE_COLLECTION:'articles'
 }
-=======
-}
->>>>>>> 4450998a2e022164d75975e8f6e2d358e6bd78d5

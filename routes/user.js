@@ -11,14 +11,14 @@ const { google } = require('googleapis')
 const path = require('path');
 const { slides } = require('googleapis/build/src/apis/slides');
 const secretKeyPath = process.env.MY_SECRET_KEY_PATH;
-if (!secretKeyPath) {
-  throw new Error("MY_SECRET_KEY_PATH is not set in the environment variables.");
-}
+// if (!secretKeyPath) {
+//   throw new Error("MY_SECRET_KEY_PATH is not set in the environment variables.");
+// }
 
-const auth = new google.auth.GoogleAuth({
-  keyFile: path.resolve(__dirname, secretKeyPath),
-  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-});
+// const auth = new google.auth.GoogleAuth({
+//   keyFile: path.resolve(__dirname, secretKeyPath),
+//   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+// }); 
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -233,14 +233,24 @@ router.get('/sports-scoreboard', async (req, res) => {
 });
 
 router.get('/full-screen', (req, res) => {
-    userHelpers.getSlide().then((slides)=>{
-      res.render('pages/user/fullScreen.hbs', {
-        slides,
-        user:false,
-        hideUserHeader:true
+  userHelpers.getSlide().then((slides) => {
+    res.render('pages/user/fullScreen.hbs', {
+      slides,
+      user: false,
+      hideUserHeader: true
     })
+  })
 })
-})
+
+router.get('/publications', function (req, res, next) {
+  userHelpers.getArticle().then((articles) => {
+    console.log(articles);
+    res.render('pages/user/publications', { admin: false, articles, title: 'Publications - DIIA' });
+  });
+  
+});
+
+
 
 // router.post('/submit-report', (req, res) => {
 //   const reportDescription = req.body['report-description'];
