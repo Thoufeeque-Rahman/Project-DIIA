@@ -22,14 +22,13 @@ const secretKeyPath = process.env.MY_SECRET_KEY_PATH;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  userHelpers.getFeed().then((feeds) => {
-    userHelpers.getPhoto().then((photo) => {
-      userHelpers.getAnnouncement().then((announcement) => {
-        userHelpers.getCarousel().then((carousel) => {
-          console.log(announcement);
-          console.log(carousel);
-          res.render('pages/user/user-homePage', { admin: false, carousel, announcement, title: 'Darul Irfan Pandikkad - DIIA', feeds, photo, home: true });
-        })
+
+  userHelpers.getPhoto().then((photo) => {
+    userHelpers.getAnnouncement().then((announcement) => {
+      userHelpers.getCarousel().then((carousel) => {
+        console.log(announcement);
+        console.log(carousel);
+        res.render('pages/user/user-homePage', { admin: false, carousel, announcement, title: 'Darul Irfan Pandikkad - DIIA', photo, home: true });
       })
     })
   })
@@ -242,12 +241,12 @@ router.get('/full-screen', (req, res) => {
   })
 })
 
-router.get('/publications', function (req, res, next) {
+router.get('/dsc/publications', function (req, res, next) {
   userHelpers.getArticle().then((articles) => {
     console.log(articles);
     res.render('pages/user/publications', { admin: false, articles, title: 'Publications - DIIA' });
   });
-  
+
 });
 
 

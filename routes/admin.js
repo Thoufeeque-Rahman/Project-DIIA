@@ -525,7 +525,7 @@ router.post('/add-docs', (req, res) => {
   });
 });
 
-router.get('/publications', function (req, res, next) {
+router.get('/dsc/publications', function (req, res, next) {
   if (req.session.loggedIn) {
     var date = dateCreate();
     db.get().collection(collection.ARTICLE_COLLECTION).find().sort({ _id: -1 }).toArray().then((articles) => {
@@ -535,23 +535,23 @@ router.get('/publications', function (req, res, next) {
   } else {
     res.redirect('/admin/auth/login')
   }
-});
+}); 
 
-router.post('/add-article', function (req, res, next) {
+router.post('/dsc/add-article', function (req, res, next) {
   console.log(req.body);
   const now = new Date();
   const pattern = date.compile('YYYY, MM, DD');
   const dateNow = date.format(now, pattern);
   req.body.date = dateNow;
   ctrlHelpers.addArticle(req.body).then((response) => {
-    res.redirect('/admin/publications')
+    res.redirect('/admin/dsc/publications')
   })
 });
 
-router.get('/delete-article/:id', function (req, res, next) {
+router.get('/dsc/delete-article/:id', function (req, res, next) {
   if (req.session.loggedIn) {
     db.get().collection(collection.ARTICLE_COLLECTION).deleteOne({ _id: new ObjectId(req.params.id) }).then((response) => {
-      res.redirect('/admin/publications')
+      res.redirect('/admin/dsc/publications')
     })
   } else {
     res.redirect('/admin/auth/login')

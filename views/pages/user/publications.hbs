@@ -11,8 +11,8 @@
     <div class="container">
         <h2 class="text-center">DSC Publications</h2>
         <span class="title-span"></span>
-        <div class="d-flex justify-content-center">
-            <div class="searchbar-container">
+        <div class="d-flex justify-content-center flex-wrap">
+            <div class="searchbar-container me-sm-4 mt-4">
                 <div class="searchbarPub">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input id="searchbarAC" onkeyup="searchFunctionAC()" class="" type="text" name="search"
@@ -30,8 +30,6 @@
                     text-decoration: none;
                     display: inline-block;
                     font-size: 16px;
-                    margin-top: 30px;
-                    margin-left: 20px;
                     height: 45px;
                     cursor: pointer;
                     border-radius: 25px;
@@ -44,7 +42,7 @@
 
                 }
             </style>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mt-2 mt-md-4">
                 <!-- Button trigger modal -->
                 <button class="add-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New Article</button>
             </div>
@@ -52,10 +50,16 @@
 
         </div>
         <div class="mt-3 ">
-
+            <style>
+                @media (min-width: 768px) {
+                    .article-card {
+                        width: 70%;
+                    }
+                }
+            </style>
             {{#if admin}}
             {{#each articles}}
-            <div class="d-flex justify-content-center">
+            <div id="{{_id}}" class="d-flex justify-content-center">
                 <div class="article-card">
                     <div class="container">
                         <h5>{{articleTitle}}</h5>
@@ -65,8 +69,9 @@
                         </div>
                         <p>{{abstract}}</p>
                         <div>
-                            <a href={{fileURL}} class="download-btn btn btn-primary">Download Full Paper</a>
-                            <a href="delete-article/{{_id}}" class="ms-2 delete-btn btn btn-primary">Delete Article</a>
+                            <a href={{fileURL}} class="download-btn btn btn-primary me-2">Download Full Paper</a>
+                            <a onclick="copyToClipboard('{{_id}}')" class="mt-2 mt-sm-0 copy-btn btn btn-primary me-2"><i class="fa-regular fa-copy"></i> Copy URL</a>
+                            <a href="delete-article/{{_id}}" class="mt-2 mt-md-0 delete-btn btn btn-primary">Delete Article</a>
                         </div>
                     </div>
                 </div>
@@ -74,7 +79,7 @@
             {{/each}}
             {{else}}
             {{#each articles}}
-            <div class="d-flex justify-content-center">
+            <div id="{{_id}}" class="d-flex justify-content-center">
                 <div class="article-card">
                     <div class="container">
                         <h5>{{articleTitle}}</h5>
@@ -84,7 +89,8 @@
                         </div>
                         <p>{{abstract}}</p>
                         <div>
-                            <a href={{fileURL}} class="download-btn btn btn-primary">Download Full Paper</a>
+                            <a href={{fileURL}} class="download-btn btn btn-primary me-2">Download Full Paper</a>
+                            <a onclick="copyToClipboard('{{_id}}')" class="mt-2 mt-sm-0 copy-btn btn btn-primary"><i class="fa-regular fa-copy"></i> Copy URL</a>
                         </div>
                     </div>
                 </div>
@@ -105,7 +111,7 @@
                         </div>
                         <div class="modal-body">
 
-                            <form id="publicationForm" action="/admin/add-article" method="POST">
+                            <form id="publicationForm" action="/admin/dsc/add-article" method="POST">
                                 <div class="mb-3">
                                     <label for="articleTitle" class="form-label">Article Title</label>
                                     <input type="text" class="form-control" id="articleTitle" name="articleTitle"
@@ -193,4 +199,39 @@
             alert('Invalid Google Drive link. Please provide a valid link.');
         }
     });
+
+    // Copy URL
+    function copyToClipboard(id) {
+        const articleCard = document.getElementById(id);
+        const downloadBtn = articleCard.querySelector('.download-btn');
+        const downloadURL = downloadBtn.getAttribute('href');
+
+        // Create a temporary input element
+        const input = document.createElement('input');
+        input.value = "http://localhost:3000/dsc/publications/#" + id;
+        document.body.appendChild(input);
+
+        // Select the input element's content
+        input.select();
+        input.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the selected content
+        document.execCommand('copy');
+
+        // Remove the temporary input element
+        document.body.removeChild(input);
+
+        // Show a success message
+        const copyBtn = articleCard.querySelector('.copy-btn');
+        copyBtn.setAttribute('title', 'URL copied to clipboard!');
+        
+        // Temporarily change the button text to show success message
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fa-regular fa-circle-check"></i> Copied!';
+        
+        // Revert the button text after 2 seconds
+        setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+        }, 2000);
+    }
 </script>

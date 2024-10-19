@@ -1247,18 +1247,16 @@ section .animate {
 .searchbar-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
 }
 
 .searchbarPub {
-    width: 500px;
+    width: 350px;
     padding: 10px;
     border-radius: 50px;
     border: 1px solid #fff;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    margin-top: 10px;
     position: relative;
     z-index: 1;
     background-color: #fff;
@@ -1299,7 +1297,6 @@ section .animate {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
     margin-bottom: 20px;
-    width: 70%;
 }
 
 .article-card .container {
@@ -1376,6 +1373,26 @@ section .animate {
     background-color: #42929d;
     color: #fff;
     border: 1px solid #42929d;
+}
+
+.article-card .copy-btn {
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: #fff;
+    color: #008cff;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid #008cff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.article-card .copy-btn:hover {
+    background-color: #008cff;
+    color: #fff;
+    border: 1px solid #008cff;
 }
 
 .article-card .delete-btn {
