@@ -249,100 +249,70 @@ module.exports = {
     },
     addData: (data) => {
         return new Promise((resolve, reject) => {
-          db.get().collection(collection.DATA_COLLECTIONS).insertOne(data)
-            .then(async (response) => {
-              if (data.userpurpose === "Personal" || data.userpurpose === "Class") {
-                try {
-                  const userIdStr = data.userId;
-                  const userIdInt = parseInt(data.userId);
-      
-                  // Attempt to find user data using userId as string
-                  let userData = await db.get().collection(collection.DATABASE_COLLECTIONS).findOne({ userId: userIdStr });
-      
-                  // If not found, attempt to find user data using userId as integer
-                  if (!userData && !isNaN(userIdInt)) {
-                    userData = await db.get().collection(collection.DATABASE_COLLECTIONS).findOne({ userId: userIdInt });
-                  }
-      
-                  if (userData) {
-                    // Add 5 to the rent
-                    const updatedRent = (userData.rent || 0) + 5;
-                    const updateResult = await db.get().collection(collection.DATABASE_COLLECTIONS).updateOne(
-                      { _id: userData._id },
-                      { $set: { rent: updatedRent } }
-                    );
-      
-                    console.log(`Rent updated for userId ${userData.userId}: New rent is ${updatedRent}`);
-                    console.log("Update result:", updateResult);
-                  } else {
-                    // If no userData, initialize rent with 5 rupees
-                    const initialRent = 5;
-                    const newUserId = isNaN(userIdInt) ? userIdStr : userIdInt;
-                    const insertResult = await db.get().collection(collection.DATABASE_COLLECTIONS).insertOne({
-                      userId: newUserId,
-                      rent: initialRent
-                    });
-      
-                    console.log(`Initialized rent for userId ${newUserId} with ${initialRent} rupees`);
-                  }
-                } catch (error) {
-                  console.error("Error updating/inserting rent:", error);
-                  reject(error);
-                }
-              }
-              resolve(response);
-            })
-            .catch((error) => {
-              console.error("Error inserting data:", error);
-              reject(error);
-            });
+            console.log("Data to insert:", data); // Log the data being inserted
+    
+            // Insert data into DATA_COLLECTIONS
+            db.get().collection(collection.DATA_COLLECTIONS).insertOne(data)
+                .then(async (response) => {
+                    console.log("Insert response:", response); // Log the response from insert
+    
+                    // Check if userpurpose is "Personal" or "Class"
+                    if (data.userpurpose === "Personal" || data.userpurpose === "Class") {
+                        try {
+                            const userIdStr = data.userId;
+                            const userIdInt = parseInt(data.userId);
+                            console.log(`Searching for userId (string): ${userIdStr}, userId (integer): ${userIdInt}`);
+    
+                            // Attempt to find user data using userId as string
+                            let userData = await db.get().collection(collection.DATABASE_COLLECTIONS).findOne({ userId: userIdStr });
+                            console.log("Found userData (string search):", userData);
+    
+                            // If not found, attempt to find user data using userId as integer
+                            if (!userData && !isNaN(userIdInt)) {
+                                userData = await db.get().collection(collection.DATABASE_COLLECTIONS).findOne({ userId: userIdInt });
+                                console.log("Found userData (integer search):", userData);
+                            }
+    
+                            if (userData) {
+                                // Add 5 to the rent
+                                const updatedRent = (userData.rent || 0) + 5;
+                                console.log(`Updating rent for userId ${userData.userId}: Old rent is ${userData.rent}, New rent will be ${updatedRent}`);
+    
+                                const updateResult = await db.get().collection(collection.DATABASE_COLLECTIONS).updateOne(
+                                    { _id: userData._id },
+                                    { $set: { rent: updatedRent } }
+                                );
+    
+                                console.log(`Update result for rent:`, updateResult);
+                                if (updateResult.modifiedCount === 0) {
+                                    console.error("No documents were updated. Check if the document exists and if rent value was changed.");
+                                }
+                            } else {
+                                // If no userData, initialize rent with 5 rupees
+                                const initialRent = 5;
+                                const newUserId = isNaN(userIdInt) ? userIdStr : userIdInt;
+                                const insertResult = await db.get().collection(collection.DATABASE_COLLECTIONS).insertOne({
+                                    userId: newUserId,
+                                    rent: initialRent
+                                });
+    
+                                console.log(`Initialized rent for userId ${newUserId} with ${initialRent} rupees`, insertResult);
+                            }
+                        } catch (error) {
+                            console.error("Error updating/inserting rent:", error);
+                            reject({ error: "Error updating/inserting rent", details: error });
+                        }
+                    }
+                    resolve({ status: true, response }); // Modify to indicate successful operation
+                })
+                .catch((error) => {
+                    console.error("Error inserting data:", error);
+                    reject({ error: "Error inserting data", details: error });
+                });
         });
-      },
-      
-    //   updateRent: (data) => {
-    //     return new Promise((resolve, reject) => {
-    //       let userId = data.userId;
-      
-    //       // Convert userId to integer if possible
-    //       if (typeof userId === 'string' && !isNaN(userId)) {
-    //         userId = parseInt(userId);
-    //       }
-      
-    //       // Find user data by userId
-    //       db.get().collection(collection.DATABASE_COLLECTIONS).findOne({ userId })
-    //         .then(async (userData) => {
-    //           if (userData) {
-    //             // Check if userpurpose is "Personal" or "Class"
-    //             if (data.userpurpose === "Personal" || data.userpurpose === "Class") {
-    //               // Reduce rent by 5
-    //               const reducedRent = (userData.rent || 0) - 5;
-      
-    //               // Update the rent in the database
-    //               const updateResult = await db.get().collection(collection.DATABASE_COLLECTIONS).updateOne(
-    //                 { _id: userData._id },
-    //                 { $set: { rent: reducedRent } }
-    //               );
-      
-    //               console.log(`Rent reduced by 5 for userId ${userId}: New rent is ${reducedRent}`);
-    //               console.log("Update result:", updateResult);
-      
-    //               resolve(updateResult);
-    //             } else {
-    //               // No rent reduction needed, resolve with null
-    //               console.log(`No rent reduction needed for userId ${userId}`);
-    //               resolve(null);
-    //             }
-    //           } else {
-    //             console.log(`No data found for userId ${userId}`);
-    //             resolve(null); // Resolve with null if no user data found
-    //           }
-    //         })
-    //         .catch((error) => {
-    //           console.error("Error updating rent:", error);
-    //           reject(error);
-    //         });
-    //     });
-    //   },
+    },
+
+    
 
     deleteData: (data) => {
         return new Promise((resolve, reject) => {

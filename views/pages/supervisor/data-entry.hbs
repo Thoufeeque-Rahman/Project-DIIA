@@ -1,56 +1,56 @@
-
 <style>
-        body {
-            background-color: #f2f2f2;
-            font-family: Arial, sans-serif;
-        }
+    body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+    }
 
-        .entry-form {
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            margin: 50px auto;
-            max-width: 400px;
-            padding: 20px;
-        }
+    .entry-form {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        margin: 50px auto;
+        max-width: 400px;
+        padding: 20px;
+    }
 
-        .entry-form h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+    .entry-form h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
 
-        .entry-form label {
-            display: block;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
+    .entry-form label {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
 
-        .entry-form input[type="text"],
-        .entry-form input[type="password"] {
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-size: 16px;
-            padding: 10px;
-            width: 100%;
-        }
+    .entry-form input[type="text"],
+    .entry-form input[type="password"] {
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 16px;
+        padding: 10px;
+        width: 100%;
+    }
 
-        .entry-form button[type="submit"] {
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 3px;
-            color: #fff;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-            padding: 10px;
-            width: 100%;
-        }
+    .entry-form button[type="submit"] {
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 3px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        padding: 10px;
+        width: 100%;
+    }
 
-        .entry-form button[type="submit"]:hover {
-            background-color: #3e8e41;
-        }
-         .notification {
+    .entry-form button[type="submit"]:hover {
+        background-color: #3e8e41;
+    }
+
+    .notification {
         display: none; /* Hidden by default */
         position: fixed;
         top: 150px;
@@ -62,38 +62,56 @@
         border-radius: 5px;
         z-index: 1000; /* Ensure it is on top */
     }
-    </style>
-   <div id="notification" class="notification"></div>
+</style>
+
+<div id="notification" class="notification"></div>
+
 <form action="/admin/data-entry" method="post" class="entry-form" onsubmit="sendLoginNotification(event)">
     <h1>Data Entry</h1>
-    <label for="adno">Ad.no</label>
+    <label for="userId">Ad.no</label>
     <input type="text" id="userId" name="userId" onblur="fetchStudentName()" required>
     <br>
-    <label for="name">Name</label>
+    <label for="username">Name</label>
     <input type="text" id="username" name="username">
     <br>
-    <label for="purpose">Purpose</label>
+    <label for="userpurpose">Purpose</label>
     <input type="text" id="userpurpose" name="userpurpose" required>
     <br>
     <button type="submit">Submit</button>
 </form>
 
+<script>
+   function fetchStudentName() {
+    const userId = document.getElementById('userId').value;  // Ensure the input field ID is 'userId'
+    if (userId) {
+        fetch(`/admin/getStudentName/${userId}`)  // Use userId in the fetch request URL
+            .then(response => response.json())
+            .then(data => {
+                if (data.name) {
+                    document.getElementById('username').value = data.name;  // Set the username in the input field
+                } else {
+                    alert('Student not found');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+}
 
+   function sendLoginNotification(event) {
+    event.preventDefault(); // Prevent the default form submission
 
-    <script>
-        function fetchStudentName() {
-            const adno = document.getElementById('adno').value;
-            if (adno) {
-                fetch(`/getStudentName/${adno}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.name) {
-                            document.getElementById('name').value = data.name;
-                        } else {
-                            alert('Student not found');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        }
-    </script>
+    // Show the notification
+    const notification = document.getElementById('notification');
+    notification.style.display = 'block';
+    notification.innerText = 'Form submitted successfully!';
+
+    // Hide the notification after 3 seconds and submit the form
+    setTimeout(() => {
+        notification.style.display = 'none';
+
+        // Submit the form after the notification is displayed
+        document.querySelector('form').submit();
+    }, 3000); // 3 seconds delay before submitting the form
+}
+
+</script>
