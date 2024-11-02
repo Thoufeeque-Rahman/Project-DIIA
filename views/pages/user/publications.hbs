@@ -33,6 +33,7 @@
                     height: 45px;
                     cursor: pointer;
                     border-radius: 25px;
+                    font-weight: 600;
                     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                     transition: box-shadow 0.3s ease-in-out;
                 }
@@ -67,6 +68,7 @@
                             <i class="fa-solid fa-user"></i>
                             <p>{{authorName}}</p>
                         </div>
+                        <h5 class="authorNameAndTitleShow" hidden>{{authorNameAndTitle}}</h5>
                         <p class="fw-bold">Abstract</p>
                         <p>{{abstract}}</p>
                         <div>
@@ -88,6 +90,7 @@
                             <i class="fa-solid fa-user"></i>
                             <p>{{authorName}}</p>
                         </div>
+                        <h5 class="authorNameAndTitleShow" hidden>{{authorNameAndTitle}}</h5>
                         <p class="fw-bold">Abstract</p>
                         <p>{{abstract}}</p>
                         <div>
@@ -123,6 +126,11 @@
                                     <label for="authorName" class="form-label">Author Name</label>
                                     <input type="text" class="form-control" id="authorName" name="authorName"
                                         placeholder="Enter Author Name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="authorNameAndTitle" class="form-label">Author Email</label>
+                                    <input type="email" class="form-control" id="authorNameAndTitle" name="authorNameAndTitle"
+                                        placeholder="authorNameAndTitle" hidden>
                                 </div>
                                 <div class="mb-3">
                                     <label for="abstract" class="form-label">Abstract</label>
@@ -164,7 +172,7 @@
 
         // Loop through all article cards, and hide those who don't match the search query
         for (i = 0; i < cardContainer.length; i++) {
-            h5 = cardContainer[i].getElementsByTagName("h5")[0];
+            h5 = cardContainer[i].getElementsByClassName("authorNameAndTitleShow")[0];
             if (h5) {
                 txtValue = h5.textContent || h5.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -183,6 +191,9 @@
         // Get the Google Drive link from the input
         const fileURLInput = document.getElementById('fileURL');
         const fileURL = fileURLInput.value;
+        const authorNameAndTitle = document.getElementById('authorNameAndTitle');
+
+        authorNameAndTitle.value = document.getElementById('authorName').value + " " + document.getElementById('articleTitle').value;
 
         // Extract the file ID from the Google Drive link
         const fileIDMatch = fileURL.match(/\/d\/(.*?)\//);
