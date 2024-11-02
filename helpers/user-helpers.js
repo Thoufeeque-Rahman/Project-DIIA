@@ -65,11 +65,11 @@ module.exports = {
     },
     getCarousel: () => {
         return new Promise(async (resolve, reject) => {
-            let carousel = await db.get().collection(collection.NOTIFICATION_COLLECTION).find({ notiStatus: "true" }).sort({ _id: -1 }).limit(10).toArray()
+            let carousel = await db.get().collection(collection.NOTIFICATION_COLLECTION).find({ notiStatus: "true" }).sort({ _id: 1  }).limit(10).toArray()
             resolve(carousel)
         })
-    },
-    getSlide: () => {
+    },  
+    getSlide: () => { 
         return new Promise(async (resolve, reject) => {
             let carousel = await db.get().collection(collection.MEDIA_COLLECTION).find({ slideStatus: "true" }).sort({ _id: -1 }).limit(5).toArray()
             resolve(carousel)
