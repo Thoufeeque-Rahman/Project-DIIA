@@ -751,6 +751,7 @@ router.get('/data-entry', async (req, res) => {
     try {
       const supervisor = await db.get().collection(collection.SUPERVISOR_COLLECTION).findOne({ username: req.session.user.username });
       if (supervisor) {
+        ctrlHelpers.updateRent()
         res.render('pages/supervisor/data-entry', { supervisor: true, user: req.session.user, title: 'Computer Lab - DIIA' });
       } else {
         res.redirect('/admin/auth/super-login');
@@ -787,7 +788,7 @@ router.get('/view-data', function (req, res, next) {
   }
 });
 
-router.post('/data-entry',(req,res)=>{
+router.post('/data-entry', (req, res) => {
   console.log(req.body);
   const now = moment().tz('Asia/Kolkata');
   const dateNow = now.format('YYYY-MM-DD');
@@ -797,14 +798,19 @@ router.post('/data-entry',(req,res)=>{
   req.body.date = `${dateNow} ${timeNow}`;
   req.body.supervisor = user;
 
-  console.log(user);
-  console.log('Supervisor:',req.body.supervisor);
-  ctrlHelpers.addData(req.body,req.body.userId).then((response)=>{
-    setTimeout(() => {
-      res.redirect('/admin/data-entry'); // Redirect user after data is added
-  }, 300); // 3000 milliseconds = 3 seconds
-})
-  })
+  console.log('Supervisor:', req.body.supervisor);
+  ctrlHelpers.addData(req.body).then((response) => { // No need to pass userId here
+      if (response.status) {
+          res.redirect('/admin/data-entry');
+      } else {
+          res.status(400).send({ error: 'Failed to add data' });
+      }
+  }).catch((error) => {
+      console.error('Error adding data:', error);
+      res.status(500).send({ error: 'Internal Server Error' });
+  });
+  
+});
 
 router.get('/data-base',(req, res)=>{
   if (req.session.loggedIn) {
@@ -828,10 +834,20 @@ router.get('/data-base',(req, res)=>{
 })
 
 
-router.get('/getStudentName/:adno', async (req, res) => {
-  const adno = req.params.adno;
+router.get('/getStudentName/:userId', async (req, res) => {
+  const userIdParam = req.params.userId;
+  let query;
+
+  // Try to parse userId as an integer, and fallback to string
+  if (!isNaN(userIdParam)) {
+    query = { userId: parseInt(userIdParam) };  // Handle as number
+  } else {
+    query = { userId: userIdParam };  // Handle as string
+  }
+
   try {
-    const student = await collection(collection.STUDENTS_COLLECTION).findOne({ adno: adno });
+    const student = await db.get().collection(collection.STUDENTS_COLLECTION).findOne(query);
+    
     console.log(student);
     if (student) {
       res.json({ name: student.username });
@@ -843,6 +859,8 @@ router.get('/getStudentName/:adno', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching student' });
   }
 });
+
+
 
 router.get('/delete-entry/:id', function (req, res, next) {
   if (req.session.loggedIn) {
