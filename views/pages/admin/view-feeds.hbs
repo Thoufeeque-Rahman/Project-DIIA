@@ -200,6 +200,10 @@
 
     {{else if notificationPage}}
     <h1>View Notifications</h1>
+
+    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><button>Add New
+        Notification</button></a>
+        
     <table>
       <thead>
         <tr>
@@ -241,11 +245,13 @@
       </tbody>
     </table>
 
-    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal"><button>Add New
-        Notification</button></a>
 
     {{else if announcementPage}}
     <h1>View Announcements</h1>
+
+    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#annModal"><button>Add New
+        Announcement</button></a>
+
     <table>
       <thead>
         <tr>
@@ -275,8 +281,7 @@
 
     </table>
 
-    <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#annModal"><button>Add New
-        Announcement</button></a>
+
 
     {{else if mediaSlides}}
     <h1>View Media Slides</h1>
