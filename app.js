@@ -29,6 +29,8 @@ app.use((req, res, next) => {
   res.locals.currentPath = req.path; // Store the current path
   next();
 });
+app.use(express.static('public'));
+
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
