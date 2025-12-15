@@ -6,11 +6,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var exHbs = require('express-handlebars');
 const multer = require('multer');
-var userRouter = require('./routes/user');
-var adminRouter = require('./routes/admin');
+var userRouter = require('../routes/user');
+var adminRouter = require('../routes/admin');
 const bodyParser = require('body-parser');
 var app = express();
-var db = require('./config/connection');
+var db = require('../config/connection');
 var session = require('express-session');
 var Handlebars = require('handlebars');
 
@@ -58,7 +58,7 @@ db.connect((err) => {
   } else {
     console.log('Database Connected');
   }
-});
+}); 
 
 // Multer configuration
 const storage = multer.diskStorage({
@@ -90,7 +90,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-const PORT = 3000;
+const PORT = 3000; 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
