@@ -8,7 +8,7 @@ const state = {
 
 // mongodb connection string
 // const url = "mongodb://0.0.0.0:27017";
-const url = "mongodb+srv://rahman:9946337540@cluster0.olwqtmo.mongodb.net/";
+const url = process.env.MONGODB_URI;
 // database name
 const dbName = "DIIA-Website";
 

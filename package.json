@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./api/app.js",
-    "run": "node ./bin/www"
+    "run": "node ./api/app.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
