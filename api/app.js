@@ -89,10 +89,12 @@ app.use((err, req, res, next) => {
   res.render('error'); // Ensure you have an error.hbs view
 });
 
-// Start the server
-const PORT = 3000; 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Only start server in local development, not in serverless environment
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
 module.exports = app;
