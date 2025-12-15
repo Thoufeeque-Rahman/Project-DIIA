@@ -38,11 +38,12 @@ app.use(bodyParser.json());
 app.engine('hbs', exHbs.engine({
   extname: 'hbs',
   defaultLayout: 'layout',
-  layoutsDir: path.join(__dirname, 'views/layout/'),
-  partialsDir: path.join(__dirname, 'views/partials/')
+  layoutsDir: path.join(__dirname, '../views/layout/'),
+  partialsDir: path.join(__dirname, '../views/partials/')
 }));
 app.set('view engine', 'hbs');
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('views', path.join(__dirname, '../views'));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(session({
@@ -52,13 +53,18 @@ app.use(session({
 }));
 
 // Database connection
-db.connect((err) => {
-  if (err) {
-    console.log('Error: ' + err);
-  } else {
-    console.log('Database Connected');
-  }
-}); 
+if (!process.env.MONGODB_URI) {
+  console.error('MONGODB_URI environment variable is not set');
+  // Don't crash the app, let it start and fail on first DB query
+} else {
+  db.connect((err) => {
+    if (err) {
+      console.error('Database connection error:', err.message);
+    } else {
+      console.log('Database Connected');
+    }
+  });
+} 
 
 // Multer configuration
 const storage = multer.diskStorage({

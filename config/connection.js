@@ -8,9 +8,13 @@ const state = {
 
 // mongodb connection string
 // const url = "mongodb://0.0.0.0:27017";
-const url = process.env.MONGODB_URI;
+const url = process.env.MONGODB_URI || process.env.DB_URL || '';
 // database name
 const dbName = "DIIA-Website";
+
+if (!url) {
+  console.error('[WARNING] MONGODB_URI environment variable is not set. Database operations will fail.');
+}
 
 // create a new mongodb client object
 const client = new MongoClient(url);
