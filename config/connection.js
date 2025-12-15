@@ -21,6 +21,15 @@ const client = new MongoClient(url);
 
 // function to establish mongodb connection
 const connect = async (cb) => {
+  if (state.db) {
+    return cb ? cb() : Promise.resolve();
+  }
+
+  if (!url) {
+    const err = new Error('MONGODB_URI is not defined');
+    return cb ? cb(err) : Promise.reject(err);
+  }
+
   try {
     // connecting to mongodb
     await client.connect();
@@ -29,10 +38,10 @@ const connect = async (cb) => {
     // setting up database name to the state
     state.db = db;
     // callback after connected
-    return cb();
+    return cb ? cb() : Promise.resolve();
   } catch (err) {
     // callback when an error occurs
-    return cb(err);
+    return cb ? cb(err) : Promise.reject(err);
   }
 };
 

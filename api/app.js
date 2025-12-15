@@ -52,6 +52,19 @@ app.use(session({
   saveUninitialized: false
 }));
 
+// Ensure database connection per request (important for serverless cold starts)
+app.use((req, res, next) => {
+  if (db.get()) return next();
+
+  db.connect((err) => {
+    if (err) {
+      console.error('Database connect error:', err.message);
+      return next(err);
+    }
+    return next();
+  });
+});
+
 // Database connection
 if (!process.env.MONGODB_URI) {
   console.error('MONGODB_URI environment variable is not set');
